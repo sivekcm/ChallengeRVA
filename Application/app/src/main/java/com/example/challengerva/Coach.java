@@ -1,6 +1,6 @@
 package com.example.challengerva;
 
-public class Coach {
+public class Coach extends UserType{
     private String username;
     private String password;
 
