@@ -4,6 +4,15 @@ public class Coach {
     private String username;
     private String password;
 
+    public Coach (){
+        this.username = "username";
+        this.password = "password";
+    }
+
+    public Coach(String user, String pw){
+        this.username = user;
+        this.password = pw;
+    }
     public void setUsername(String name){
         this.username = name;
     }
@@ -15,5 +24,11 @@ public class Coach {
     }
     public String getPassword(){
         return password;
+    }
+    public boolean verifyPassword(){
+        return false;
+    }
+    public boolean verifyCoach(){
+        return false;
     }
 }
