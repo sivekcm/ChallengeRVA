@@ -5,7 +5,7 @@ Group Members:
 
   Shradda Adhikari, 
   Farhana Khan, 
-  Dylan Serra, 
+  Adrienne Serra, 
   Christopher Sivek, 
   
 Part 1:
