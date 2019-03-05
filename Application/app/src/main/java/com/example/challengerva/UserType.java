@@ -1,21 +1,24 @@
 package com.example.challengerva;
 
 //class to initiate user information
-public class Profile {
+public class UserType {
     private String username;
     private String password;
     private String first;
     private String last;
 
-    public Profile() {
+
+    public UserType() {
+        this.username = "UserName";
+        this.password = "PassWord";
     }
 
-    public Profile(username, password) {
-        this.username = username;
-        this.password = password;
+    public UserType(String user, String pw) {
+        this.username = user;
+        this.password = pw;
     }
 
-    public Profile(username, password, first, last){
+    public UserType(String username, String password, String first, String last){
         this.username = username;
         this.password = password;
         this.first = first;
