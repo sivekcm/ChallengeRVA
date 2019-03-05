@@ -1,6 +1,6 @@
 package com.example.challengerva;
 
-//class to initiate user class 
+//class to initiate user class
 public class UserType {
     private String username;
     private String password;
