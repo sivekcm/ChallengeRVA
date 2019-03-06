@@ -19,7 +19,7 @@ public class Coach extends UserType{
     public String getUsername(){
         return username;
     }
-    public void setMaster(String pass){
+    public void setPassword(String pass){
         this.password = pass;
     }
     public String getPassword(){

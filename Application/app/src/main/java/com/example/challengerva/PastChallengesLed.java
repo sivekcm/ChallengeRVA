@@ -1,6 +1,6 @@
 package com.example.challengerva;
 
-public class PastChallengesLed{
+public class PastChallengesLed extends Challenge{
     private String challengeName;
     private String[] listofChallenges;
 
