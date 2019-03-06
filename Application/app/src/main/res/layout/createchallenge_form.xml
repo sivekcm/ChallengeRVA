@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:hint="Challenge Name"
+    android:inputType="textPersonName">
+
+    <EditText
+        android:id="@+id/EditTextEmail"
+        android:layout_height="wrap_content"
+        android:hint="Coach Name"
+        android:inputType="textEmailAddress"
+        android:layout_width="fill_parent">
+    </EditText>
+</android.support.constraint.ConstraintLayout>
