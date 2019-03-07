@@ -1,6 +1,6 @@
 package com.example.challengerva;
 
-public class CreateChallenge {
+public class CreateChallenge extends UserType{
     private String challengeName;
     private String challengeDescription;
     private String type;
