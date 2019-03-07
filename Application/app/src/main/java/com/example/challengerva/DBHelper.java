@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DBHelper extends SQLiteOpenHelper
 {
+    //Database
     public static final String DB_NAME = "challenge.db";
 
+    //User Table
     public static final String TABLE_USER = "User";
     public static final String USER_COL1 = "username";
     public static final String USER_COL2 = "password";
@@ -21,6 +23,7 @@ public class DBHelper extends SQLiteOpenHelper
     public static final String USER_COL9 = "private";
     public static final String USER_COL10 = "type";
 
+    //Challenge Table
     public static final String TABLE_CHALLENGE = "Challenge";
     public static final String CHAL_COL1 = "challenge_id";
     public static final String CHAL_COL2 = "name";
@@ -31,6 +34,7 @@ public class DBHelper extends SQLiteOpenHelper
     public static final String CHAL_COL7 = "difficulty";
     public static final String CHAL_COL8 = "category";
 
+    //Team Table
     public static final String TABLE_TEAM = "Team";
     public static final String TEAM_COL1 = "team_id";
     public static final String TEAM_COL2 = "challenge_id";
@@ -39,23 +43,45 @@ public class DBHelper extends SQLiteOpenHelper
     public static final String TEAM_COL5 = "user3";
     public static final String TEAM_COL6 = "user4";
 
+    //Leaderboard Table
     public static final String TABLE_LEADERBOARD = "LeaderBoard";
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
     public static final String LB_COL3 = "challenges_comp";
 
+    //Participates Table
     public static final String TABLE_PARTICIPATES = "Participates";
     public static final String PART_COL1 = "username";
     public static final String PART_COL2 = "challenge_id";
     public static final String PART_COL3 = "join_date";
 
+    /***************************
+     * DBHeler Constructor
+     * @param context: current context, usually "this"
+     *
+     *
+     * Create DBHelper object to use the Database
+     */
     public DBHelper(Context context)
     {
-        super(context,"challenge.db", null, 1);
+        super(context, DB_NAME, null, 1);
     }
 
+    /****************************
+     * OnCreate method
+     * @param db: SQLiteDatabase object
+     *
+     * Creates the tables of the
+     * Database using SQLite.
+     * Called automatically when
+     * activity is launched
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        //User table
+        //Stores user information
+        //Unique usernames
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_USER + "(" +
                 "username TEXT PRIMARY KEY, " +
                 "password TEXT NOT NULL, " +
@@ -69,6 +95,9 @@ public class DBHelper extends SQLiteOpenHelper
                 "type TEXT NOT NULL" +
                 ") ");
 
+        //Challenge table
+        //Stores challenge data
+        //Unique challenge ID
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_CHALLENGE + "(" +
                 "challenge_ID INTEGER PRIMARY KEY, " +
                 "name TEXT NOT NULL, " +
@@ -81,6 +110,9 @@ public class DBHelper extends SQLiteOpenHelper
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
                 ") ");
 
+        //Team table
+        //Stores team data
+        //unique team id and challenge id
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TEAM + "(" +
                 "team_id INTEGER NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
@@ -96,6 +128,9 @@ public class DBHelper extends SQLiteOpenHelper
                 "FOREIGN KEY(user4) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL"+
                 ") ");
 
+        //Leaderboard table
+        //Stores leaderboard data
+        //unique rank and username pairing
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD + "(" +
                 "rank INTEGER NOT NULL, " +
                 "username TEXT NOT NULL, " +
@@ -105,6 +140,9 @@ public class DBHelper extends SQLiteOpenHelper
                 "FOREIGN KEY(challenges_comp) REFERENCES " + TABLE_USER + "(challenges_comp) ON DELETE CASCADE" +
                 ") ");
 
+        //Participates table
+        //Stores data of what challenges a user is participating in
+        //unique username and challenge id pairing
         db.execSQL("CREATE TABLE " + TABLE_PARTICIPATES + "(" +
                 "username TEXT, " +
                 "challenge_id INTEGER, " +
@@ -115,6 +153,14 @@ public class DBHelper extends SQLiteOpenHelper
                 ") ");
     }
 
+    /*********************************
+     * onUpgrade method
+     * @param db: instance of SQLiteDatabase
+     * @param oldVersion
+     * @param newVersion
+     *
+     * Creates updated database
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
@@ -126,6 +172,27 @@ public class DBHelper extends SQLiteOpenHelper
 
     }
 
+    /***********************************************************************
+     * insertUser method
+     * @param username
+     * @param password
+     * @param fName: first name
+     * @param lName: last name
+     * @param birthDate: MUST BE IN FORMAT "YYYY-MM-DD"
+     * @param joinDate: date user signed up. MUST BE IN FORMAT "YYYY-MM-DD"
+     * @param email: email of user
+     * @param complChall: the integer number of challenges completed by user
+     * @param priv: is Profile Private, "Y" or "N"
+     * @param type: "athlete" or "coach"
+     * @return false if insert failed, true if data was inserted successfully
+     *
+     * This method inserts data (a full row) into the User table. All dates
+     * must be formatted "YYYY-MM-DD" otherwise insert will fail. Username
+     * cannot match the username of another user in the user table, otherwise
+     * insert will fail. The only parameter that can be null is complChall.
+     * This method just inserts a new data entry, It can not change the values
+     * of an existing data entry.
+     */
     public boolean insertUser(String username, String password, String fName,
                               String lName, String birthDate, String joinDate,
                               String email, int complChall, String priv,
@@ -155,6 +222,24 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+    /************************************************************************
+     * insertChallenge method
+     * @param challengeID: id for challenge (unique)
+     * @param name: name of challenge
+     * @param coach: the username (not name) of the user that is the coach of the challenge
+     * @param startDate: start date of challenge "YYYY-MM-DD"
+     * @param duration: integer number of days for challenge
+     * @param type: "single" or "team"
+     * @param diff: the difficulty
+     * @param category: cardio, strength, endurance, etc
+     * @return false if insert fails, true if data is inserted successfully
+     *
+     * This method inserts a new data entry (a full row) into the challenge
+     * table. ChallengeID cannot match another ChallengeID in the challenge
+     * table, otherwise insert will fail. All dates must be specified in the
+     * format "YYYY-MM-YY", otherwise insert will fail. No parameters are
+     * allowed to be null in this method.
+     */
     public boolean insertChallenge(int challengeID, String name, String coach,
                                    String startDate, int duration, String type,
                                    String diff, String category)
@@ -181,6 +266,20 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+    /**********************************************************************
+     * insertTeam method
+     * @param team_id: id for team
+     * @param challenge_id id for challenge referring to challenge table (unique pairing with team id)
+     * @param user1
+     * @param user2
+     * @param user3
+     * @param user4
+     * @return false if insert fails, true if data is inserted successfully
+     *
+     * This method inserts a new data entry in the the team table. No two data
+     * entries may have the same team_id and challenge_id pairing. team id and
+     * challenge id cannot be null.
+     */
     public boolean insertTeam(int team_id, int challenge_id, String user1,
                               String user2, String user3, String user4)
     {
@@ -204,6 +303,17 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+    /*************************************************************************
+     * insertLeaderBoard method
+     * @param rank: the rank of the user
+     * @param username: the user (unique pairing with rank
+     * @param challengesComp: the amount of challenges completed by user
+     * @return false if insert fails, true if data is inserted successfully
+     *
+     * This methods inserts a new data entry (a full row) into the leaderboard
+     * table. No two data entries may have the same rank and username pairing.
+     * Only challengesComp can be null
+     */
     public boolean insertLeaderBoard(int rank, String username, int challengesComp)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -223,6 +333,20 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+    /********************************************************************************
+     * insertParticipates method
+     * @param username: the user
+     * @param challengeID: the id of the challenge (unique pairing with username)
+     * @param joinDate: date that user joined challenge "YYYY-MM-DD"
+     * @return false if insert fails, true if data is inserted successfully
+     *
+     * this method inserts a new data entry (a full row) into the participates table.
+     * The participates table contains data of the users that a participating in a
+     * certain challenge (i.e when a user completes a challenge, the data entry
+     * in this table associated with the user should be removed). No two data entries
+     * may have the same username and challengeID pairing. All dates must be formatted
+     * "YYYY-MM-DD" otherwise insert will fail. No parameters are allowed to be null.
+     */
     public boolean insertParticipates(String username, int challengeID, String joinDate)
     {
         SQLiteDatabase db = this.getWritableDatabase();
