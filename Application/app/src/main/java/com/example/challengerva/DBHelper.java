@@ -407,11 +407,82 @@ public class DBHelper extends SQLiteOpenHelper
         }
         if (data == null)
         {
-            return "Invalid Table, column, primaryKey1, or PrimaryKey2 name. Please try again with valid inputs and make sure that the desired data is stored in the database"
+            return "Invalid Table, column, primaryKey1, or PrimaryKey2 name. Please try again with valid inputs and make sure that the desired data is stored in the database";
         }
         return data.getString(0);
     }
 
-    public boolean
+    /***************************************************
+     * dleteUser method
+     * @param username: username at the row to be deleted
+     * @return the number of rows that were deleted
+     *
+     * Deletes the row containing the specified username
+     * from the user table
+     */
+    public int deleteUser(String username)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_USER,"username = ?", new String[] {username});
+    }
+
+    /*****************************************************
+     * deleteChallenge method
+     * @param challenge_id: challenge id at the row to be deleted
+     * @return the number of rows that were deleted
+     *
+     * Deletes the row containing the specified challenge_id
+     * from the challenge table
+     */
+    public int deleteChallenge(String challenge_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_CHALLENGE,"challenge_id = ?", new String[] {challenge_id});
+    }
+
+    /*****************************************************
+     * deleteTeam
+     * @param team_id: team id at the row to be deleted
+     * @param challenge_id: challenge_id at the row to be deleted
+     * @return the number of rows that were deleted
+     *
+     * Deletes the row containing the specified team id
+     * and challenge_id from the team table
+     */
+    public int deleteTeam(Integer team_id, Integer challenge_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_TEAM,"team_id = ?, challenge_id = ?", new String[] {team_id.toString(), challenge_id.toString()});
+    }
+
+    /*******************************************************
+     * deleteLeaderBoard method
+     * @param rank: rank at the row to be deleted
+     * @param username: username at the row to be deleted
+     * @return the number of rows that were deleted
+     *
+     * Deletes the row containing the specified team id and username
+     * from the leaderboard table
+     */
+    public int deleteLeaderBoard(Integer rank, String username)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LEADERBOARD,"rank = ?, username = ?", new String[] {rank.toString(), username});
+    }
+
+    /****************************************************
+     * deleteParticipates method
+     * @param username: username at row to be deleted
+     * @param challenge_id: challenge_id at row to be deleted
+     * @return the number of rows that were deleted
+     *
+     * Deletes the row containing the specified username
+     * and challenge_id from the participates table
+     */
+    public int deleteParticipates(String username, Integer challenge_id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_PARTICIPATES,"username = ?, challenge_id = ?", new String[] {username, challenge_id.toString()});
+    }
 }
 
