@@ -22,10 +22,22 @@ public class LoginActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               boolean test = db.insertUser("jac","123", "Jack", "Thorne",
-                                  "1999-04=12", "2019-03-06", "john@fake.com",
-                                0, "N", "athlete");
-                if (test)
+                boolean testUser = db.insertUser("Rick", "111", "Rick",
+                        "Johnson", "1998-12-04", "2019-03-06",
+                        "rickster@fake.org", 0, "N", "coach");
+
+                boolean testChallenge = db.insertChallenge(2, "challenge2",
+                       "Rick", "2019-03-06", 1, "Team",
+                       "hard", "strength");
+
+                boolean testTeam = db.insertTeam(1, 2, "Rick",
+                        null,null,null);
+
+                boolean testLB = db.insertLeaderBoard(1,"Rick",0);
+
+                boolean testPart = db.insertParticipates("Rick", 2, "2019-06-02");
+
+                if (testUser && testChallenge && testTeam && testLB && testPart)
                 {
                     Toast.makeText(LoginActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
                 }
