@@ -2,6 +2,7 @@ package com.example.challengerva;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -365,5 +366,52 @@ public class DBHelper extends SQLiteOpenHelper
             return true;
         }
     }
+
+    /**********************************************************************************************
+     * getStringData method
+     * @param table: the table you want to get data from
+     * @param column: the column you want to get data from
+     * @param primaryKey1: For tables that have 1 unique identifier, enter the value of the primary key that
+     *                     is associated with the row you want to get data from.
+     * @param primaryKey2: Use this in conjunction with primaryKey1 if table has 2 unique identifiers.
+     *                     If table only has 1 unique identifier, then pass null as this parameter
+     * @return The String representation of an individual data cell from a column that is of type String.
+     *
+     *
+     *  Do not use this method for retrieving integer data. This method is work-in-progress and may
+     *  cause unexpected results or errors in its current state.
+     */
+    public String getStringData(String table, String column, String primaryKey1, String primaryKey2)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor data = null;
+        if (table.equals(TABLE_USER))
+        {
+            data = db.rawQuery("SELECT " + column + " FROM " + table + " WHERE username = " + primaryKey1, null);
+        }
+        if (table.equals(TABLE_CHALLENGE))
+        {
+            data = db.rawQuery("SELECT " + column + " FROM " + table + " WHERE challenge_id = " + primaryKey1, null);
+        }
+        if (table.equals(TABLE_TEAM))
+        {
+            data = db.rawQuery("SELECT " + column + " FROM " + table + " WHERE team_id = " + primaryKey1 + ", Challenge_id = ", null);
+        }
+        if (table.equals(TABLE_LEADERBOARD))
+        {
+            data = db.rawQuery("SELECT " + column + " FROM " + table + " WHERE rank = " + primaryKey1 + ", username = " + primaryKey2, null);
+        }
+        if (table.equals(TABLE_PARTICIPATES))
+        {
+            data = db.rawQuery("SELECT " + column + " FROM " + table + " WHERE username = " + primaryKey1 + ", challenge_id = " + primaryKey2, null);
+        }
+        if (data == null)
+        {
+            return "Invalid Table, column, primaryKey1, or PrimaryKey2 name. Please try again with valid inputs and make sure that the desired data is stored in the database"
+        }
+        return data.getString(0);
+    }
+
+    public boolean
 }
 
