@@ -1,6 +1,10 @@
 package com.example.challengerva;
 
+<<<<<<< HEAD:Application/app/src/main/java/com/example/challengerva/CreateChallenge.java
+public class CreateChallenge extends UserType{
+=======
 public class Challenge {
+>>>>>>> 02f3f155ec1c71cba5a2521e7d1112c4da335a73:Application/app/src/main/java/com/example/challengerva/Challenge.java
     private String challengeName;
     private String challengeDescription;
     private String type;
