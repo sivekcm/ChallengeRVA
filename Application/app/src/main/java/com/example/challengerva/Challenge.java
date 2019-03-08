@@ -1,22 +1,25 @@
 package com.example.challengerva;
 
-<<<<<<< HEAD:Application/app/src/main/java/com/example/challengerva/CreateChallenge.java
-public class CreateChallenge extends UserType {
-    //=======
-    public class Challenge {
-        >>>>>>> 02f3f155ec1c71cba5a2521e7d1112c4da335a73:Application/app/src/main/java/com/example/challengerva/Challenge.java
-        private String challengeName;
-        private String challengeDescription;
-        private String type;
-        private String coachAssigned;
-        private String difficulty;
-        private int startDate;
-        private int endDate;
-        private int interval;
-        private boolean open;
-        private boolean team;
-        private int startAge;
-        private int endAge;
+public class Challenge {
+    private String challengeName;
+    private String challengeDescription;
+    private String type;
+    private String coachAssigned;
+    private String difficulty;
+    private int startDate;
+    private int endDate;
+    private int interval;
+    private boolean open;
+    private boolean team;
+    private int startAge;
+    private int endAge;
+
+    public void setChallengeDescription(String challengeDescription) {
+        this.challengeDescription = challengeDescription;
+    }
+    public String getChallengeDescription(){
+        return challengeDescription;
+    }
 
         public void setChallengeDescription(String challengeDescription) {
             this.challengeDescription = challengeDescription;

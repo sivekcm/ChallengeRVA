@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="challengeTypeList">
+        <item>@string/challengeType1</item>
+        <item>@string/challengeType2</item>
+        <item>@string/challengeType3</item>
+    </string-array>
+
+    <string-array name="registrationTypeList">
+        <item>@string/registrationType1</item>
+        <item>@string/registrationType2</item>
+    </string-array>
+</resources>

@@ -1,29 +1,18 @@
 package com.example.challengerva;
 
-public class Coach extends UserType{
-    private String username;
-    private String password;
+public class Coach extends User{
 
-    public Coach (){
-        this.username = "username";
-        this.password = "password";
+    /*
+    Default constructor for Coach object
+     */
+    public Coach(){
+        super.username = username;
+        super.password = password;
     }
 
-    public Coach(String user, String pw){
+    public Coach(String user, String pw) {
         this.username = user;
         this.password = pw;
-    }
-    public void setUsername(String name){
-        this.username = name;
-    }
-    public String getUsername(){
-        return username;
-    }
-    public void setPassword(String pass){
-        this.password = pass;
-    }
-    public String getPassword(){
-        return password;
     }
     public boolean verifyPassword(){
         return false;

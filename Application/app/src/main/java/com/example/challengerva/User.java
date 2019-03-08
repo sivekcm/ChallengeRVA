@@ -2,16 +2,21 @@ package com.example.challengerva;
 import java.util.ArrayList;
 
 public class User {
-    private String username;
-    private String password;
+    protected String username;
+    protected String password;
     private ArrayList<String> challenges; //PLACEHOLDER
     private ArrayList<String> teams; //PLACEHOLDER
-    private UserType accountType;
+    protected UserType accountType;
 
     //Enumeration used to determine type of account
     enum UserType
     {
         ATHLETE, COACH;
+    }
+
+    //Default Constructor
+    public User(){
+
     }
 
     //Constructor
@@ -23,8 +28,6 @@ public class User {
         accountType = newAccountType;
         challenges = new ArrayList<String>();
         teams = new ArrayList<String>();
-
-
 
     }
 
@@ -87,7 +90,7 @@ public class User {
         return inputPassword.equals(password);
     }
     /*
-    Adds a Challenge to the User, depending on UserType
+    Adds a Challenge to the User, depending on User Type
     @Param newChallenge the Challenge object to be added
     @return true if successful, false if not
      */
