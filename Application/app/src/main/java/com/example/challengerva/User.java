@@ -2,16 +2,21 @@ package com.example.challengerva;
 import java.util.ArrayList;
 
 public class User {
-    private String username;
-    private String password;
+    protected String username;
+    protected String password;
     private ArrayList<String> challenges; //PLACEHOLDER
     private ArrayList<String> teams; //PLACEHOLDER
-    private UserType accountType;
+    protected UserType accountType;
 
     //Enumeration used to determine type of account
     enum UserType
     {
         ATHLETE, COACH;
+    }
+
+    //Default Constructor
+    public User(){
+
     }
 
     //Constructor
