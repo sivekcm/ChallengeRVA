@@ -1,17 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ScrollView01"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:hint="Challenge Name"
-    android:inputType="textPersonName">
+    android:scrollbars="vertical">
 
-    <EditText
-        android:id="@+id/EditTextEmail"
-        android:layout_height="wrap_content"
-        android:hint="Coach Name"
-        android:inputType="textEmailAddress"
-        android:layout_width="fill_parent">
-    </EditText>
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/createChallenge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/createChallenge"
+            android:textSize="10pt"
+            android:textStyle="bold"
+            app:fontFamily="sans-serif"></TextView>
+
+        <!--Input Type for Challenge Specifications below-->
+        <EditText
+            android:id="@+id/challengeName"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/challengeName">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/CoachAssigned"
+            android:layout_height="wrap_content"
+            android:hint="@string/coachAssigned"
+            android:layout_width="fill_parent">
+        </EditText>
+
+        <EditText
+            android:id="@+id/challengeDescription"
+            android:layout_height="wrap_content"
+            android:hint="@string/challengeDescription"
+            android:layout_width="fill_parent">
+        </EditText>
+
+        <EditText
+            android:id="@+id/difficulty"
+            android:layout_height="wrap_content"
+            android:hint="@string/difficulty"
+            android:layout_width="fill_parent">
+        </EditText>
+
+        <EditText
+            android:id="@+id/startDate"
+            android:layout_height="wrap_content"
+            android:hint="@string/startDate"
+            android:layout_width="fill_parent">
+        </EditText>
+
+        <EditText
+            android:id="@+id/endDate"
+            android:layout_height="wrap_content"
+            android:hint="@string/endDate"
+            android:layout_width="fill_parent">
+        </EditText>
+
+        <!--Drop-Down list for challenge type below-->
+        <!--@param: ChallengeType1: Cardio type
+                    ChallengeType2: Lifting type
+                    ChallengeType3: Health type-->
+        <TextView
+            android:id="@+id/challengeTypeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="@string/type"
+            android:textSize="8pt"
+            android:textStyle="bold">
+
+        </TextView>
+        <Spinner
+            android:id="@+id/ChallengeType"
+            android:layout_height="wrap_content"
+            android:prompt="@string/createChallenge"
+            android:layout_width="fill_parent"
+            android:entries="@array/challengeTypeList">
+        </Spinner>
+
+        <!--Drop-Down list for registration type below-->
+        <!--@Param: RegistrationType1: Individual
+                    RegistrationType2: Team-->
+        <TextView
+            android:id="@+id/registrationTypeTextView"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:text="@string/registrationType"
+            android:textSize="8pt"
+            android:textStyle="bold">
+
+        </TextView>
+        <Spinner
+            android:id="@+id/registrationType"
+            android:layout_height="wrap_content"
+            android:prompt="@string/registrationType"
+            android:layout_width="fill_parent"
+            android:entries="@array/registrationTypeList">
+        </Spinner>
+
+        <!--Button submission below-->
+        <Button
+            android:id="@+id/ButtonSubmitChallenge"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/submitChallengeButton"></Button>
+
+    </LinearLayout>
+</ScrollView>

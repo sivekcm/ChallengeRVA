@@ -5,4 +5,36 @@
     <string name="password">Password</string>
     <string name="forgot_pass">Forgot Password?</string>
     <string name="new_account">No account? Create one here!</string>
+ 
+    <!--Registration Activity strings-->
+    <string name="register_intro">Fill in this form to register! Required fields are marked with *</string>
+    <string name="register_title">Register</string>
+    <string name="register_username">Username *</string>
+    <string name="register_password">Password *</string>
+    <string name="register_email">E-mail *</string>
+    <string name="register_first_name">First Name *</string>
+    <string name="register_last_name">Last_Name *</string>
+    <string name="register_birth_date">Date of Birth *</string>
+
+    <!--Create Challenge params below-->
+    <string name="challengeName">Challenge Name</string>
+    <string name="createChallenge">Create A New Challenge!</string>
+    <string name="coachAssigned">Coach Name</string>
+    <string name="challengeDescription">Challenge Description</string>
+    <string name="type">Challenge Type</string>
+    <string name="difficulty">Difficulty</string>
+    <string name="startDate">Start Date</string>
+    <string name="endDate">End Date</string>
+    <string name="registrationType">Individual or Team Competition?</string>
+    <string name="submitChallengeButton">Create Challenge!</string>
+
+    <!--Challenge Types Below -->
+    <string name="challengeType1">Cardio</string>
+    <string name="challengeType2">Lifting</string>
+    <string name="challengeType3">Health</string>
+
+    <!--Registration Types Below-->
+    <string name="registrationType1">Individual</string>
+    <string name="registrationType2">Team</string>
+
 </resources>
