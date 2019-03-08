@@ -24,8 +24,6 @@ public class User {
         challenges = new ArrayList<String>();
         teams = new ArrayList<String>();
 
-
-
     }
 
     /*
@@ -87,7 +85,7 @@ public class User {
         return inputPassword.equals(password);
     }
     /*
-    Adds a Challenge to the User, depending on UserType
+    Adds a Challenge to the User, depending on User Type
     @Param newChallenge the Challenge object to be added
     @return true if successful, false if not
      */
@@ -96,13 +94,13 @@ public class User {
         //User is Coach case
         if(accountType == UserType.COACH)
         {
-
+            return true;
         }
         //User is Athlete case
-        if(accountType == UserType.ATHLETE)
-        {
-
+        if(accountType == UserType.ATHLETE){
+            return false;
         }
+        return false;
     }
 
     /*
@@ -112,7 +110,7 @@ public class User {
      */
     public boolean addTeam(String newTeam)//!!!!! PLACEHOLDER
     {
-
+        return false;
     }
 
     /*
