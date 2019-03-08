@@ -1,12 +1,12 @@
 package com.example.challengerva;
 
-public class Coach extends UserType{
+public class Coach extends User{
     private String username;
     private String password;
 
-    public Coach (){
-        this.username = "username";
-        this.password = "password";
+    public Coach(){
+        this.username = username;
+        this.password = password;
     }
 
     public Coach(String user, String pw){
