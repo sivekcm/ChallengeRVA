@@ -97,7 +97,8 @@ public class User {
             return true;
         }
         //User is Athlete case
-        if(accountType == UserType.ATHLETE){
+        if(accountType == UserType.ATHLETE)
+        {
             return false;
         }
         return false;
