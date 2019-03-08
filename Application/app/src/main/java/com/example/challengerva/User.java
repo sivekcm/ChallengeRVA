@@ -96,13 +96,14 @@ public class User {
         //User is Coach case
         if(accountType == UserType.COACH)
         {
-
+            return false;
         }
         //User is Athlete case
         if(accountType == UserType.ATHLETE)
         {
-
+            return false;
         }
+        return false;
     }
 
     /*
@@ -112,7 +113,7 @@ public class User {
      */
     public boolean addTeam(String newTeam)//!!!!! PLACEHOLDER
     {
-
+        return false;
     }
 
     /*

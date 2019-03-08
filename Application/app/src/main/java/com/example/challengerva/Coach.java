@@ -4,6 +4,7 @@ public class Coach extends UserType{
     private String username;
     private String password;
 
+    //constructor
     public Coach (){
         this.username = "username";
         this.password = "password";
