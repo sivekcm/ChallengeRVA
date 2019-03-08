@@ -5,4 +5,12 @@
     <string name="password">Password</string>
     <string name="forgot_pass">Forgot Password?</string>
     <string name="new_account">No account? Create one here!</string>
+    <string name="register_intro">Fill in this form to register! Required fields are marked with *</string>
+    <string name="register_title">Register</string>
+    <string name="register_username">Username *</string>
+    <string name="register_password">Password *</string>
+    <string name="register_email">E-mail *</string>
+    <string name="register_first_name">First Name *</string>
+    <string name="register_last_name">Last_Name *</string>
+    <string name="register_birth_date">Date of Birth *</string>
 </resources>
