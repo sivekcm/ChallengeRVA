@@ -367,6 +367,206 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+    /***********************************************************************
+     * updateUser method
+     * @param oldUsername: the row you want to update
+     * @param newUsername: the username you want to replace the old one with
+     * @param password: the password
+     * @param fName: first name
+     * @param lName: last name
+     * @param birthDate: MUST BE IN FORMAT "YYYY-MM-DD"
+     * @param joinDate: date user signed up. MUST BE IN FORMAT "YYYY-MM-DD"
+     * @param email: email of user
+     * @param complChall: the integer number of challenges completed by user
+     * @param priv: is Profile Private, "Y" or "N"
+     * @param type: "athlete" or "coach"
+     * @return false if update failed, true if data was updated successfully
+     *
+     * This method updates a row in the User table at the specified username. All dates
+     * must be formatted "YYYY-MM-DD" otherwise insert will fail. Username must already
+     * exist in table or else update will fail. The only parameter that can be null is complChall.
+     */
+    public boolean updateUser(String oldUsername, String newUsername, String password, String fName,
+                              String lName, String birthDate, String joinDate,
+                              String email, int complChall, String priv,
+                              String type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(USER_COL1, newUsername);
+        cv.put(USER_COL2, password);
+        cv.put(USER_COL3, fName);
+        cv.put(USER_COL4, lName);
+        cv.put(USER_COL5, birthDate);
+        cv.put(USER_COL6, joinDate);
+        cv.put(USER_COL7, email);
+        cv.put(USER_COL8, complChall);
+        cv.put(USER_COL9, priv);
+        cv.put(USER_COL10, type);
+
+        long result = db.update(TABLE_USER, cv, "username = ?", new String[] {oldUsername});
+        if (result > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /************************************************************************
+     * updateChallenge method
+     * @param oldChallengeID: The row you want to update
+     * @param newChallengeID: the challengeID you want to replace the old one with
+     * @param name: name of challenge
+     * @param coach: the username (not name) of the user that is the coach of the challenge
+     * @param startDate: start date of challenge "YYYY-MM-DD"
+     * @param duration: integer number of days for challenge
+     * @param type: "single" or "team"
+     * @param diff: the difficulty
+     * @param category: cardio, strength, endurance, etc
+     * @return false if update fails, true if data is updated successfully
+     *
+     * This method updates a row in the challenge table at the specified
+     * challengeID. All dates must be specified in the format "YYYY-MM-YY",
+     * otherwise update will fail. No parameters are allowed to be null in this method.
+     */
+    public boolean updateChallenge(int oldChallengeID, int newChallengeID, String name, String coach,
+                                   String startDate, int duration, String type,
+                                   String diff, String category)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CHAL_COL1, newChallengeID);
+        cv.put(CHAL_COL2, name);
+        cv.put(CHAL_COL3, coach);
+        cv.put(CHAL_COL4, startDate);
+        cv.put(CHAL_COL5, duration);
+        cv.put(CHAL_COL6, type);
+        cv.put(CHAL_COL7, diff);
+        cv.put(CHAL_COL8, category);
+
+        long result = db.update(TABLE_CHALLENGE, cv, "challenge_id = ?", new String[] {Integer.valueOf(oldChallengeID).toString()});
+        if (result > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    /**********************************************************************
+     * updateTeam method
+     * @param oldTeam_id: team id of the row you want to change
+     * @param oldChallenge_id: challenge id of the row you want to change (paired with team id)
+     * @param newTeam_id: the Team id you want to replace the old one with
+     * @param newChallenge_id: the challenge id you want to replace the old one with
+     * @param user1
+     * @param user2
+     * @param user3
+     * @param user4
+     * @return false if update fails, true if data is updated successfully
+     *
+     * This method updates the data of a row at the specified Team_id and
+     * challenge_id pairing. Team_id and challenge_id must already exist
+     * or else update will fail.
+     */
+    public boolean updateTeam(int oldTeam_id, int oldChallenge_id, int newTeam_id, int newChallenge_id, String user1,
+                              String user2, String user3, String user4)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TEAM_COL1, newTeam_id);
+        cv.put(TEAM_COL2, newChallenge_id);
+        cv.put(TEAM_COL3, user1);
+        cv.put(TEAM_COL4, user2);
+        cv.put(TEAM_COL5, user3);
+        cv.put(TEAM_COL6, user4);
+
+        long result = db.update(TABLE_TEAM, cv, "team_id = ? AND challenge_id = ?", new String[]  {Integer.valueOf(oldTeam_id).toString(), Integer.valueOf(oldChallenge_id).toString()});
+        if (result > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /*************************************************************************
+     * updateLeaderBoard method
+     * @param oldRank: the rank of the row you want to update
+     * @param oldUsername: the username of the row you want to update (paired with oldRank)
+     * @param newRank: The rank you want to replace the old one with.
+     * @param newUsername: the username you want to replace the old one with.
+     * @param challengesComp: the amount of challenges completed by user
+     * @return false if update fails, true if data is updated successfully
+     *
+     * This methods updates a row in the leaderboard
+     * table at the specififed rank and username pairing.
+     * the rank and username must already exist in the table,
+     * otherwise update will fail. Only challengesComp can
+     * be null.
+     */
+    public boolean updateLeaderBoard(int oldRank, String oldUsername, int newRank, String newUsername, int challengesComp)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(LB_COL1, newRank);
+        cv.put(LB_COL2, newUsername);
+        cv.put(LB_COL3, challengesComp);
+
+        long result = db.update(TABLE_LEADERBOARD, cv, "rank = ? AND username = ?", new String[] {Integer.valueOf(oldRank).toString(), oldUsername});
+        if (result > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /********************************************************************************
+     * updateParticipates method
+     * @param oldUsername: the username of the row you want to update
+     * @param oldChallengeID: the challenge id of the row you want to update (paired with username)
+     * @param newUsername: the username you want to replace the old one with
+     * @param newChallengeID: the challenge id you want to replace the old one with
+     * @param joinDate: date that user joined challenge "YYYY-MM-DD"
+     * @return false if update fails, true if data is updated successfully
+     *
+     * this method updates a row in the participates table at the specified username
+     * and challengeID pairing. The participates table contains data of the users that a participating in a
+     * certain challenge (i.e when a user completes a challenge, the data entry
+     * in this table associated with the user should be removed). The username and
+     * challengeID must already exist or the update will fail. All dates must be formatted
+     * "YYYY-MM-DD" otherwise insert will fail. No parameters are allowed to be null.
+     */
+    public boolean updateParticipates(String oldUsername, int oldChallengeID, String newUsername, int newChallengeID, String joinDate)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(PART_COL1, newUsername);
+        cv.put(PART_COL2, newChallengeID);
+        cv.put(PART_COL3, joinDate);
+
+        long result = db.update(TABLE_PARTICIPATES, cv, "username = ? AND challenge_id = ?", new String[] {oldUsername, Integer.valueOf(oldChallengeID).toString()});
+        if (result > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     /**********************************************************************************************
      * getStringData method
      * @param table: the table you want to get data from
@@ -413,7 +613,7 @@ public class DBHelper extends SQLiteOpenHelper
     }
 
     /***************************************************
-     * dleteUser method
+     * deleteUser method
      * @param username: username at the row to be deleted
      * @return the number of rows that were deleted
      *
@@ -449,10 +649,10 @@ public class DBHelper extends SQLiteOpenHelper
      * Deletes the row containing the specified team id
      * and challenge_id from the team table
      */
-    public int deleteTeam(Integer team_id, Integer challenge_id)
+    public int deleteTeam(int team_id, int challenge_id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_TEAM,"team_id = ?, challenge_id = ?", new String[] {team_id.toString(), challenge_id.toString()});
+        return db.delete(TABLE_TEAM,"team_id = ? AND challenge_id = ?", new String[] {Integer.valueOf(team_id).toString(), Integer.valueOf(challenge_id).toString()});
     }
 
     /*******************************************************
@@ -464,10 +664,10 @@ public class DBHelper extends SQLiteOpenHelper
      * Deletes the row containing the specified team id and username
      * from the leaderboard table
      */
-    public int deleteLeaderBoard(Integer rank, String username)
+    public int deleteLeaderBoard(int rank, String username)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_LEADERBOARD,"rank = ?, username = ?", new String[] {rank.toString(), username});
+        return db.delete(TABLE_LEADERBOARD,"rank = ? AND username = ?", new String[] {Integer.valueOf(rank).toString(), username});
     }
 
     /****************************************************
@@ -482,7 +682,7 @@ public class DBHelper extends SQLiteOpenHelper
     public int deleteParticipates(String username, Integer challenge_id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_PARTICIPATES,"username = ?, challenge_id = ?", new String[] {username, challenge_id.toString()});
+        return db.delete(TABLE_PARTICIPATES,"username = ? AND challenge_id = ?", new String[] {username, Integer.valueOf(challenge_id).toString()});
     }
 }
 
