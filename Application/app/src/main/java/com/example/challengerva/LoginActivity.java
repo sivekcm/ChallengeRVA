@@ -22,20 +22,21 @@ public class LoginActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean testUser = db.insertUser("Rick", "111", "Rick",
+                boolean testUser = db.updateUser("Rick", "rickrock900",
+                        "900", "Rick",
                         "Johnson", "1998-12-04", "2019-03-06",
-                        "rickster@fake.org", 0, "N", "coach");
+                        "rickster@fake.org", 0, "Y", "coach");
 
-                boolean testChallenge = db.insertChallenge(2, "challenge2",
+                boolean testChallenge = db.updateChallenge(2, 15824, "best challenge",
                        "Rick", "2019-03-06", 1, "Team",
-                       "hard", "strength");
+                       "hard", "running");
 
-                boolean testTeam = db.insertTeam(1, 2, "Rick",
-                        null,null,null);
+                boolean testTeam = db.updateTeam(1, 2, 92147, 42176, "Rick",
+                        "john",null,null);
 
-                boolean testLB = db.insertLeaderBoard(1,"Rick",0);
+                boolean testLB = db.updateLeaderBoard(1, "Rick", 20,"Rick",1);
 
-                boolean testPart = db.insertParticipates("Rick", 2, "2019-06-02");
+                boolean testPart = db.updateParticipates("Rick", 2, "Rick", 21, "2019-06-24");
 
                 if (testUser && testChallenge && testTeam && testLB && testPart)
                 {
