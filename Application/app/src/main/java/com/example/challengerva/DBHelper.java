@@ -238,7 +238,7 @@ public class DBHelper extends SQLiteOpenHelper
      * This method inserts a new data entry (a full row) into the challenge
      * table. ChallengeID cannot match another ChallengeID in the challenge
      * table, otherwise insert will fail. All dates must be specified in the
-     * format "YYYY-MM-YY", otherwise insert will fail. No parameters are
+     * format "YYYY-MM-DD", otherwise insert will fail. No parameters are
      * allowed to be null in this method.
      */
     public boolean insertChallenge(int challengeID, String name, String coach,
@@ -429,7 +429,7 @@ public class DBHelper extends SQLiteOpenHelper
      * @return false if update fails, true if data is updated successfully
      *
      * This method updates a row in the challenge table at the specified
-     * challengeID. All dates must be specified in the format "YYYY-MM-YY",
+     * challengeID. All dates must be specified in the format "YYYY-MM-DD",
      * otherwise update will fail. No parameters are allowed to be null in this method.
      */
     public boolean updateChallenge(int oldChallengeID, int newChallengeID, String name, String coach,

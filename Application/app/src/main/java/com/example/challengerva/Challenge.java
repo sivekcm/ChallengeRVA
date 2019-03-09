@@ -1,10 +1,6 @@
 package com.example.challengerva;
 
 public class Challenge {
-<<<<<<< HEAD
-
-=======
->>>>>>> 8e57006fe29a8472dd4e6425c176fb7ba661ef37
     private String challengeName;
     private String challengeDescription;
     private String type;
