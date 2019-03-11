@@ -36,5 +36,7 @@
     <!--Registration Types Below-->
     <string name="registrationType1">Individual</string>
     <string name="registrationType2">Team</string>
+    <string name="register_re_password">Re-enter password *</string>
+    <string name="register_date">Pick a Date</string>
 
 </resources>

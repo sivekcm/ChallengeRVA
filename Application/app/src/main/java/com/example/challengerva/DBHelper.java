@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper
 {
     //Database
@@ -30,10 +32,15 @@ public class DBHelper extends SQLiteOpenHelper
     public static final String CHAL_COL2 = "name";
     public static final String CHAL_COL3 = "coach";
     public static final String CHAL_COL4 = "start_date";
-    public static final String CHAL_COL5 = "duration";
+    public static final String CHAL_COL5 = "end_date";
     public static final String CHAL_COL6 = "type";
     public static final String CHAL_COL7 = "difficulty";
-    public static final String CHAL_COL8 = "category";
+    public static final String CHAL_COL8 = "team_or_single";
+    public static final String CHAL_COL9 = "availability";
+    public static final String CHAL_COL10 = "min_age";
+    public static final String CHAL_COL11 = "max_age";
+    public static final String CHAL_COL12 = "health_hazards";
+    public static final String CHAL_COL13 = "description";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -104,10 +111,15 @@ public class DBHelper extends SQLiteOpenHelper
                 "name TEXT NOT NULL, " +
                 "coach TEXT NOT NULL, " +
                 "start_date DATE NOT NULL, " +
-                "duration INTEGER NOT NULL, " +
+                "end_date DATE NOT NULL, " +
                 "type TEXT NOT NULL, " +
                 "difficulty TEXT NOT NULL, " +
-                "category TEXT NOT NULL," +
+                "team_or_single TEXT NOT NULL, " +
+                "availabiility TEXT NOT NULL, " +
+                "min_age INTEGER, " +
+                "max_age INTEGER, " +
+                "health_hazards TEXT, " +
+                "description TEXT, " +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
                 ") ");
 
@@ -229,21 +241,27 @@ public class DBHelper extends SQLiteOpenHelper
      * @param name: name of challenge
      * @param coach: the username (not name) of the user that is the coach of the challenge
      * @param startDate: start date of challenge "YYYY-MM-DD"
-     * @param duration: integer number of days for challenge
-     * @param type: "single" or "team"
+     * @param endDate: end date of challenge "YYYY-MM-DD"
+     * @param type: type, e.g Strength,Cardio, etc
      * @param diff: the difficulty
-     * @param category: cardio, strength, endurance, etc
+     * @param teamOrSingle: if challenge is team or single
+     * @param availability: if challenge is open or closed
+     * @param minAge: minimum age for challenge
+     * @param maxAge: max age for challing
+     * @param hazards: possible health hazards
+     * @param description: description of challenge
      * @return false if insert fails, true if data is inserted successfully
      *
      * This method inserts a new data entry (a full row) into the challenge
      * table. ChallengeID cannot match another ChallengeID in the challenge
      * table, otherwise insert will fail. All dates must be specified in the
-     * format "YYYY-MM-YY", otherwise insert will fail. No parameters are
+     * format "YYYY-MM-DD", otherwise insert will fail. No parameters are
      * allowed to be null in this method.
      */
     public boolean insertChallenge(int challengeID, String name, String coach,
-                                   String startDate, int duration, String type,
-                                   String diff, String category)
+                                   String startDate, String endDate, String type,
+                                   String diff, String teamOrSingle, String availability,
+                                   int minAge, int maxAge, String hazards, String description)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -251,10 +269,15 @@ public class DBHelper extends SQLiteOpenHelper
         cv.put(CHAL_COL2, name);
         cv.put(CHAL_COL3, coach);
         cv.put(CHAL_COL4, startDate);
-        cv.put(CHAL_COL5, duration);
+        cv.put(CHAL_COL5, endDate);
         cv.put(CHAL_COL6, type);
         cv.put(CHAL_COL7, diff);
-        cv.put(CHAL_COL8, category);
+        cv.put(CHAL_COL8, teamOrSingle);
+        cv.put(CHAL_COL9, availability);
+        cv.put(CHAL_COL10, minAge);
+        cv.put(CHAL_COL11, maxAge);
+        cv.put(CHAL_COL12, hazards);
+        cv.put(CHAL_COL13, description);
 
         long num = db.insert(TABLE_CHALLENGE,null,cv);
         if (num == -1)
@@ -422,19 +445,25 @@ public class DBHelper extends SQLiteOpenHelper
      * @param name: name of challenge
      * @param coach: the username (not name) of the user that is the coach of the challenge
      * @param startDate: start date of challenge "YYYY-MM-DD"
-     * @param duration: integer number of days for challenge
-     * @param type: "single" or "team"
+     * @param endDate: end date of challenge "YYYY-MM-DD"
+     * @param type: type, e.g Strength,Cardio, etc
      * @param diff: the difficulty
-     * @param category: cardio, strength, endurance, etc
+     * @param teamOrSingle: if challenge is team or single
+     * @param availability: if challenge is open or closed
+     * @param minAge: minimum age for challenge
+     * @param maxAge: max age for challinge
+     * @param hazards: possible health hazards
+     * @param description: description of challenge
      * @return false if update fails, true if data is updated successfully
      *
      * This method updates a row in the challenge table at the specified
-     * challengeID. All dates must be specified in the format "YYYY-MM-YY",
+     * challengeID. All dates must be specified in the format "YYYY-MM-DD",
      * otherwise update will fail. No parameters are allowed to be null in this method.
      */
     public boolean updateChallenge(int oldChallengeID, int newChallengeID, String name, String coach,
-                                   String startDate, int duration, String type,
-                                   String diff, String category)
+                                   String startDate, String endDate, String type,
+                                   String diff, String teamOrSingle, String availability,
+                                   int minAge, int maxAge, String hazards, String description)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -442,11 +471,15 @@ public class DBHelper extends SQLiteOpenHelper
         cv.put(CHAL_COL2, name);
         cv.put(CHAL_COL3, coach);
         cv.put(CHAL_COL4, startDate);
-        cv.put(CHAL_COL5, duration);
+        cv.put(CHAL_COL5, endDate);
         cv.put(CHAL_COL6, type);
         cv.put(CHAL_COL7, diff);
-        cv.put(CHAL_COL8, category);
-
+        cv.put(CHAL_COL8, teamOrSingle);
+        cv.put(CHAL_COL9, availability);
+        cv.put(CHAL_COL10, minAge);
+        cv.put(CHAL_COL11, maxAge);
+        cv.put(CHAL_COL12, hazards);
+        cv.put(CHAL_COL13, description);
         long result = db.update(TABLE_CHALLENGE, cv, "challenge_id = ?", new String[] {Integer.valueOf(oldChallengeID).toString()});
         if (result > 0)
         {
@@ -683,6 +716,63 @@ public class DBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_PARTICIPATES,"username = ? AND challenge_id = ?", new String[] {username, Integer.valueOf(challenge_id).toString()});
+    }
+
+    /******************************************************************
+     * userIsAvail method
+     * @param username: the username to be checked
+     * @return: true if username is available, false if it is taken
+     *
+     * This method checks if the username entered by the user
+     * is already taken (i.e already exists in the database).
+     */
+    public boolean userIsAvail(String username)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //queries the database to find if username is in the User table.
+        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ?",new String[] {username});
+        //If query returns no data
+        if (cursor.getCount() == 0)
+        {
+            return true;
+        }
+        //if the query returns data, then the username was found.
+        return false;
+    }
+
+    /******************************************************
+     * getChallengeData(int challengeID)
+     * @param challengeID
+     * @return A cursor object containing the challenge with the specified challengeID
+     */
+    public Cursor getChallengeData(int challengeID)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?",new String[] {Integer.valueOf(challengeID).toString()});
+        return cursor;
+    }
+
+    /****************************************************
+     * getChallengeData()
+     * @return A cursor object containing every challenge in the database
+     */
+    public Cursor getChallengeData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge",new String[] {});
+        return cursor;
+    }
+
+    /****************************************************
+     * getChallengeData(String coach)
+     * @return A cursor object containing every challenge hosted by the specified coach
+     *
+     */
+    public Cursor getChallengeData(String coach)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE coach = ?",new String[] {coach});
+        return cursor;
     }
 }
 
