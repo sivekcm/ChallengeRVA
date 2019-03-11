@@ -4,8 +4,8 @@ public class Challenge {
     private String challengeName;
     private String challengeDescription;
     private String type;
-    private String coachAssigned;
-    private int difficulty;
+    private User coachAssigned;
+    private String difficulty;
     private int startDateYear;
     private int startDateMonth;
     private int startDateDay;
@@ -89,6 +89,7 @@ public class Challenge {
         return challengeDescription;
     }
 
+
     /*
     Set the challenge name for a new challenge
     @param: name for challenge
@@ -97,6 +98,7 @@ public class Challenge {
     public void setChallengeName(String name){
         if (stringIsValid(name))
             this.challengeName = name;
+
         else
             throw new IllegalArgumentException("Please enter a challenge name");
     }
@@ -289,4 +291,5 @@ public class Challenge {
             return team;
     }
 }
+
 

@@ -261,6 +261,6 @@
         android:color="@color/colorAccent"
         android:text="create challenge" />
 
-</RelativeLayout>
 
+</RelativeLayout>
 
