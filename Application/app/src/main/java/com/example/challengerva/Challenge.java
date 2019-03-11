@@ -4,8 +4,8 @@ public class Challenge {
     private String challengeName;
     private String challengeDescription;
     private String type;
-    private User coachAssigned;
-    private String difficulty;
+    private String coachAssigned;
+    private int difficulty;
     private int startDateYear;
     private int startDateMonth;
     private int startDateDay;
@@ -17,6 +17,7 @@ public class Challenge {
     private boolean team;
     private int startAge;
     private int endAge;
+    private int duration;
 
     /*
     Default constructor when creating a challenge
@@ -142,7 +143,7 @@ public class Challenge {
     */
     public void setCoachAssigned(String coach){
         if (stringIsValid(coach))
-            this.coachAssigned= coach;
+            this.coachAssigned = coach;
         else
             throw new IllegalArgumentException("Coach name not provided.");
     }
