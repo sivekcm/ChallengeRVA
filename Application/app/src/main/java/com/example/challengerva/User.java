@@ -99,8 +99,7 @@ public class User {
         //User is Coach case
         if(accountType == UserType.COACH)
         {
-
-            return false;
+            return true;
         }
         //User is Athlete case
         if(accountType == UserType.ATHLETE)

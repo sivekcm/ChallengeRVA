@@ -18,8 +18,10 @@ public class Challenge {
     private int startAge;
     private int endAge;
 
-    //constructor
-    public Challenge(String challengeName, String challengeDescription, String type, String coachAssigned, String difficulty,
+    /*
+    Default constructor when creating a challenge
+    */
+    public Challenge(String challengeName, String challengeDescription, String type, String coachAssigned, int difficulty,
                      int startDateYear, int startDateMonth, int startDateDay, int endDateYear, int endDateMonth, int endDateDay, int interval,
                      int startAge, int endAge, boolean open, boolean team){
         setChallengeName(challengeName);
@@ -36,6 +38,12 @@ public class Challenge {
 
     }
 
+    /*
+    Check to see if a string exists
+    @param: string
+    @return: boolean true if string exists and false
+             if it does not
+    */
     public boolean stringIsValid(String entry){
         if (entry.length() > 0){
             return true;
@@ -43,6 +51,12 @@ public class Challenge {
         return false;
     }
 
+    /*
+    Check to see if an inputted number exists
+    @param: integer
+    @return: boolean true if integer exists and false
+             if it does not
+    */
     public boolean integerIsValid(int entry){
         if (entry > 0){
             return true;
@@ -50,61 +64,125 @@ public class Challenge {
         return false;
     }
 
-    public boolean setChallengeDescription(String challengeDescription) {
+    /*
+    Set the challenge description for a given challenge
+    @param: A "String" of the challenge's description and specifics
+    @return true if the challenge string exists and false if no
+            challenge description is given
+    */
+    public boolean setChallengeDescription(String description) {
         if (stringIsValid(challengeDescription)) {
-            this.challengeDescription = challengeDescription;
+            this.challengeDescription = description;
             return true;
         }
         else {
-            throw new IllegalArgumentException("Please enter a challenge description.");
+            throw new IllegalArgumentException("No challenge description was provided.");
         }
     }
+
+    /*
+    Return value for challenge description
+    @param: none
+    @return: challenge description
+    */
     public String getChallengeDescription(){
         return challengeDescription;
     }
 
 
-    public void setChallengeName(String challengeName){
-        if (stringIsValid(challengeName))
-            this.challengeName = challengeName;
+    /*
+    Set the challenge name for a new challenge
+    @param: name for challenge
+    @return: challenge name or throw argument if name not given
+    */
+    public void setChallengeName(String name){
+        if (stringIsValid(name))
+            this.challengeName = name;
+
         else
             throw new IllegalArgumentException("Please enter a challenge name");
     }
+
+    /*
+    Get the value for challenge name
+    @param: none
+    @return: challenge name
+    */
     public String getChallengeName(){
         return challengeName;
     }
 
+    /*
+    Identify the type of challenge
+    @param: string of type
+    @return: type if type given or throw an exception when type not
+             provided
+    */
     public void setType(String type){
         if (stringIsValid(type))
             this.type=type;
         else
-            throw new IllegalArgumentException("Please enter the type of challenge");
+            throw new IllegalArgumentException("Type of challenge not specified.");
 
     }
+
+    /*
+    Return the type for the challenge
+    @param: none
+    @return: type for the challenge
+    */
     public String getType(){
         return type;
     }
 
-    public void setCoachAssigned(String coachAssigned){
-        if (stringIsValid(coachAssigned))
-            this.coachAssigned= coachAssigned;
+    /*
+    Set the coach assigned for the challenge
+    @param: name of coach assigned
+    @return: coach assigned for challenge
+    */
+    public void setCoachAssigned(String coach){
+        if (stringIsValid(coach))
+            this.coachAssigned= coach;
         else
-            throw new IllegalArgumentException("Please enter your (the coach) name.");
+            throw new IllegalArgumentException("Coach name not provided.");
     }
+
+    /*
+    Get the coach name for challenge
+    @param: none
+    @return: coach assigned for challenge
+    */
     public String getCoachAssigned(){
         return coachAssigned;
     }
 
-    public void setDifficulty(String difficulty){
-        if (stringIsValid(difficulty))
+    /*
+    Set the difficulty of the challenge
+    @param: int of difficulty: 1 (easiest), 2, 3 (hardest)
+    @return: the difficulty of the challenge
+    */
+    public void setDifficulty(int difficulty){
+        if (integerIsValid(difficulty))
             this.difficulty=difficulty;
         else
             throw new IllegalArgumentException("Please state the difficulty of this challenge.");
     }
-    public String getDifficulty(){
+
+    /*
+    Return the value of the difficulty of challenge
+    @param: none
+    @return: difficulty
+    */
+    public int getDifficulty(){
         return difficulty;
     }
 
+    /*
+    Sets the start date of the challenge
+    @param: year, month, and day for the start date
+    @return: true if all values are correct values for dates and
+             false if not
+    */
     public boolean setStartDate(int startDateYear, int startDateMonth, int startDateDay){
         if (startDateYear >2019) {
             this.startDateYear = startDateYear;
@@ -120,6 +198,12 @@ public class Challenge {
         }
         return false;
     }
+
+    /*
+    Get the start date, month, and year
+    @param: none
+    @return: date, month and year
+    */
     public int getStartDateYear(){
         return startDateYear;
     }
@@ -129,6 +213,13 @@ public class Challenge {
     public int getStartDateDay(){
         return startDateDay;
     }
+
+    /*
+    Set the end date for the challenge
+    @param: year, monnth, and day for the end date of challenge
+    @return: true if completed date is a valid date and false
+             if not
+    */
     public boolean setEndDate(int endDateYear, int endDateMonth, int endDateDay){
         if (endDateYear > 2019){
             this.endDateYear = endDateYear;
@@ -144,6 +235,12 @@ public class Challenge {
         }
         return false;
     }
+
+    /*
+    Get the end date's year, month, and day
+    @param: none
+    @return: end date's year, month, and day
+    */
     public int getEndDateYear(){
         return endDateYear;
     }
@@ -154,101 +251,45 @@ public class Challenge {
         return endDateDay;
     }
 
-        public void setChallengeDescription(String challengeDescription) {
-            this.challengeDescription = challengeDescription;
-        }
-
-        public String getChallengeDescription() {
-            return challengeDescription;
-        }
-
-        public void setChallengeName(String challengeName) {
-            this.challengeName = challengeName;
-        }
-
-        public String getChallengeName() {
-            return challengeName;
-        }
-
-        public void setType(String type) {
-            this.type = type;
-        }
-
-        public String getType() {
-            return type;
-        }
-
-
-        public void setCoachAssigned(String coachAssigned) {
-            this.coachAssigned = coachAssigned;
-        }
-
-        public String getCoachAssigned() {
-            return coachAssigned;
-        }
-
-        public void setDifficulty(String type) {
-            this.difficulty = difficulty;
-        }
-
-        public String getDifficulty() {
-            return difficulty;
-        }
-
-        public void setStartDate(int startDate) {
-            this.startDate = startDate;
-        }
-
-        public int getStartDate() {
-            return startDate;
-        }
-
-        public void setEndDate(int endDate) {
-            this.endDate = endDate;
-        }
-
-        public int getEndDate() {
-            return endDate;
-        }
-
-        public void setInterval(int interval) {
+    public void setInterval(int interval) {
             this.interval = interval;
-        }
+    }
 
-        public int getInterval() {
+    public int getInterval() {
             return interval;
-        }
+    }
 
-        public void setStartAge(int startAge) {
+    public void setStartAge(int startAge) {
             this.startAge = startAge;
-        }
+    }
 
-        public int getStartAge() {
+    public int getStartAge() {
             return startAge;
-        }
+    }
 
-        public void setEndAge(int endAge) {
+    public void setEndAge(int endAge) {
             this.endAge = endAge;
-        }
+    }
 
-        public int getEndAge() {
+    public int getEndAge() {
             return endAge;
-        }
+    }
 
-        public void setOpen(boolean open) {
+    public void setOpen(boolean open) {
             this.open = open;
-        }
+    }
 
-        public boolean isOpen() {
+    public boolean isOpen() {
             return open;
-        }
+    }
 
-        public void setTeam(boolean team) {
+    public void setTeam(boolean team) {
             this.team = team;
-        }
+    }
 
-        public boolean isTeam() {
+    public boolean isTeam() {
             return team;
-        }
-   }
+    }
+}
+
 
