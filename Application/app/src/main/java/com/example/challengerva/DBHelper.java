@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper
 {
     //Database
@@ -705,6 +707,20 @@ public class DBHelper extends SQLiteOpenHelper
         }
         //if the query returns data, then the username was found.
         return false;
+    }
+
+    public Cursor getChallengeData(int challengeID)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?",new String[] {Integer.valueOf(challengeID).toString()});
+        return cursor;
+    }
+
+    public Cursor getChallengeData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge",new String[] {});
+        return cursor;
     }
 }
 
