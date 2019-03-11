@@ -4,7 +4,7 @@ public class Challenge {
     private String challengeName;
     private String challengeDescription;
     private String type;
-    private String coachAssigned;
+    private User coachAssigned;
     private String difficulty;
     private int startDateYear;
     private int startDateMonth;

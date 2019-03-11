@@ -30,9 +30,7 @@ public class LoginActivity extends AppCompatActivity {
                         "Johnson", "1998-12-04", "2019-03-06",
                         "rickster@fake.org", 0, "Y", "coach");
 
-                boolean testChallenge = db.updateChallenge(2, 15824, "best challenge",
-                       "Rick", "2019-03-06", 1, "Team",
-                       "hard", "running");
+
 
                 boolean testTeam = db.updateTeam(1, 2, 92147, 42176, "Rick",
                         "john",null,null);
@@ -41,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 boolean testPart = db.updateParticipates("Rick", 2, "Rick", 21, "2019-06-24");
 
-                if (testUser && testChallenge && testTeam && testLB && testPart)
+                if (testUser  && testTeam && testLB && testPart)
                 {
                     Toast.makeText(LoginActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
                 }
