@@ -63,7 +63,7 @@ public class Challenge {
         return challengeDescription;
     }
 
-<<<<<<< HEAD
+
     public void setChallengeName(String challengeName){
         if (stringIsValid(challengeName))
             this.challengeName = challengeName;
@@ -153,7 +153,7 @@ public class Challenge {
     public int getEndDateDay(){
         return endDateDay;
     }
-=======
+
         public void setChallengeDescription(String challengeDescription) {
             this.challengeDescription = challengeDescription;
         }
@@ -177,7 +177,7 @@ public class Challenge {
         public String getType() {
             return type;
         }
->>>>>>> 8e57006fe29a8472dd4e6425c176fb7ba661ef37
+
 
         public void setCoachAssigned(String coachAssigned) {
             this.coachAssigned = coachAssigned;
@@ -250,5 +250,5 @@ public class Challenge {
         public boolean isTeam() {
             return team;
         }
-    }
+   }
 

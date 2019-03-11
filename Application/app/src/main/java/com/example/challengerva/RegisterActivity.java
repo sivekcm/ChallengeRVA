@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -23,8 +25,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/*****************************************************************************
+ * Class RegisterActivity
+ *
+ * @version 3/10/2019
+ *
+ * Registers user accounts for the app.
+ */
 public class RegisterActivity extends AppCompatActivity {
 
+    //Declares Text Views
     TextView titleTextView;
     TextView descTextView;
     TextView userTextView;
@@ -36,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
     TextView birthTextView;
     TextView dateTextView;
 
+    //Declares Edit Texts
     EditText userEditText;
     EditText passEditText;
     EditText rePassEditText;
@@ -43,18 +54,28 @@ public class RegisterActivity extends AppCompatActivity {
     EditText fNameEditText;
     EditText lNameEditText;
 
+    //Declares radio buttons
     RadioButton athleteRB;
     RadioButton coachRB;
 
+    //declares register button
     Button registerBtn;
 
+    //declares onDateSetListener
     DatePickerDialog.OnDateSetListener onDateSetListener;
 
+    /*******************************
+     * OnCreate
+     * @param savedInstanceState
+     *
+     * Runs the Activity upon launch
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        //Initializes textViews to their respective UI elements
         titleTextView = findViewById(R.id.registerTitleTextView);
         descTextView = findViewById(R.id.registerDescTextView);
         userTextView = findViewById(R.id.registerUserTextView);
@@ -66,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         birthTextView = findViewById(R.id.registerBirthTextView);
         dateTextView = findViewById(R.id.registerDateTextView);
 
+        //Initializes editTexts to their respective UI elements
         userEditText = findViewById(R.id.registerUserEditText);
         passEditText = findViewById(R.id.registerPassEditText);
         rePassEditText = findViewById(R.id.registerRePassEditText);
@@ -73,16 +95,34 @@ public class RegisterActivity extends AppCompatActivity {
         fNameEditText = findViewById(R.id.registerFirstEditText);
         lNameEditText = findViewById(R.id.registerLastEditText);
 
+        //Initializes radio buttons to their respective UI elements
         athleteRB = findViewById(R.id.registerAthleteRB);
         coachRB = findViewById(R.id.registerCoachRB);
 
+        //Initializes register button
         registerBtn = findViewById(R.id.registerBtn);
+
+        //Sets the on click listener for the register button
         registerBtn.setOnClickListener(new View.OnClickListener()
         {
+            /**************************************************************
+             * registerBRN.onClick
+             * @param v
+             *
+             * Defines what the register button does when It is clicked.
+             * The app will validate that all information is present and
+             * meets the minimum requirements. Upon successful validation
+             * of user-entered data, the user will be inserted into
+             * the User table in the database
+             *
+             */
             @Override
             public void onClick(View v)
             {
+                //Instance of DBHelper to call database methods
                 DBHelper db = new DBHelper(RegisterActivity.this);
+
+                //Creates variables for the information entered into each editText box
                 String username = userEditText.getText().toString();
                 String password = passEditText.getText().toString();
                 String rePassword = rePassEditText.getText().toString();
@@ -91,59 +131,81 @@ public class RegisterActivity extends AppCompatActivity {
                 String lastName = lNameEditText.getText().toString();
                 String birthDate = dateTextView.getText().toString();
 
+                //Will convert date to correct SQL format ("YYYY-MM-DD") only if Date was entered
                 if (!birthDate.equals("Pick a Date"))
                 {
                     birthDate = formatDate(birthDate);
                 }
 
+                //Gets the current date, for determining the date the user signed up
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
                 String currentDate = sdf.format(date);
 
-                Log.d("RegisterActivity","Current Date:" + currentDate);
+                /***********************************************
+                 * User Validation Section
+                 * Precedence goes from top to bottom (error for missing information will have precedence over error for taken username
+                 ************************************************/
 
+                //Checks that the user has entered a value into every required field (none of the fields are empty)
                 if (!hasAllFields(username,password,rePassword,email,firstName,lastName,birthDate))
                 {
-                    //empty fields message
+                    //Popup message warning user of missing information
                     alertMessage("Empty Fields", "One or more of the required fields" +
                             "were left blank. Please fill in all required fields");
                 }
+
+                //Checks that the password and re-enter password match
                 else if (!passMatch(password,rePassword))
                 {
-                    //passwords do not match message
+                    //Popup message warning user passwords do not match
                     alertMessage("Passwords do not match", "The passwords you entered do not match,");
                 }
+
+                //Checks that the username, password, and age match the minimum requirements to register as a user.
                 else if (!userIsValid(username) || !passIsValid(password) || !ageIsValid(currentDate,birthDate))
                 {
-                    //multiple fields do not meet requirements message
+                    //Popup warning user that one or more fields do not meet minimum requirements
                     alertMessage("Invalid fields", "One or more fields do not meet the minimum requirements." +
                             "Please read the minimum requirements for a field by clicking on the *");
                 }
-                else if (!userIsAvail(username,db))
+
+                //Checks that the username is not taken
+                else if (!db.userIsAvail(username))
                 {
-                    //username is not available message
+                    //Popup message warning user that the username is already taken
                     alertMessage("Username Taken", "The username entered is already " +
                             "taken, please enter a new one");
                 }
+
+                //Checks that the email is valid
                 else if (!emailIsValid(email))
                 {
-                    //email is not valid message
+                    //popup message warning user that the email is not valid
                     alertMessage("Invalid Email", "The provided email address does not exist." +
                             "Please enter a valid email address");
                 }
+
+                //Will get to this else statements only if all information is present and valid
                 else
                 {
                     boolean success = false;
+                    //If athlete radio button is checked, User information will be inserted as an Athlete
                     if (athleteRB.isChecked())
                     {
                         success = db.insertUser(username, password, firstName, lastName, birthDate,
                                 currentDate, email, 0, "Y", "Athlete");
                     }
+                    //If coach radio button is checked, User information wil lbe inserted as a Coach
                     else if (coachRB.isChecked())
                     {
                         success = db.insertUser(username, password, firstName, lastName, birthDate,
                                 currentDate, email, 0, "Y", "Coach");
                     }
+
+                    //the insert method returns true or false.
+                    //If registration succeeded, quick fading message will show saying registration was successful
+                    //if Registration was not successful, Something went wrong not on the user's end
                     if (success)
                     {
                         Toast.makeText(RegisterActivity.this,"Registered Successfully!",Toast.LENGTH_LONG).show();
@@ -158,21 +220,35 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        //Initializes date selection textView
         dateTextView = findViewById(R.id.registerDateTextView);
         dateTextView.setOnClickListener(new View.OnClickListener() {
+            /********************************************
+             * date onClick
+             * @param v
+             *
+             * Defines what happens when a user clicks on the
+             * "pick a date" TextView.
+             */
             @Override
             public void onClick(View v) {
+
+                //Defaults to today's date
                 Calendar date = Calendar.getInstance();
                 int year = date.get(Calendar.YEAR);
                 int month = date.get(Calendar.MONTH);
                 int day = date.get(Calendar.DAY_OF_MONTH);
 
+                //Creates the dialog box that pops up on click
                 DatePickerDialog dialog = new DatePickerDialog(RegisterActivity.this,
-                        android.R.style.Theme_Dialog,onDateSetListener,year,month,day);
+                        android.R.style.Theme_Light_Panel,onDateSetListener,year,month,day);
+
+                //displays the dialog box
                 dialog.show();
             }
         });
 
+        //defines the default format for the date when seleted
         onDateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -185,6 +261,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+
+    /********************************************************************************
+     * formatDate method
+     * @param date: the date desired to be formatted
+     * @PreCondition: the date is in the format "MM/DD/YYYY"
+     * @return the input date in the format "YYYY-MM-DD"
+     *
+     * Formats the date to a format recognized by SQL, "YYYY-MM-DD"
+     */
     public static String formatDate(String date)
     {
         List<String> dateArr = new ArrayList<>(Arrays.asList(date.split("/")));
@@ -202,7 +287,14 @@ public class RegisterActivity extends AppCompatActivity {
         return date;
     }
 
-    //Username  is between 3-14 characters
+    /*********************************************************
+     * userIsValid method
+     * @param username the username to be checked
+     * @return ture if username is valid, false if not valid
+     *
+     * Checks if username meets minimum requirements: Username
+     * must be between 2 and 14 characters.
+     */
     public static boolean userIsValid(String username)
     {
         if (username.length() > 2 && username.length() <= 14)
@@ -215,26 +307,14 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    //User does not already exist
-    public static boolean userIsAvail(String username, DBHelper myDB)
-    {
-        SQLiteDatabase db = myDB.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ?",new String[] {username});
-        if (cursor.getCount() == 0)
-        {
-            return true;
-        }
-        while (cursor.moveToNext())
-        {
-            if (username.equals(cursor.getString(0)))
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    //password has at least one letter and number and is at least 8 characters long
+    /****************************************************************
+     * passIsValid method
+     * @param password the password to be checked
+     * @return true if password meets minimum requirements, false otherwise
+     *
+     * Checks if passwords meets minimum requirements: is Alphanumeric and
+     * is at least 8 characters
+     */
     public static boolean passIsValid(String password)
     {
         if (password.matches("^[a-zA-Z0-9]*$") && password.length() >= 8)
@@ -247,6 +327,14 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /****************************************************************
+     * passMatch method
+     * @param password the password to be checked
+     * @param rePassword the password from the "re enter password" field
+     * @return true if passwords match, false if they don't
+     *
+     * Checks if passwords match
+     */
     public static boolean passMatch(String password, String rePassword)
     {
         if (password.equals(rePassword))
@@ -259,46 +347,77 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    //age is at least 16
+    /********************************************************************
+     * ageIsValid method
+     * @param currentDate the current date
+     * @param birthDate the birthdate entered by the user
+     * @return true if the user is 16 or older, false otherwise
+     *
+     * Compares today's date with the birthdate of the user to determine
+     * if they are old enough to user the app
+     */
     public static boolean ageIsValid(String currentDate, String birthDate)
     {
+        //gets arrays for the current date and birth date
         String[] currentDateArr = currentDate.split("-");
         String[] birthDateArr = birthDate.split("-");
 
-        Log.d("RegisterActivity","CurrentDate [0] = " + currentDateArr[0] + ", [1] = " + currentDateArr[1] + ", [2] = " + currentDateArr[2]);
-        Log.d("RegisterActivity","BirthDate [0] = " + birthDateArr[0] + ", [1] = " + birthDateArr[1] + ", [2] = " + birthDateArr[2]);
-
+        //If the user is older than 16 return true
         if (Integer.parseInt(currentDateArr[0]) - Integer.parseInt(birthDateArr[0]) > 16)
         {
             return true;
         }
+
+        //If the user is supposed to/already turned 16 this year
         if (Integer.parseInt(currentDateArr[0]) - Integer.parseInt(birthDateArr[0]) == 16)
         {
+            //If the user turned 16  this month, return true
             if (Integer.parseInt(currentDateArr[1]) == Integer.parseInt(birthDateArr[1]) &&
                     Integer.parseInt(currentDateArr[2]) >= Integer.parseInt(birthDateArr[2]))
             {
                 return true;
             }
 
+            //If the user turned 16 this year, return true
             if (Integer.parseInt(currentDateArr[1]) > Integer.parseInt(birthDateArr[1]))
             {
                 return true;
             }
+            //return false if the user is supposed to turn 16 this year, but has not yet
             return false;
         }
+        //return false if the user is under 16 and is not supposed to turn 16 this year
         return false;
 
     }
 
-    //email exists
+    /***************************************************************
+     * emailIsVail method
+     * @param email the email to be checked
+     * @return true if email is valid, false otherwise
+     *
+     * checks if email is valid.
+     */
     public static boolean emailIsValid(String email)
     {
         return true;
     }
 
-    //all required fields have been filled out
+    /**********************************************************************
+     * hasAllFields method
+     * @param user useraneme
+     * @param pass password
+     * @param rePass re-enter password field
+     * @param email email
+     * @param fName first name
+     * @param lName last name
+     * @param birthDate birthDate
+     * @return true if all the information has been entered, false if missing info
+     */
     public static boolean hasAllFields(String user, String pass, String rePass, String email, String fName, String lName, String birthDate)
     {
+        //Only one field needs to be empty in order to fail.
+        //For birthdate, the default text is "Pick a Date", so whether or not that text equals that will determine if the user entered data for that field
         if (user.isEmpty() || pass.isEmpty() || rePass.isEmpty() || email.isEmpty() || fName.isEmpty() || lName.isEmpty() || birthDate.equals("Pick a Date"))
         {
             return false;
@@ -309,6 +428,13 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    /****************************************************************************
+     * alertMessage method
+     * @param title the title of the message
+     * @param message the content of the message
+     *
+     * Creates a popup message on the screen with information.
+     */
     public void alertMessage(String title, String message)
     {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);

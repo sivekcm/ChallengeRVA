@@ -684,5 +684,27 @@ public class DBHelper extends SQLiteOpenHelper
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_PARTICIPATES,"username = ? AND challenge_id = ?", new String[] {username, Integer.valueOf(challenge_id).toString()});
     }
+
+    /******************************************************************
+     * userIsAvail method
+     * @param username: the username to be checked
+     * @return: true if username is available, false if it is taken
+     *
+     * This method checks if the username entered by the user
+     * is already taken (i.e already exists in the database).
+     */
+    public boolean userIsAvail(String username)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //queries the database to find if username is in the User table.
+        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ?",new String[] {username});
+        //If query returns no data
+        if (cursor.getCount() == 0)
+        {
+            return true;
+        }
+        //if the query returns data, then the username was found.
+        return false;
+    }
 }
 
