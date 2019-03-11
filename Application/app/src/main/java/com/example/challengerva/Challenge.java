@@ -17,7 +17,6 @@ public class Challenge {
     private boolean team;
     private int startAge;
     private int endAge;
-    private int duration;
 
     /*
     Default constructor when creating a challenge
@@ -291,6 +290,7 @@ public class Challenge {
     public boolean isTeam() {
             return team;
     }
+
 }
 
 
