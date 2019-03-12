@@ -146,16 +146,9 @@ public class User {
         //User is Coach case
         if(accountType == UserType.COACH)
         {
-
             return true;
-
         }
-        //User is Athlete case
-        if(accountType == UserType.ATHLETE)
-        {
-            return false;
-        }
-        return false;
+        else return false;
     }
 
     /*
