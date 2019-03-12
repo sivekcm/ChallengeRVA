@@ -19,7 +19,6 @@
     <!--Create Challenge params below-->
     <string name="challengeName">Challenge Name</string>
     <string name="createChallenge">Create A New Challenge!</string>
-    <string name="coachAssigned">Coach Name</string>
     <string name="challengeDescription">Challenge Description</string>
     <string name="type">Challenge Type</string>
     <string name="difficulty">Difficulty</string>
