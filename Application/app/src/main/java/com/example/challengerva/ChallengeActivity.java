@@ -13,8 +13,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class ChallengeActivity extends AppCompatActivity{
     TextView createChallenge;
@@ -122,6 +125,47 @@ public class ChallengeActivity extends AppCompatActivity{
                 endDate.setText(stringEndDate);
             }
         };
+    }
+
+    /********************************************************************************
+     * formatDate method - based on Chris's RegisterActivity
+     * @param date: the date desired to be formatted
+     * @PreCondition: the date is in the format "MM/DD/YYYY"
+     * @return the input date in the format "YYYY-MM-DD"
+     *
+     * Formats the date to a format recognized by SQL, "YYYY-MM-DD"
+     */
+    public static String formatDate(String date)
+    {
+        List<String> dateArr = new ArrayList<>(Arrays.asList(date.split("/")));
+        if (Integer.parseInt(dateArr.get(0)) < 10)
+        {
+            dateArr.set(0, "0" + dateArr.get(0));
+        }
+
+        if (Integer.parseInt(dateArr.get(1)) < 10)
+        {
+            dateArr.set(1, "0" + dateArr.get(1));
+        }
+
+        date = dateArr.get(2) + "-" + dateArr.get(0) + "-" + dateArr.get(1);
+        return date;
+    }
+
+    public static boolean nameIsValid(){
+
+    }
+
+    public static boolean coachIsValid(){
+
+    }
+
+    public static boolean difficultyIsValid(int difficulty){
+        if(difficulty >=1 && difficulty <= 3){
+            return true;
+        }
+        return false;
+
     }
 
 }
