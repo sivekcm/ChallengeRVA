@@ -33,8 +33,8 @@ public class Challenge {
         setInterval(interval);
         setStartAge(startAge);
         setEndAge(endAge);
-        setOpen(open);
-        setTeam(team);
+        isOpen(open);
+        isTeam(team);
 
     }
 
@@ -251,7 +251,13 @@ public class Challenge {
         return endDateDay;
     }
 
+    /*
+    Set the end date's year, month, and day
+    @param: int interval
+    @return: end date's year, month, and day
+    */
     public void setInterval(int interval) {
+        if(integerIsValid(interval))
             this.interval = interval;
     }
 
@@ -259,36 +265,57 @@ public class Challenge {
             return interval;
     }
 
-    public void setStartAge(int startAge) {
+    /*
+  Set the start age
+  @param: int start age
+  @return: return true if it is set
+  */
+    public boolean setStartAge(int startAge) {
+        if(integerIsValid(startAge))
             this.startAge = startAge;
     }
 
     public int getStartAge() {
             return startAge;
     }
-
-    public void setEndAge(int endAge) {
+    /*
+      Set the end age
+      @param: boolean end age
+      @return: true if the end age is set
+      */
+    public boolean setEndAge(int endAge) {
+        if(integerIsValid(endAge))
             this.endAge = endAge;
     }
 
     public int getEndAge() {
             return endAge;
     }
-
-    public void setOpen(boolean open) {
-            this.open = open;
+    /*
+       Set the status of the challenge
+       @param: boolean end age
+       @return: return true if the status of the challenge is open
+       */
+    public boolean isOpen(boolean open) {
+            if (open) {
+                this.open = open;
+                return true;
+            }
+            return false;
     }
 
-    public boolean isOpen() {
-            return open;
-    }
 
-    public void setTeam(boolean team) {
+    /*
+     Set if the challenge accepts teams
+     @param: boolean team
+     @return: return true if the challenge is team based
+     */
+    public boolean isTeam(boolean team) {
+        if(team) {
             this.team = team;
-    }
-
-    public boolean isTeam() {
-            return team;
+            return true;
+        }
+        return false;
     }
 
 }
