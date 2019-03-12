@@ -1,12 +1,21 @@
 package com.example.challengerva;
-import java.util.ArrayList;
+import android.database.Cursor;
+
+
 
 public class User {
+    protected String oldUsername;
     protected String username;
     protected String password;
-    private ArrayList<String> challenges; //PLACEHOLDER
-    private ArrayList<String> teams; //PLACEHOLDER
+    protected String firstName;
+    protected String lastName;
+    protected String birthDate;
+    protected String joinDate;
+    protected String email;
+    protected boolean isPrivate;
     protected UserType accountType;
+    protected int challengesCompleted;
+
 
     //Enumeration used to determine type of account
     enum UserType
@@ -20,15 +29,53 @@ public class User {
     }
 
     //Constructor
-    public User(String newUsername, String newPassword, UserType newAccountType)
+    public User(Cursor userCursor)
     {
-        setUsername(newUsername);
-        setPassword(newPassword);
+        setUsername(userCursor.getString(0));
+        oldUsername = this.username;
+        setPassword(userCursor.getString(1));
 
-        accountType = newAccountType;
-        challenges = new ArrayList<String>();
-        teams = new ArrayList<String>();
+        this.firstName = userCursor.getString(2);
+        this.lastName = userCursor.getString(3);
+        this.birthDate = userCursor.getString(4);
+        this.joinDate = userCursor.getString(5);
+        this.email = userCursor.getString(6);
+        this.challengesCompleted = userCursor.getInt(7);
 
+        if(userCursor.getString(8) == "true")
+            this.isPrivate = true;
+        else this.isPrivate = false;
+
+        if(userCursor.getString(9) == "coach")
+            this.accountType = UserType.COACH;
+        else this.accountType = UserType.ATHLETE;
+
+
+
+    }
+    /*
+    Passes an array of the parameters of this User object
+    @return an array with all parameters of this User object
+     */
+    public Object[] getParameters()
+    {
+        Object[] parameters = new Object[11];
+        parameters[0] = oldUsername;
+        parameters[1] = username;
+        parameters[2] = password;
+        parameters[3] = firstName;
+        parameters[4] = lastName;
+        parameters[5] = birthDate;
+        parameters[6] = joinDate;
+        parameters[7] = email;
+        parameters[8] = challengesCompleted;
+        if(isPrivate)
+            parameters[9] = "true";
+        else parameters[9] = "false";
+        if (accountType == UserType.COACH)
+            parameters[10] = "coach";
+        else parameters[10] = "athlete";
+        return parameters;
     }
 
     /*
@@ -99,11 +146,9 @@ public class User {
         //User is Coach case
         if(accountType == UserType.COACH)
         {
-<<<<<<< HEAD
-            return false;
-=======
+
             return true;
->>>>>>> 8e57006fe29a8472dd4e6425c176fb7ba661ef37
+
         }
         //User is Athlete case
         if(accountType == UserType.ATHLETE)
