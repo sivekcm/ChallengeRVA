@@ -390,6 +390,8 @@ public class DBHelper extends SQLiteOpenHelper
         }
     }
 
+
+
     /***********************************************************************
      * updateUser method
      * @param oldUsername: the row you want to update
@@ -436,6 +438,17 @@ public class DBHelper extends SQLiteOpenHelper
         {
             return false;
         }
+    }
+
+    /**
+     * updateUser method
+     * @param parameterArray: an Object array of all necessary parameters
+     */
+    public boolean updateUser(Object[] parameterArray)
+    {
+        return updateUser((String) parameterArray[0], (String)parameterArray[1], (String)parameterArray[2], (String)parameterArray[3],
+                (String)parameterArray[4], (String)parameterArray[5], (String)parameterArray[6], (String)parameterArray[7],
+                (int)parameterArray[8], (String)parameterArray[9], (String)parameterArray[10]);
     }
 
     /************************************************************************
