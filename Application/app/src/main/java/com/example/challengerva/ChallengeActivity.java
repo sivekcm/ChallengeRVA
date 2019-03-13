@@ -13,6 +13,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -113,15 +114,101 @@ public class ChallengeActivity extends AppCompatActivity{
                     boolean success = false;
                     if(registrationTypeList.getSelectedItem().toString() == "Indidivudal"){
                         if(challengeTypeList.getSelectedItem().toString() == "Cardio"){
-                            success = db.insertChallenge(count_ID++, name, )
+                            success = db.insertChallenge(count_ID++,
+                                    name,
+                                    "",
+                                    start,
+                                    end,
+                                    type,
+                                    diff,
+                                    "Individual",
+                                    "Cardio",
+                                    "",
+                                    "");
 
+                        }
+                        else if(challengeTypeList.getSelectedItem().toString() == "Lifting"){
+                            success = db.insertChallenge(count_ID++,
+                                    name,
+                                    "",
+                                    start,
+                                    end,
+                                    type,
+                                    diff,
+                                    "Individual",
+                                    "Lifting",
+                                    "",
+                                    "");
+                        }
+                        else if(challengeTypeList.getSelectedItem().toString() == "Health"){
+                            success = db.insertChallenge(count_ID++,
+                                    name,
+                                    "",
+                                    start,
+                                    end,
+                                    type,
+                                    diff,
+                                    "Individual",
+                                    "Health",
+                                    "",
+                                    "");
+                        }
+                    }
+                    else if(registrationTypeList.getSelectedItem().toString() == "Team"){
+                        if(challengeTypeList.getSelectedItem().toString() == "Cardio"){
+                            success = db.insertChallenge(count_ID++,
+                                    name,
+                                    "",
+                                    start,
+                                    end,
+                                    type,
+                                    diff,
+                                    "Team",
+                                    "Cardio",
+                                    "",
+                                    "");
+
+                        }
+                        else if(challengeTypeList.getSelectedItem().toString() == "Lifting"){
+                            success = db.insertChallenge(count_ID++,
+                                    name,
+                                    "",
+                                    start,
+                                    end,
+                                    type,
+                                    diff,
+                                    "Team",
+                                    "Lifting",
+                                    "",
+                                    "");
+                        }
+                        else if(challengeTypeList.getSelectedItem().toString() == "Health"){
+                            success = db.insertChallenge(count_ID++,
+                                    name,
+                                    "",
+                                    start,
+                                    end,
+                                    type,
+                                    diff,
+                                    "Team",
+                                    "Health",
+                                    "",
+                                    "");
+                        }
+
+                        if(success){
+                            Toast.makeText(ChallengeActivity.this,
+                                    "Challenge Successfully Created!",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                        else{
+                            Toast.makeText(ChallengeActivity.this,
+                                    "Challenge Creation Failed. Please Try Again.",
+                                    Toast.LENGTH_LONG).show();
                         }
                     }
 
                 }
-
-
-
             }
         });
 
