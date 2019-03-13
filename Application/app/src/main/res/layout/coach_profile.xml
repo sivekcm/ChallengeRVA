@@ -11,21 +11,21 @@
         android:layout_height="wrap_content"></RelativeLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/statusTxtView"
         android:layout_width="74dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/coachProfileImg"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="73dp"
-        android:layout_marginLeft="73dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="264dp"
-        android:layout_marginRight="264dp"
-        android:text="Jane Doe"
+        android:layout_marginStart="158dp"
+        android:layout_marginLeft="158dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="178dp"
+        android:layout_marginRight="178dp"
+        android:text="Coach"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Widget.TabWidget"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/coachProfileImg"
         android:layout_width="152dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -44,35 +44,35 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="44dp"
         android:layout_marginLeft="44dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="215dp"
         android:layout_marginRight="215dp"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/h"
-        android:layout_width="73dp"
+        android:id="@+id/coachNameTxtView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/statusTxtView"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="264dp"
-        android:layout_marginRight="264dp"
-        android:text="Coach "
+        android:layout_marginStart="47dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="-28dp"
+        android:layout_marginEnd="247dp"
+        android:layout_marginRight="247dp"
+        android:text="Jane Doe"
         android:textColor="@color/colorAccent"
         android:textSize="24sp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/changeUserNameBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button3"
+        android:layout_below="@+id/changeDisplayNameBtn"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
@@ -85,24 +85,8 @@
         android:text="Change Username" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="117dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="260dp"
-        android:layout_marginLeft="260dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="34dp"
-        android:layout_marginRight="31dp"
-        android:text="Change Password" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="131dp"
+        android:id="@+id/changeDisplayNameBtn"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
@@ -117,19 +101,21 @@
         android:text="Change Diaplay Name" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/coachUserNameTxtView"
         android:layout_width="96dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/coachNameTxtView"
+        android:layout_alignBottom="@+id/statusTxtView"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginLeft="72dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginLeft="55dp"
         android:layout_marginTop="1dp"
-        android:layout_marginEnd="243dp"
-        android:layout_marginRight="243dp"
+        android:layout_marginEnd="260dp"
+        android:layout_marginRight="260dp"
+        android:layout_marginBottom="-30dp"
         android:text="User Name "
         android:textSize="18sp" />
 
@@ -142,7 +128,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginBottom="106dp"
+        android:layout_marginBottom="116dp"
         android:visibility="visible">
 
 
@@ -162,10 +148,10 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/viewAll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Challenge x- date" />
+                android:text="View all of your challenges" />
 
             <Button
                 android:id="@+id/button5"
@@ -244,7 +230,7 @@
 
 
     <Button
-        android:id="@+id/button18"
+        android:id="@+id/createChallengeBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
