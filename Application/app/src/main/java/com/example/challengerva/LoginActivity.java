@@ -1,19 +1,30 @@
 package com.example.challengerva;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
     DBHelper db;
-    Button btn;
-    TextView register;
+
+    TextView userTextView;
+    TextView passTextView;
+    TextView forgotUserTextView;
+    TextView forgotPassTextView;
+    TextView registerTextView;
+
+    EditText userEditText;
+    EditText passEditText;
+
+    Button loginBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,32 +33,50 @@ public class LoginActivity extends AppCompatActivity {
 
         db = new DBHelper(this);
 
-        btn = findViewById(R.id.loginBtn);
-        btn.setOnClickListener(new View.OnClickListener() {
+        userTextView = findViewById(R.id.userTextView);
+        passTextView = findViewById(R.id.passTextView);
+        forgotUserTextView = findViewById(R.id.forgotUserTextView);
+        forgotPassTextView = findViewById(R.id.forgotPassTextView);
+        registerTextView = findViewById(R.id.createAccTextView);
+
+        userEditText = findViewById(R.id.loginUserEditText);
+        passEditText = findViewById(R.id.loginPassEditText);
+
+        loginBtn = findViewById(R.id.loginBtn);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean testUser = db.updateUser("Rick", "rickrock900",
-                        "900", "Rick",
-                        "Johnson", "1998-12-04", "2019-03-06",
-                        "rickster@fake.org", 0, "Y", "coach");
+                String username = userEditText.getText().toString();
+                String password = passEditText.getText().toString();
 
 
-                boolean testTeam = db.updateTeam(1, 2, 92147, 42176, "Rick",
-                        "john", null, null);
 
-                boolean testLB = db.updateLeaderBoard(1, "Rick", 20, "Rick", 1);
+                if (!hasAllFields(username,password))
+                {
+                    RegisterActivity.alertMessage(LoginActivity.this,"Missing Fields",
+                            "Please fill in every required field");
+                }
+                Cursor userData = db.getUserData(username,password);
 
-                boolean testPart = db.updateParticipates("Rick", 2, "Rick", 21, "2019-06-24");
+                if (hasAllFields(username, password) && userData.getCount() == 0)
+                {
+                    RegisterActivity.alertMessage(LoginActivity.this, "Invalid Credentials",
+                            "We could not find an account with this username or password");
+                    passEditText.setText("");
+                }
+                else if (userData.getCount() == 1)
+                {
+                    Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_LONG).show();
+                    Cursor cursor = db.getUserData(username, password);
+                }
 
-                if (testUser && testTeam && testLB && testPart) {
-                    Toast.makeText(LoginActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                } else
-                    Toast.makeText(LoginActivity.this, "Data Not Inserted", Toast.LENGTH_LONG).show();
+
+
+
             }
         });
 
-        register = findViewById(R.id.createAccTextView);
-        register.setOnClickListener(new View.OnClickListener() {
+        registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toRegister = new Intent(getApplicationContext(), RegisterActivity.class);
@@ -65,5 +94,14 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static boolean hasAllFields(String user, String pass)
+    {
+        if (user.isEmpty() || pass.isEmpty())
+        {
+            return false;
+        }
+        return true;
     }
 }

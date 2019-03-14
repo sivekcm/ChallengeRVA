@@ -47,6 +47,7 @@ public class CoachActivity extends AppCompatActivity {
 
         viewAll();
 
+
     }
         public void viewAll(){
         viewChallengesBtn = findViewById(R.id.viewAll);

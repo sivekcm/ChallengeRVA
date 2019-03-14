@@ -24,24 +24,24 @@ import java.util.List;
 import static java.util.Calendar.YEAR;
 
 public class ChallengeActivity extends AppCompatActivity{
-    TextView createChallenge;
-    TextView challengeType;
-    TextView registrationType;
+    TextView createChallengeTextView;
+    TextView challengeTypeTextView;
+    TextView registrationTypeTextView;
 
-    Spinner challengeTypeList;
-    Spinner registrationTypeList;
+    Spinner challengeTypeListSpinner;
+    Spinner registrationTypeListSpinner;
 
 
-    EditText challengeName;
-    EditText challengeDescription;
-    EditText difficulty;
-    EditText startDate;
-    EditText endDate;
+    EditText challengeNameEditText;
+    EditText challengeDescriptionEditText;
+    EditText difficultyEditText;
+    EditText startDateEditText;
+    EditText endDateEditText;
 
-    Button submitChallenge;
+    Button submitChallengeBtn;
 
-    DatePickerDialog.OnDateSetListener startListener;
-    DatePickerDialog.OnDateSetListener endListener;
+    DatePickerDialog.OnDateSetListener startDateListener;
+    DatePickerDialog.OnDateSetListener endDateListener;
 
     int startYear, startMonth, startDay;
     int endYear, endMonth, endDay;
@@ -55,39 +55,42 @@ public class ChallengeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createchallenge_form);
 
-        createChallenge = findViewById(R.id.createChallenge);
-        challengeType = findViewById(R.id.challengeTypeTextView);
-        registrationType = findViewById(R.id.registrationTypeTextView);
+        createChallengeTextView = findViewById(R.id.createChallengeTextView);
+        challengeTypeTextView = findViewById(R.id.challengeTypeTextView);
+        registrationTypeTextView = findViewById(R.id.registrationTypeTextView);
 
-        challengeTypeList = findViewById(R.id.ChallengeType);
-        registrationTypeList = findViewById(R.id.registrationType);
+        challengeTypeListSpinner = findViewById(R.id.ChallengeTypeSpinner);
+        registrationTypeListSpinner = findViewById(R.id.registrationTypeSpinner);
 
-        challengeName = findViewById(R.id.challengeName);
-        challengeDescription = findViewById(R.id.challengeDescription);
-        difficulty = findViewById(R.id.difficulty);
-        startDate = findViewById(R.id.startDate);
-        endDate = findViewById(R.id.endDate);
+        challengeNameEditText = findViewById(R.id.challengeNameEditText);
+        challengeDescriptionEditText = findViewById(R.id.challengeDescriptionEditText);
+        difficultyEditText = findViewById(R.id.difficultyEditText);
+        startDateEditText = findViewById(R.id.startDateEditText);
+        endDateEditText = findViewById(R.id.endDateEditText);
 
 
 
-        submitChallenge = findViewById(R.id.ButtonSubmitChallenge);
+        submitChallengeBtn = findViewById(R.id.submitChallengeBtn);
         /*******************************************************************
          * SubmitChallenge button is initialized and when clicked,
          * all the provided information will be checked and validated for
          * accuracy.
-         *******************************************************************/
-        submitChallenge.setOnClickListener(new View.OnClickListener() {
+         * ******************************************************************/
+        submitChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DBHelper db = new DBHelper(ChallengeActivity.this);
 
-                String name = challengeName.getText().toString();
-                String start = startDate.getText().toString();
-                String end = endDate.getText().toString();
-                String type = registrationType.getText().toString();
-                int diff = Integer.parseInt(difficulty.getText().toString());
-                String category = challengeType.getText().toString();
+                String name = challengeNameEditText.getText().toString();
+                String description = challengeDescriptionEditText.getText().toString();
+                String start = startDateEditText.getText().toString();
+                String end = endDateEditText.getText().toString();
+                String type = registrationTypeListSpinner.toString();
+                int diff = Integer.parseInt(difficultyEditText.getText().toString());
+                String category = challengeTypeListSpinner.toString();
                 int count_ID = 0; //default value
+
+
 
                 //convert dates to SQL format for db
                 if(!start.equals("Start Date")){
@@ -99,121 +102,49 @@ public class ChallengeActivity extends AppCompatActivity{
 
                 //Validate the challenge name for a challenge
                 if(!nameIsValid(name)){
-                    alertMessage("Challenge Name Not Found",
+                    AlertMessage.alertMessage(ChallengeActivity.this,"Challenge Name Not Found",
                             "Please enter a name for the created challenge.");
                 }
 
                 //Validate the difficulty of the challenge
-                if(!difficultyIsValid(diff)){
-                    alertMessage("Difficulty Out Of Range",
+                else if(!difficultyIsValid(diff))
+                {
+                    AlertMessage.alertMessage(ChallengeActivity.this,"Difficulty Out Of Range",
                             "Please enter a difficulty level 1 to 3.");
                 }
 
                 //Add newly created challenge object to database based on type selection
-                else{
+                else
+                {
                     boolean success = false;
-                    if(registrationTypeList.getSelectedItem().toString() == "Indidivudal"){
-                        if(challengeTypeList.getSelectedItem().toString() == "Cardio"){
-                            success = db.insertChallenge(count_ID++,
-                                    name,
-                                    "",
-                                    start,
-                                    end,
-                                    type,
-                                    diff,
-                                    "Individual",
-                                    "Cardio",
-                                    "",
-                                    "");
 
-                        }
-                        else if(challengeTypeList.getSelectedItem().toString() == "Lifting"){
-                            success = db.insertChallenge(count_ID++,
+                    success = db.insertChallenge(
                                     name,
-                                    "",
+                                    "1",
                                     start,
                                     end,
-                                    type,
+                                    challengeTypeListSpinner.getSelectedItem().toString(),
                                     diff,
-                                    "Individual",
-                                    "Lifting",
-                                    "",
-                                    "");
-                        }
-                        else if(challengeTypeList.getSelectedItem().toString() == "Health"){
-                            success = db.insertChallenge(count_ID++,
-                                    name,
-                                    "",
-                                    start,
-                                    end,
-                                    type,
-                                    diff,
-                                    "Individual",
-                                    "Health",
-                                    "",
-                                    "");
-                        }
-                    }
-                    else if(registrationTypeList.getSelectedItem().toString() == "Team"){
-                        if(challengeTypeList.getSelectedItem().toString() == "Cardio"){
-                            success = db.insertChallenge(count_ID++,
-                                    name,
-                                    "",
-                                    start,
-                                    end,
-                                    type,
-                                    diff,
-                                    "Team",
-                                    "Cardio",
-                                    "",
-                                    "");
+                                    registrationTypeListSpinner.getSelectedItem().toString(),
+                                    "open",
+                                    "1",
+                                    description);
 
-                        }
-                        else if(challengeTypeList.getSelectedItem().toString() == "Lifting"){
-                            success = db.insertChallenge(count_ID++,
-                                    name,
-                                    "",
-                                    start,
-                                    end,
-                                    type,
-                                    diff,
-                                    "Team",
-                                    "Lifting",
-                                    "",
-                                    "");
-                        }
-                        else if(challengeTypeList.getSelectedItem().toString() == "Health"){
-                            success = db.insertChallenge(count_ID++,
-                                    name,
-                                    "",
-                                    start,
-                                    end,
-                                    type,
-                                    diff,
-                                    "Team",
-                                    "Health",
-                                    "",
-                                    "");
-                        }
-
-                        if(success){
+                    if(success){
                             Toast.makeText(ChallengeActivity.this,
                                     "Challenge Successfully Created!",
                                     Toast.LENGTH_LONG).show();
-                        }
-                        else{
+                    }
+                    else {
                             Toast.makeText(ChallengeActivity.this,
                                     "Challenge Creation Failed. Please Try Again.",
                                     Toast.LENGTH_LONG).show();
-                        }
                     }
-
                 }
             }
         });
 
-        startDate = findViewById(R.id.startDate);
-        startDate.setOnClickListener(new View.OnClickListener() {
+        startDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -225,7 +156,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
                 //create a dialog box when choosing start date
                 DatePickerDialog startDialog = new DatePickerDialog(ChallengeActivity.this,
-                        startListener,
+                        startDateListener,
                         startYear,
                         startMonth,
                         startDay);
@@ -236,8 +167,7 @@ public class ChallengeActivity extends AppCompatActivity{
             }
         });
 
-        endDate = findViewById(R.id.startDate);
-        endDate.setOnClickListener(new View.OnClickListener() {
+        endDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //default to today's date for start
@@ -248,7 +178,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
                 //create a dialog box when choosing end date
                 DatePickerDialog endDialog = new DatePickerDialog(ChallengeActivity.this,
-                        endListener,
+                        endDateListener,
                         endYear,
                         endMonth,
                         endDay);
@@ -259,20 +189,23 @@ public class ChallengeActivity extends AppCompatActivity{
         });
 
         //define default onDateSetListener obj
-        startListener = new DatePickerDialog.OnDateSetListener() {
+        startDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 String stringStartDate = month + "/" + day + "/" + year;
-                startDate.setText(stringStartDate);
+                startDateEditText.setText(stringStartDate);
             }
         };
-        endListener = new DatePickerDialog.OnDateSetListener() {
+
+        //define default onDateSetListener obj
+        endDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                String stringEndDate = month + "/" + day + "/" + year;
-                endDate.setText(stringEndDate);
+                String stringStartDate = month + "/" + day + "/" + year;
+                endDateEditText.setText(stringStartDate);
             }
         };
+
     }
 
     /**
@@ -326,19 +259,4 @@ public class ChallengeActivity extends AppCompatActivity{
         return false;
     }
 
-    /****************************************************************************
-     * alertMessage method implemented from RegisterActivity
-     * @param title the title of the message
-     * @param message the content of the message
-     *
-     * Creates a popup message on the screen with information.
-     */
-    public void alertMessage(String title, String message)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message);
-        builder.setTitle(title);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }
