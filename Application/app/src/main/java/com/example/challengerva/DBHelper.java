@@ -745,6 +745,17 @@ public class DBHelper extends SQLiteOpenHelper
         return false;
     }
 
+    /****************************************************
+     * getChallengeData()
+     * @return A cursor object containing every challenge in the database
+     */
+    public Cursor getChallengeData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge",new String[] {});
+        return cursor;
+    }
+
     /******************************************************
      * getChallengeData(int challengeID)
      * @param challengeID
@@ -754,17 +765,6 @@ public class DBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?",new String[] {Integer.valueOf(challengeID).toString()});
-        return cursor;
-    }
-
-    /****************************************************
-     * getChallengeData()
-     * @return A cursor object containing every challenge in the database
-     */
-    public Cursor getChallengeData()
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge",new String[] {});
         return cursor;
     }
 
@@ -779,5 +779,46 @@ public class DBHelper extends SQLiteOpenHelper
         Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE coach = ?",new String[] {coach});
         return cursor;
     }
+
+    /***************************************************
+     * getUserData() method
+     * @return A cursor object containing every user in the user table
+     */
+    public Cursor getUserData()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM User", new String[] {});
+        return cursor;
+    }
+
+    /******************************************************
+     * getUserData(String username)
+     * @param username: the username of the user
+     * @return A cursor object containing the user with the specified username from the user table
+     */
+    public Cursor getUserData(String username)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE username = ?", new String[] {username});
+        return cursor;
+    }
+
+    /*****************************************************
+     * getUserData(String username, String password)
+     * @param username: the username of the user
+     * @param password: the password of the user
+     * @return A cursor object containing the user with the specified username and password
+     */
+    public Cursor getUserData(String username, String password)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE username = ? AND password = ?",
+                new String[] {username, password});
+        return cursor;
+    }
+
+
+
+
 }
 
