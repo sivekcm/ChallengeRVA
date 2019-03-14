@@ -105,7 +105,7 @@ public class DBHelper extends SQLiteOpenHelper
         //Stores challenge data
         //Unique challenge ID
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_CHALLENGE + "(" +
-                "challenge_ID INTEGER PRIMARY KEY, " +
+                "challenge_ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 "name TEXT NOT NULL, " +
                 "coach TEXT NOT NULL, " +
                 "start_date DATE NOT NULL, " +
@@ -113,9 +113,7 @@ public class DBHelper extends SQLiteOpenHelper
                 "type TEXT NOT NULL, " +
                 "difficulty TEXT NOT NULL, " +
                 "team_or_single TEXT NOT NULL, " +
-                "availabiility TEXT NOT NULL, " +
-                "min_age INTEGER, " +
-                "max_age INTEGER, " +
+                "availability TEXT NOT NULL, " +
                 "health_hazards TEXT, " +
                 "description TEXT, " +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
@@ -254,14 +252,13 @@ public class DBHelper extends SQLiteOpenHelper
      * format "YYYY-MM-DD", otherwise insert will fail. No parameters are
      * allowed to be null in this method.
      */
-    public boolean insertChallenge(int challengeID, String name, String coach,
+    public boolean insertChallenge(String name, String coach,
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
                                    String hazards, String description)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(CHAL_COL1, challengeID);
         cv.put(CHAL_COL2, name);
         cv.put(CHAL_COL3, coach);
         cv.put(CHAL_COL4, startDate);
@@ -457,8 +454,6 @@ public class DBHelper extends SQLiteOpenHelper
      * @param diff: the difficulty
      * @param teamOrSingle: if challenge is team or single
      * @param availability: if challenge is open or closed
-     * @param minAge: minimum age for challenge
-     * @param maxAge: max age for challinge
      * @param hazards: possible health hazards
      * @param description: description of challenge
      * @return false if update fails, true if data is updated successfully
@@ -470,7 +465,7 @@ public class DBHelper extends SQLiteOpenHelper
     public boolean updateChallenge(int oldChallengeID, int newChallengeID, String name, String coach,
                                    String startDate, String endDate, String type,
                                    String diff, String teamOrSingle, String availability,
-                                   int minAge, int maxAge, String hazards, String description)
+                                   String hazards, String description)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();

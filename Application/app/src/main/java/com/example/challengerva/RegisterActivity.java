@@ -221,8 +221,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        //Initializes date selection textView
-        dateTextView = findViewById(R.id.registerDateTextView);
         dateTextView.setOnClickListener(new View.OnClickListener() {
             /********************************************
              * date onClick

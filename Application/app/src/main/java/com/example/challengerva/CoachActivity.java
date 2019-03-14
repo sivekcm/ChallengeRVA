@@ -46,19 +46,18 @@ public class CoachActivity extends AppCompatActivity {
 
         viewChallengesBtn = findViewById(R.id.viewAll);
 
-        public void viewAll(){
-            viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
-                DBHelper db = new DBHelper(CoachActivity.this);
-                @Override
-                public void onClick(View v) {
-                    Cursor res = db.getChallengeData();
-                    if (res.getCount() == 0){
-                        //error message
-                        return;
-                    }
-                    StringBuffer buffer = new StringBuffer();
+        viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
+            DBHelper db = new DBHelper(CoachActivity.this);
+            @Override
+            public void onClick(View v) {
+                Cursor res = db.getChallengeData();
+                if (res.getCount() == 0){
+                    //error message
+                    return;
                 }
-            });
-        }
+                StringBuffer buffer = new StringBuffer();
+            }
+        });
+
     }
 }
