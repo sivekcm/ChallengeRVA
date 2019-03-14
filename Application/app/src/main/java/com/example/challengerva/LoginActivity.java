@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText passEditText;
 
     Button loginBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = passEditText.getText().toString();
 
 
+
                 if (!hasAllFields(username,password))
                 {
                     RegisterActivity.alertMessage(LoginActivity.this,"Missing Fields",
@@ -70,18 +72,28 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
             }
         });
 
         registerTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toRegister = new Intent(getApplicationContext(),RegisterActivity.class);
+                Intent toRegister = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(toRegister);
 
             }
         });
 
+        TextView forgotUser = findViewById(R.id.forgotUserTextView);
+        forgotUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toForgotUser = new Intent(getApplicationContext(), ForgotUserActivity.class);
+                startActivity(toForgotUser);
+
+            }
+        });
     }
 
     public static boolean hasAllFields(String user, String pass)

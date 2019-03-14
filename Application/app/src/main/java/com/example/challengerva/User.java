@@ -180,7 +180,9 @@ public class User {
         username = newUsername;
         return true;
     }
-
+    public String getUsername(){
+        return username;
+    }
     /*
     Sets the Password to something new
     @Param newPassword the new Password
