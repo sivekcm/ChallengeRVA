@@ -36,7 +36,7 @@ public class CoachActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coach_profile);
-        coachNameTxtView = (TextView) findViewById(R.id.coachNameTxtView);
+        coachNameTxtView = findViewById(R.id.coachNameTxtView);
         statusTxtView = findViewById(R.id.statusTxtView);
         coachUserNameTxtView = findViewById(R.id.coachUserNameTxtView);
 
@@ -45,10 +45,10 @@ public class CoachActivity extends AppCompatActivity {
         changeDisplayNameBtn = findViewById(R.id.changeDisplayNameBtn);
         createChallengeBtn = findViewById(R.id.createChallengeBtn);
 
-        ViewAll();
+        viewAll();
 
     }
-        public void ViewAll(){
+        public void viewAll(){
         viewChallengesBtn = findViewById(R.id.viewAll);
             viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
                     DBHelper db = new DBHelper(CoachActivity.this);
@@ -62,8 +62,11 @@ public class CoachActivity extends AppCompatActivity {
                           StringBuffer buffer = new StringBuffer();
 
                          User test = new User();
+                         test.username = "test123";
+                         test.firstName = "test";
+
                          while (res.moveToNext()) {
-                             if (res.getString(1).equals(test)) {
+                             if (res.getString(1).equals(test.username)) {
                                  buffer.append("Challenge Name:" + res.getString(1) + "\n");
                                  buffer.append("Challenge Description:" + res.getString(10) + "\n");
                                  buffer.append("Start Date:" + res.getString(3) + "End Date" + res.getString(4) + "\n");
