@@ -31,24 +31,26 @@ public class User {
     //Constructor
     public User(Cursor userCursor)
     {
-        setUsername(userCursor.getString(0));
-        oldUsername = this.username;
-        setPassword(userCursor.getString(1));
+        while (userCursor.moveToNext()) {
+            setUsername(userCursor.getString(0));
+            oldUsername = this.username;
+            setPassword(userCursor.getString(1));
 
-        this.firstName = userCursor.getString(2);
-        this.lastName = userCursor.getString(3);
-        this.birthDate = userCursor.getString(4);
-        this.joinDate = userCursor.getString(5);
-        this.email = userCursor.getString(6);
-        this.challengesCompleted = userCursor.getInt(7);
+            this.firstName = userCursor.getString(2);
+            this.lastName = userCursor.getString(3);
+            this.birthDate = userCursor.getString(4);
+            this.joinDate = userCursor.getString(5);
+            this.email = userCursor.getString(6);
+            this.challengesCompleted = userCursor.getInt(7);
 
-        if(userCursor.getString(8) == "true")
-            this.isPrivate = true;
-        else this.isPrivate = false;
+            if (userCursor.getString(8).equals("true"))
+                this.isPrivate = true;
+            else this.isPrivate = false;
 
-        if(userCursor.getString(9) == "coach")
-            this.accountType = UserType.COACH;
-        else this.accountType = UserType.ATHLETE;
+            if (userCursor.getString(9).equals("coach"))
+                this.accountType = UserType.COACH;
+            else this.accountType = UserType.ATHLETE;
+        }
 
 
 
@@ -178,7 +180,9 @@ public class User {
         username = newUsername;
         return true;
     }
-
+    public String getUsername(){
+        return username;
+    }
     /*
     Sets the Password to something new
     @Param newPassword the new Password
