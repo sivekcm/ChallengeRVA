@@ -39,7 +39,11 @@
     <string name="register_date">Pick a Date</string>
 
     <!--Challange Search Below -->
-    <string name ="search_challenges_header"> Search Challenges by...</string>
+    <string name="search_challenges_header"> Search Challenges by...</string>
     <string name="search_challenges_button">Search Challenges!</string>
+    <string name="search_challenges_coach">Coach Username</string>
+
+    <!--Forgot Below-->
+    <string name="forgot_username_body">Forgot your username? Enter your email to reset it.</string>
 
 </resources>
