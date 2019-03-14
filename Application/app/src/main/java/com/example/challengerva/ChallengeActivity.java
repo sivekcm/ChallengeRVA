@@ -82,6 +82,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 DBHelper db = new DBHelper(ChallengeActivity.this);
 
                 String name = challengeName.getText().toString();
+                String coach = User.username;
                 String start = startDate.getText().toString();
                 String end = endDate.getText().toString();
                 String type = registrationType.getText().toString();
