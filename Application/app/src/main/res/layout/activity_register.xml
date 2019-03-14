@@ -168,26 +168,22 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/registerUserTextView"
-        app:layout_constraintTop_toBottomOf="@+id/registerDescTextView" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/registerPassEditText"
+        app:layout_constraintStart_toEndOf="@+id/registerUserTextView" />
 
     <EditText
         android:id="@+id/registerPassEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="76dp"
         android:ems="10"
         android:inputType="textPassword"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@+id/registerPassTextView"
-        app:layout_constraintTop_toBottomOf="@+id/registerDescTextView" />
+        tools:layout_editor_absoluteX="162dp"
+        tools:layout_editor_absoluteY="178dp" />
 
     <EditText
         android:id="@+id/registerRePassEditText"

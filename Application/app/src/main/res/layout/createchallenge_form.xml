@@ -31,12 +31,6 @@
 
         </EditText>
 
-        <EditText
-            android:id="@+id/CoachAssigned"
-            android:layout_height="wrap_content"
-            android:hint="@string/coachAssigned"
-            android:layout_width="fill_parent">
-        </EditText>
 
         <EditText
             android:id="@+id/challengeDescription"

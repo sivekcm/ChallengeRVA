@@ -37,10 +37,8 @@ public class DBHelper extends SQLiteOpenHelper
     public static final String CHAL_COL7 = "difficulty";
     public static final String CHAL_COL8 = "team_or_single";
     public static final String CHAL_COL9 = "availability";
-    public static final String CHAL_COL10 = "min_age";
-    public static final String CHAL_COL11 = "max_age";
-    public static final String CHAL_COL12 = "health_hazards";
-    public static final String CHAL_COL13 = "description";
+    public static final String CHAL_COL10 = "health_hazards";
+    public static final String CHAL_COL11 = "description";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -246,8 +244,6 @@ public class DBHelper extends SQLiteOpenHelper
      * @param diff: the difficulty
      * @param teamOrSingle: if challenge is team or single
      * @param availability: if challenge is open or closed
-     * @param minAge: minimum age for challenge
-     * @param maxAge: max age for challing
      * @param hazards: possible health hazards
      * @param description: description of challenge
      * @return false if insert fails, true if data is inserted successfully
@@ -260,8 +256,8 @@ public class DBHelper extends SQLiteOpenHelper
      */
     public boolean insertChallenge(int challengeID, String name, String coach,
                                    String startDate, String endDate, String type,
-                                   String diff, String teamOrSingle, String availability,
-                                   int minAge, int maxAge, String hazards, String description)
+                                   int diff, String teamOrSingle, String availability,
+                                   String hazards, String description)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -274,10 +270,8 @@ public class DBHelper extends SQLiteOpenHelper
         cv.put(CHAL_COL7, diff);
         cv.put(CHAL_COL8, teamOrSingle);
         cv.put(CHAL_COL9, availability);
-        cv.put(CHAL_COL10, minAge);
-        cv.put(CHAL_COL11, maxAge);
-        cv.put(CHAL_COL12, hazards);
-        cv.put(CHAL_COL13, description);
+        cv.put(CHAL_COL10, hazards);
+        cv.put(CHAL_COL11, description);
 
         long num = db.insert(TABLE_CHALLENGE,null,cv);
         if (num == -1)
@@ -489,10 +483,8 @@ public class DBHelper extends SQLiteOpenHelper
         cv.put(CHAL_COL7, diff);
         cv.put(CHAL_COL8, teamOrSingle);
         cv.put(CHAL_COL9, availability);
-        cv.put(CHAL_COL10, minAge);
-        cv.put(CHAL_COL11, maxAge);
-        cv.put(CHAL_COL12, hazards);
-        cv.put(CHAL_COL13, description);
+        cv.put(CHAL_COL10, hazards);
+        cv.put(CHAL_COL11, description);
         long result = db.update(TABLE_CHALLENGE, cv, "challenge_id = ?", new String[] {Integer.valueOf(oldChallengeID).toString()});
         if (result > 0)
         {
