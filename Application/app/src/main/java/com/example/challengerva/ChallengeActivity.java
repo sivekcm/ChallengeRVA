@@ -102,14 +102,14 @@ public class ChallengeActivity extends AppCompatActivity{
 
                 //Validate the challenge name for a challenge
                 if(!nameIsValid(name)){
-                    alertMessage("Challenge Name Not Found",
+                    AlertMessage.alertMessage(ChallengeActivity.this,"Challenge Name Not Found",
                             "Please enter a name for the created challenge.");
                 }
 
                 //Validate the difficulty of the challenge
                 else if(!difficultyIsValid(diff))
                 {
-                    alertMessage("Difficulty Out Of Range",
+                    AlertMessage.alertMessage(ChallengeActivity.this,"Difficulty Out Of Range",
                             "Please enter a difficulty level 1 to 3.");
                 }
 
@@ -259,19 +259,4 @@ public class ChallengeActivity extends AppCompatActivity{
         return false;
     }
 
-    /****************************************************************************
-     * alertMessage method implemented from RegisterActivity
-     * @param title the title of the message
-     * @param message the content of the message
-     *
-     * Creates a popup message on the screen with information.
-     */
-    public void alertMessage(String title, String message)
-    {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(message);
-        builder.setTitle(title);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }

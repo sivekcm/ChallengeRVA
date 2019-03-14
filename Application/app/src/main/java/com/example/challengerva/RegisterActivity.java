@@ -152,7 +152,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!hasAllFields(username,password,rePassword,email,firstName,lastName,birthDate))
                 {
                     //Popup message warning user of missing information
-                    alertMessage(RegisterActivity.this, "Empty Fields", "One or more of the required fields" +
+                    AlertMessage.alertMessage(RegisterActivity.this, "Empty Fields", "One or more of the required fields" +
                             "were left blank. Please fill in all required fields");
                 }
 
@@ -160,14 +160,14 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (!passMatch(password,rePassword))
                 {
                     //Popup message warning user passwords do not match
-                    alertMessage(RegisterActivity.this, "Passwords do not match", "The passwords you entered do not match,");
+                    AlertMessage.alertMessage(RegisterActivity.this, "Passwords do not match", "The passwords you entered do not match,");
                 }
 
                 //Checks that the username, password, and age match the minimum requirements to register as a user.
                 else if (!userIsValid(username) || !passIsValid(password) || !ageIsValid(currentDate,birthDate))
                 {
                     //Popup warning user that one or more fields do not meet minimum requirements
-                    alertMessage(RegisterActivity.this, "Invalid fields", "One or more fields do not meet the minimum requirements." +
+                    AlertMessage.alertMessage(RegisterActivity.this, "Invalid fields", "One or more fields do not meet the minimum requirements." +
                             "Please read the minimum requirements for a field by clicking on the *");
                 }
 
@@ -175,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (!db.userIsAvail(username))
                 {
                     //Popup message warning user that the username is already taken
-                    alertMessage(RegisterActivity.this,"Username Taken", "The username entered is already " +
+                    AlertMessage.alertMessage(RegisterActivity.this,"Username Taken", "The username entered is already " +
                             "taken, please enter a new one");
                 }
 
@@ -183,7 +183,7 @@ public class RegisterActivity extends AppCompatActivity {
                 else if (!emailIsValid(email))
                 {
                     //popup message warning user that the email is not valid
-                    alertMessage(RegisterActivity.this, "Invalid Email", "The provided email address does not exist." +
+                    AlertMessage.alertMessage(RegisterActivity.this, "Invalid Email", "The provided email address does not exist." +
                             "Please enter a valid email address");
                 }
 
@@ -425,22 +425,6 @@ public class RegisterActivity extends AppCompatActivity {
         {
             return true;
         }
-    }
-
-    /****************************************************************************
-     * alertMessage method
-     * @param title the title of the message
-     * @param message the content of the message
-     *
-     * Creates a popup message on the screen with information.
-     */
-    public static void alertMessage(Context context, String title, String message)
-    {
-        AlertDialog.Builder alert = new AlertDialog.Builder(context);
-        alert.setCancelable(true);
-        alert.setTitle(title);
-        alert.setMessage(message);
-        alert.show();
     }
 
 
