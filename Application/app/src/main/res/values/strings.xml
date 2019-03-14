@@ -5,7 +5,7 @@
     <string name="password">Password</string>
     <string name="forgot_pass">Forgot Password?</string>
     <string name="new_account">No account? Create one here!</string>
- 
+
     <!--Registration Activity strings-->
     <string name="register_intro">Fill in this form to register! Required fields are marked with *</string>
     <string name="register_title">Register</string>
@@ -37,5 +37,13 @@
     <string name="registrationType2">Team</string>
     <string name="register_re_password">Re-enter password *</string>
     <string name="register_date">Pick a Date</string>
+
+    <!--Challange Search Below -->
+    <string name="search_challenges_header"> Search Challenges by...</string>
+    <string name="search_challenges_button">Search Challenges!</string>
+    <string name="search_challenges_coach">Coach Username</string>
+
+    <!--Forgot Below-->
+    <string name="forgot_username_body">Forgot your username? Enter your email to reset it.</string>
 
 </resources>

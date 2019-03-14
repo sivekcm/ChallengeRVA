@@ -14,6 +14,7 @@ public class LoginActivity extends AppCompatActivity {
     DBHelper db;
     Button btn;
     TextView register;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,19 +32,16 @@ public class LoginActivity extends AppCompatActivity {
                         "rickster@fake.org", 0, "Y", "coach");
 
 
-
                 boolean testTeam = db.updateTeam(1, 2, 92147, 42176, "Rick",
-                        "john",null,null);
+                        "john", null, null);
 
-                boolean testLB = db.updateLeaderBoard(1, "Rick", 20,"Rick",1);
+                boolean testLB = db.updateLeaderBoard(1, "Rick", 20, "Rick", 1);
 
                 boolean testPart = db.updateParticipates("Rick", 2, "Rick", 21, "2019-06-24");
 
-                if (testUser  && testTeam && testLB && testPart)
-                {
+                if (testUser && testTeam && testLB && testPart) {
                     Toast.makeText(LoginActivity.this, "Data Inserted", Toast.LENGTH_LONG).show();
-                }
-                else
+                } else
                     Toast.makeText(LoginActivity.this, "Data Not Inserted", Toast.LENGTH_LONG).show();
             }
         });
@@ -52,11 +50,20 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toRegister = new Intent(getApplicationContext(),RegisterActivity.class);
+                Intent toRegister = new Intent(getApplicationContext(), RegisterActivity.class);
                 startActivity(toRegister);
 
             }
         });
 
+        TextView forgotUser = findViewById(R.id.forgotUserTextView);
+        forgotUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toForgotUser = new Intent(getApplicationContext(), ForgotUserActivity.class);
+                startActivity(toForgotUser);
+
+            }
+        });
     }
 }
