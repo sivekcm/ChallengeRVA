@@ -102,15 +102,15 @@ public class ChallengeActivity extends AppCompatActivity{
 
                 //Validate the challenge name for a challenge
                 if(!nameIsValid(name)){
-                    AlertMessage.alertMessage(ChallengeActivity.this,"Challenge Name Not Found",
-                            "Please enter a name for the created challenge.");
+                    AlertMessage.alertMessage("Challenge Name Not Found",
+                            "Please enter a name for the created challenge.", ChallengeActivity.this);
                 }
 
                 //Validate the difficulty of the challenge
                 else if(!difficultyIsValid(diff))
                 {
-                    AlertMessage.alertMessage(ChallengeActivity.this,"Difficulty Out Of Range",
-                            "Please enter a difficulty level 1 to 3.");
+                    AlertMessage.alertMessage("Difficulty Out Of Range",
+                            "Please enter a difficulty level 1 to 3.", ChallengeActivity.this);
                 }
 
                 //Add newly created challenge object to database based on type selection

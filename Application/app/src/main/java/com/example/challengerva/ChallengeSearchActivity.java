@@ -7,7 +7,7 @@ import android.widget.Toast;
 
 public class ChallengeSearchActivity extends AppCompatActivity {
 
-    SearchView searchView
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
