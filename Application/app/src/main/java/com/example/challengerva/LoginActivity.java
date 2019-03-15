@@ -53,15 +53,17 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!hasAllFields(username,password))
                 {
-                    RegisterActivity.alertMessage(LoginActivity.this,"Missing Fields",
-                            "Please fill in every required field");
+                    AlertMessage.AlertMessage("Missing Fields",
+                            "Please fill in every required field",
+                            LoginActivity.this);
                 }
                 Cursor userData = db.getUserData(username,password);
 
                 if (hasAllFields(username, password) && userData.getCount() == 0)
                 {
-                    RegisterActivity.alertMessage(LoginActivity.this, "Invalid Credentials",
-                            "We could not find an account with this username or password");
+                    AlertMessage.AlertMessage("Invalid Credentials",
+                            "We could not find an account with this username or password",
+                            LoginActivity.this);
                     passEditText.setText("");
                 }
                 else if (userData.getCount() == 1)
