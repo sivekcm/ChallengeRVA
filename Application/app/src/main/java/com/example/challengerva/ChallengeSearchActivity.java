@@ -49,7 +49,7 @@ public class ChallengeSearchActivity extends AppCompatActivity {
             String query = intent.getStringExtra(SearchManager.QUERY);
 
             //process cursor and display results
-            Cursor c = db.getChallengeData(query);
+            
 
         }
     }

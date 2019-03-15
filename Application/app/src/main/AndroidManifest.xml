@@ -10,9 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ForgotUserActivity"></activity>
+        <activity android:name=".ForgotUserActivity"/>
         <activity android:name=".ChallengeSearchActivity" />
-        <activity android:name=".CoachActivity">
+        <activity android:name=".CoachActivity"/>
 
         <activity android:name=".ForgotUserActivity"/>
         <activity android:name=".ChallengeActivity"/>

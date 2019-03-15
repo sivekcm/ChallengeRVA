@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.util.ArrayList;
 
@@ -751,15 +752,28 @@ public class DBHelper extends SQLiteOpenHelper
         return cursor;
     }
 
+    /********************************************************
+     Search database for query relating to user input of
+     challenge name
+     @param: challenge name
+     @return cursor object containing challenge with specified
+     challenge name
+     */
+    public Cursor getChallengeName(){
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery("SELECT * FROM Challenge WHERE name", new String[]{});
+        return cursor;
+    }
+
     /******************************************************
      * getChallengeData(int challengeID)
      * @param challengeID
      * @return A cursor object containing the challenge with the specified challengeID
      */
-    public Cursor getChallengeData(int challengeID)
+    public Cursor getChallengeID(int challengeID)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?",new String[] {Integer.valueOf(challengeID).toString()});
+        Cursor cursor = db.rawQuery("SELECT id FROM Challenge WHERE challengeID",new String[] {Integer.valueOf(challengeID).toString()});
         return cursor;
     }
 
@@ -768,10 +782,10 @@ public class DBHelper extends SQLiteOpenHelper
      * @return A cursor object containing every challenge hosted by the specified coach
      *
      */
-    public Cursor getChallengeData(String coach)
+    public Cursor getChallengeCoach(String coach)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE coach = ?",new String[] {coach});
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE coach",new String[] {coach});
         return cursor;
     }
 
