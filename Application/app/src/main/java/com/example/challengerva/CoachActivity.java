@@ -24,46 +24,77 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+/*****************************************************************************
+ * Class Coach Activity
+ *
+ * @version 3/15/2019
+ *
+ * Allows coach to manage profile
+ */
+
 public class CoachActivity extends AppCompatActivity {
+    //Declares Text View
     TextView coachNameTxtView;
     TextView statusTxtView;
     TextView coachUserNameTxtView;
 
+    //Declares Buttons
     Button changeUserNameBtn;
     Button changePasswordBtn;
     Button changeDisplayNameBtn;
     Button createChallengeBtn;
     Button viewChallengesBtn;
 
+    /*******************************
+     * OnCreate
+     * @param savedInstanceState
+     *
+     * Runs the Activity upon launch
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coach_profile);
+
+        //Initializes textViews to their respective UI elements
         coachNameTxtView = (TextView)findViewById(R.id.coachNameTxtView);
         statusTxtView = (TextView)findViewById(R.id.statusTxtView);
         coachUserNameTxtView = (TextView)findViewById(R.id.coachUserNameTxtView);
-
+        //Initializes Buttons to their respective UI elements
         changeUserNameBtn = (Button)findViewById(R.id.changeUserNameBtn);
         changePasswordBtn = (Button)findViewById(R.id.changeUserNameBtn);
         changeDisplayNameBtn = (Button)findViewById(R.id.changeDisplayNameBtn);
         createChallengeBtn = (Button)findViewById(R.id.createChallengeBtn);
         viewChallengesBtn = (Button)findViewById(R.id.viewAll);
 
+        //Initializing a test user object
         final User test = new User();
         test.setUsername("test");
         test.firstName = "test";
-
+        //Setting the name and user name text views to the coach name and user name
         coachNameTxtView.setText(test.firstName);
         coachUserNameTxtView.setText(test.username);
-
+        //Creating new instance of DBHelper to use database methods
         final DBHelper challenge = new DBHelper(CoachActivity.this);
+        //Inserting test challenge information 
         challenge.insertChallenge("testChall", "teat", "2019", "2019", "cardio", 4, "team", "availible", "none", "basic test challenge");
 
     }
+    /**
+     * view all method - displays all challenges lead by the coach using alert message
+     * @param : none
+     * @return : none
+     */
         public void viewAll(){
         viewChallengesBtn = findViewById(R.id.viewAll);
             viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
                     DBHelper db = new DBHelper(CoachActivity.this);
+                /**
+                 * OnClick method - based on Chris's RegisterActivity
+                 * @param : View v
+                 * @return the input date in the format "YYYY-MM-DD"
+                 * If the coach has challenges with his/her user name, then display all of their challenges
+                 */
                     @Override
                     public void onClick(View v) {
                         Cursor res = db.getChallengeData();
@@ -77,36 +108,38 @@ public class CoachActivity extends AppCompatActivity {
                          test.username = "test123";
                          test.firstName = "test";
 
-                         while (res.moveToNext()) {
-                             if (res.getString(1).equals(test.username)) {
-                                 buffer.append("Challenge Name:" + res.getString(1) + "\n");
-                                 buffer.append("Challenge Description:" + res.getString(10) + "\n");
-                                 buffer.append("Start Date:" + res.getString(3) + "End Date" + res.getString(4) + "\n");
-                             }
-                             showMessage("Challenges", buffer.toString());
-                         }
-                while (res.moveToNext()) {
-                    if (res.getString(2).equals(test.getUsername())) {
-                        buffer.append("Challenge Name: " + res.getString(1) + "\n");
-                        buffer.append("Challenge Description: " + res.getString(10) + "\n");
-                        buffer.append("Start Date: " + res.getString(3) + "End Date" + res.getString(4) + "\n");
-                        buffer.append("type: " + res.getString(5)+"\n");
-                        buffer.append("difficulty: " + res.getString(6)+"\n");
-                        buffer.append("Team or sinlge: "+ res.getString(7)+"\n");
-                        buffer.append("Availibility: " + res.getString(8)+"\n");
-                        buffer.append("Hazards: " + res.getString(9)+ "\n");
+                        while (res.moveToNext()) {
+                         if (res.getString(2).equals(test.getUsername())) {
+                                buffer.append("Challenge Name: " + res.getString(1) + "\n");
+                                buffer.append("Challenge Description: " + res.getString(10) + "\n");
+                                buffer.append("Start Date: " + res.getString(3) + "End Date" + res.getString(4) + "\n");
+                                buffer.append("type: " + res.getString(5)+"\n");
+                                buffer.append("difficulty: " + res.getString(6)+"\n");
+                                buffer.append("Team or sinlge: "+ res.getString(7)+"\n");
+                                buffer.append("Availibility: " + res.getString(8)+"\n");
+                                buffer.append("Hazards: " + res.getString(9)+ "\n");
+                            }
+                            showMessage("Challenges", buffer.toString());
                     }
-                    showMessage("Challenges", buffer.toString());
                 }
+            });
             }
-        });
-        }
-
+    /**
+     * Open challenge activity method
+     * @param : none
+     * @return : none
+     * Takes the user to the challenge activity when they click on the "make a challenge" button
+     */
     public void openChallengeActivity(){
         Intent intent = new Intent(this, ChallengeActivity.class);
         startActivity(intent);
     }
-
+    /**
+     * Show message method
+     * @param : String title and String metssage
+     * @return : none
+     * Holds the alert dialog builder to show the coach thier challenges
+     */
     public void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
