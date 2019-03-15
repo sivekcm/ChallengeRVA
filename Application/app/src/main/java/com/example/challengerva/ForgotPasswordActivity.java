@@ -1,6 +1,5 @@
 package com.example.challengerva;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,18 +9,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ForgotUserActivity extends AppCompatActivity {
+public class ForgotPasswordActivity extends AppCompatActivity {
 
     EditText inputEmail;
     Button emailButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forgot_user);
+        setContentView(R.layout.activity_forgot_password);
+
         final Context thisContext = this;
 
-        inputEmail = findViewById(R.id.forgotUsernameEmailEditText);
-        emailButton = findViewById(R.id.forgotUsernameEmailButton);
+        inputEmail = findViewById(R.id.forgotPasswordEditText);
+        emailButton = findViewById(R.id.forgotPasswordUsernameButton);
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,9 +39,9 @@ public class ForgotUserActivity extends AppCompatActivity {
                     AlertMessage.AlertMessage("User not found", "There is no account associated with this email.", thisContext);
                 else {
 
-                    Intent changeUsernameIntent = new Intent(getApplicationContext(), ChangeUsernameActivity.class);
-                    changeUsernameIntent.putExtra("userEmail", email);
-                    startActivity(changeUsernameIntent);
+                    Intent changePasswordIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                    changePasswordIntent.putExtra("userEmail", email);
+                    startActivity(changePasswordIntent);
 
                 }
             }

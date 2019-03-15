@@ -240,7 +240,7 @@ public class DBHelper extends SQLiteOpenHelper
      * @param coach: the username (not name) of the user that is the coach of the challenge
      * @param startDate: start date of challenge "YYYY-MM-DD"
      * @param endDate: end date of challenge "YYYY-MM-DD"
-     * @param type: type, e.g Strength,Cardio, etc
+     * @param type: type, e.g Strength, Cardio, etc
      * @param diff: the difficulty
      * @param teamOrSingle: if challenge is team or single
      * @param availability: if challenge is open or closed

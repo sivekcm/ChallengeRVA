@@ -1,6 +1,7 @@
 package com.example.challengerva;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,7 +17,7 @@ public class ChangeUsernameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_username);
 
         Intent lastIntent = getIntent();
-        String oldUsername = lastIntent.getStringExtra("oldUsername");
+        final String userEmail = lastIntent.getStringExtra("userEmail");
 
         final EditText changeUsernameEditText = findViewById(R.id.changeUsernameEditText);
 
@@ -25,7 +26,7 @@ public class ChangeUsernameActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String newUsername = changeUsernameEditText.getText().toString();
-                DBHelper db = new DBHelper(ChangeUsernameActivity.this)
+                DBHelper db = new DBHelper(ChangeUsernameActivity.this);
 
                 if(!RegisterActivity.userIsValid(newUsername))
                     AlertMessage.AlertMessage("Invalid Username", "Invalid Username, " +
@@ -35,6 +36,12 @@ public class ChangeUsernameActivity extends AppCompatActivity {
                     AlertMessage.AlertMessage("Username Taken", "This Username" +
                             "is already taken. Please choose another.", ChangeUsernameActivity.this);
                 else{
+                    Cursor userCursor = db.userFromEmail(userEmail);
+                    userCursor.moveToFirst();
+                    User updatedUser = new User(userCursor);
+                    updatedUser.setUsername(newUsername);
+                    db.updateUser(updatedUser.getParameters());
+
 
                 }
 

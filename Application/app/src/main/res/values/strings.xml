@@ -43,12 +43,23 @@
     <string name="search_challenges_button">Search Challenges!</string>
     <string name="search_challenges_coach">Coach Username</string>
 
-    <!--Forgot Below-->
+    <!--Forgot Username Below-->
     <string name="forgot_username_body">Forgot your username? Enter your email to reset it.</string>
     <string name="forgot_username_email_button">Reset Username</string>
+
+
+    <!--Change Username Below-->
     <string name="change_username_header">Change Username</string>
     <string name="change_username_body">Enter your new Username</string>
     <string name="change_username_button">Set New Username</string>
 
+    <!--Forgot Password Below-->
+    <string name="forgot_password_body">Forgot your password? Enter your email to reset it.</string>
+    <string name="forgot_password_username_button">Reset Password</string>
+
+    <!--Change Password Below-->
+    <string name="change_password_header">Change Password</string>
+    <string name="change_password_body">Enter your new Password</string>
+    <string name="change_password_button">Set New Password</string>
 
 </resources>
