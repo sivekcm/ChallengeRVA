@@ -745,6 +745,20 @@ public class DBHelper extends SQLiteOpenHelper
         return false;
     }
 
+    /*****************************************************************
+     * userFromEmail method
+     * @param searchEmail: the email to be checked
+     * @return the cursor object created by a query
+     *
+     * This method returns a cursor object after querying a
+     * database with an email
+     */
+    public Cursor userFromEmail(String searchEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT username FROM User WHERE email = ?", new String[] {searchEmail});
+    }
+
     /******************************************************
      * getChallengeData(int challengeID)
      * @param challengeID
