@@ -57,18 +57,8 @@ public class CoachActivity extends AppCompatActivity {
         coachUserNameTxtView.setText(test.username);
 
         final DBHelper challenge = new DBHelper(CoachActivity.this);
-        challenge.insertChallenge(1234, "testChall", "test", "2019", "2019", "cardio", 4, "team", "Availible", "none", "basic test challenge");
+        challenge.insertChallenge("testChall", "teat", "2019", "2019", "cardio", 4, "team", "availible", "none", "basic test challenge");
 
-        viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
-
-<<<<<<< HEAD
-            @Override
-            public void onClick(View v) {
-                Cursor res = challenge.getChallengeData();
-                if (res.getCount() == 0) {
-                    showMessage("Nothing Found", "Nothing Found");
-                    return;
-=======
     }
         public void viewAll(){
         viewChallengesBtn = findViewById(R.id.viewAll);
@@ -95,12 +85,6 @@ public class CoachActivity extends AppCompatActivity {
                              }
                              showMessage("Challenges", buffer.toString());
                          }
-                    }
-
->>>>>>> 6eb6a1b6082e1fb383c088414664802c06e9c2ae
-                }
-                StringBuffer buffer = new StringBuffer();
-
                 while (res.moveToNext()) {
                     if (res.getString(2).equals(test.getUsername())) {
                         buffer.append("Challenge Name: " + res.getString(1) + "\n");
@@ -115,22 +99,14 @@ public class CoachActivity extends AppCompatActivity {
                     showMessage("Challenges", buffer.toString());
                 }
             }
-        }
-
-        );
-
-        createChallengeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openChallengeActivity();
-            }
         });
-    }
+        }
 
     public void openChallengeActivity(){
         Intent intent = new Intent(this, ChallengeActivity.class);
         startActivity(intent);
     }
+
     public void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
