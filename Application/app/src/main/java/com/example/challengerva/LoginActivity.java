@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     AlertMessage.alertMessage("Invalid Credentials",
                             "We could not find an account with this username or password",LoginActivity.this);
+
                     passEditText.setText("");
                 }
                 else if (userData.getCount() == 1)
