@@ -49,7 +49,6 @@ public class CoachActivity extends AppCompatActivity {
         createChallengeBtn = (Button)findViewById(R.id.createChallengeBtn);
         viewChallengesBtn = (Button)findViewById(R.id.viewAll);
 
-
         final User test = new User();
         test.setUsername("test123");
         test.firstName = "test";
@@ -61,12 +60,34 @@ public class CoachActivity extends AppCompatActivity {
         viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
             DBHelper db = new DBHelper(CoachActivity.this);
 
-            @Override
-            public void onClick(View v) {
-                Cursor res = db.getChallengeData();
-                if (res.getCount() == 0) {
-                    showMessage("Nothing Found", "Nothing Found");
-                    return;
+    }
+        public void viewAll(){
+        viewChallengesBtn = findViewById(R.id.viewAll);
+            viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
+                    DBHelper db = new DBHelper(CoachActivity.this);
+                    @Override
+                    public void onClick(View v) {
+                        Cursor res = db.getChallengeData();
+                         if (res.getCount() == 0) {
+                          showMessage("Nothing Found", "Nothing Found");
+                               return;
+                          }
+                          StringBuffer buffer = new StringBuffer();
+
+                         User test = new User();
+                         test.username = "test123";
+                         test.firstName = "test";
+
+                         while (res.moveToNext()) {
+                             if (res.getString(1).equals(test.username)) {
+                                 buffer.append("Challenge Name:" + res.getString(1) + "\n");
+                                 buffer.append("Challenge Description:" + res.getString(10) + "\n");
+                                 buffer.append("Start Date:" + res.getString(3) + "End Date" + res.getString(4) + "\n");
+                             }
+                             showMessage("Challenges", buffer.toString());
+                         }
+                    }
+
                 }
                 StringBuffer buffer = new StringBuffer();
 
