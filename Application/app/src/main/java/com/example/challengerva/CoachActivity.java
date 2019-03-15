@@ -76,17 +76,21 @@ public class CoachActivity extends AppCompatActivity {
         coachUserNameTxtView.setText(test.username);
         //Creating new instance of DBHelper to use database methods
         final DBHelper challenge = new DBHelper(CoachActivity.this);
-        //Inserting test challenge information 
+        //Inserting test challenge information
         challenge.insertChallenge("testChall", "teat", "2019", "2019", "cardio", 4, "team", "availible", "none", "basic test challenge");
-
+        //Calling the viewAll method
+        viewAllChallenges();
+        //Calling inProgress method
+        inProgress();
+        //Calling openChallengeActivity method
+        openChallengeActivity();
     }
     /**
      * view all method - displays all challenges lead by the coach using alert message
      * @param : none
      * @return : none
      */
-        public void viewAll(){
-        viewChallengesBtn = findViewById(R.id.viewAll);
+        public void viewAllChallenges(){
             viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
                     DBHelper db = new DBHelper(CoachActivity.this);
                 /**
@@ -99,7 +103,7 @@ public class CoachActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Cursor res = db.getChallengeData();
                          if (res.getCount() == 0) {
-                          showMessage("Nothing Found", "Nothing Found");
+                          showMessage("Nothing Found", "You have no challenges");
                                return;
                           }
                           StringBuffer buffer = new StringBuffer();
@@ -115,8 +119,8 @@ public class CoachActivity extends AppCompatActivity {
                                 buffer.append("Start Date: " + res.getString(3) + "End Date" + res.getString(4) + "\n");
                                 buffer.append("type: " + res.getString(5)+"\n");
                                 buffer.append("difficulty: " + res.getString(6)+"\n");
-                                buffer.append("Team or sinlge: "+ res.getString(7)+"\n");
-                                buffer.append("Availibility: " + res.getString(8)+"\n");
+                                buffer.append("Team or single: "+ res.getString(7)+"\n");
+                                buffer.append("Availability: " + res.getString(8)+"\n");
                                 buffer.append("Hazards: " + res.getString(9)+ "\n");
                             }
                             showMessage("Challenges", buffer.toString());
@@ -124,16 +128,42 @@ public class CoachActivity extends AppCompatActivity {
                 }
             });
             }
+
+            public void inProgress() {
+                changeUserNameBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showMessage("Coming Soon", "");
+                    }
+                });
+                changeDisplayNameBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showMessage("Coming Soon", "");
+
+                    }
+                });
+            }
+
     /**
-     * Open challenge activity method
+     * Open challenge activity Intent method
      * @param : none
      * @return : none
      * Takes the user to the challenge activity when they click on the "make a challenge" button
      */
-    public void openChallengeActivity(){
+    public void openChallengeActivityIntent(){
         Intent intent = new Intent(this, ChallengeActivity.class);
         startActivity(intent);
     }
+    public void openChallengeActivity(){
+        createChallengeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openChallengeActivityIntent();
+            }
+        });
+    }
+
     /**
      * Show message method
      * @param : String title and String metssage
