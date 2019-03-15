@@ -2,6 +2,7 @@ package com.example.challengerva;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -151,39 +152,45 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!hasAllFields(username,password,rePassword,email,firstName,lastName,birthDate))
                 {
                     //Popup message warning user of missing information
-                    alertMessage("Empty Fields", "One or more of the required fields" +
-                            "were left blank. Please fill in all required fields");
+                    AlertMessage.AlertMessage("Empty Fields", "One or more of the required fields" +
+                            "were left blank. Please fill in all required fields",
+                            RegisterActivity.this);
                 }
 
                 //Checks that the password and re-enter password match
                 else if (!passMatch(password,rePassword))
                 {
                     //Popup message warning user passwords do not match
-                    alertMessage("Passwords do not match", "The passwords you entered do not match,");
+                    AlertMessage.AlertMessage("Passwords do not match",
+                            "The passwords you entered do not match,",
+                            RegisterActivity.this);
                 }
 
                 //Checks that the username, password, and age match the minimum requirements to register as a user.
                 else if (!userIsValid(username) || !passIsValid(password) || !ageIsValid(currentDate,birthDate))
                 {
                     //Popup warning user that one or more fields do not meet minimum requirements
-                    alertMessage("Invalid fields", "One or more fields do not meet the minimum requirements." +
-                            "Please read the minimum requirements for a field by clicking on the *");
+                    AlertMessage.AlertMessage("Invalid fields", "One or more fields do not meet the minimum requirements." +
+                            "Please read the minimum requirements for a field by clicking on the *",
+                            RegisterActivity.this);
                 }
 
                 //Checks that the username is not taken
                 else if (!db.userIsAvail(username))
                 {
                     //Popup message warning user that the username is already taken
-                    alertMessage("Username Taken", "The username entered is already " +
-                            "taken, please enter a new one");
+                    AlertMessage.AlertMessage("Username Taken", "The username entered is already " +
+                            "taken, please enter a new one",
+                            RegisterActivity.this);
                 }
 
                 //Checks that the email is valid
                 else if (!emailIsValid(email))
                 {
                     //popup message warning user that the email is not valid
-                    alertMessage("Invalid Email", "The provided email address does not exist." +
-                            "Please enter a valid email address");
+                    AlertMessage.AlertMessage("Invalid Email", "The provided email address does not exist." +
+                            "Please enter a valid email address",
+                            RegisterActivity.this);
                 }
 
                 //Will get to this else statements only if all information is present and valid
@@ -220,8 +227,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        //Initializes date selection textView
-        dateTextView = findViewById(R.id.registerDateTextView);
         dateTextView.setOnClickListener(new View.OnClickListener() {
             /********************************************
              * date onClick
@@ -426,22 +431,6 @@ public class RegisterActivity extends AppCompatActivity {
         {
             return true;
         }
-    }
-
-    /****************************************************************************
-     * alertMessage method
-     * @param title the title of the message
-     * @param message the content of the message
-     *
-     * Creates a popup message on the screen with information.
-     */
-    public void alertMessage(String title, String message)
-    {
-        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setCancelable(true);
-        alert.setTitle(title);
-        alert.setMessage(message);
-        alert.show();
     }
 
 

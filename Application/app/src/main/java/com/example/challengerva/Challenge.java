@@ -78,6 +78,7 @@ public class Challenge {
         else {
             throw new IllegalArgumentException("No challenge description was provided.");
         }
+
     }
 
     /*
@@ -289,6 +290,7 @@ public class Challenge {
     public boolean setEndAge(int endAge) {
         if(integerIsValid(endAge)) {
             this.endAge = endAge;
+
             return true;
         }
         return false;
