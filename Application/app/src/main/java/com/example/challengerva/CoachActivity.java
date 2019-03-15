@@ -51,19 +51,20 @@ public class CoachActivity extends AppCompatActivity {
 
 
         final User test = new User();
-        test.setUsername("test123");
+        test.setUsername("test");
         test.firstName = "test";
 
         coachNameTxtView.setText(test.firstName);
         coachUserNameTxtView.setText(test.username);
 
+        final DBHelper challenge = new DBHelper(CoachActivity.this);
+        challenge.insertChallenge(1234, "testChall", "test", "2019", "2019", "cardio", 4, "team", "Availible", "none", "basic test challenge");
 
         viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
-            DBHelper db = new DBHelper(CoachActivity.this);
 
             @Override
             public void onClick(View v) {
-                Cursor res = db.getChallengeData();
+                Cursor res = challenge.getChallengeData();
                 if (res.getCount() == 0) {
                     showMessage("Nothing Found", "Nothing Found");
                     return;
@@ -71,10 +72,15 @@ public class CoachActivity extends AppCompatActivity {
                 StringBuffer buffer = new StringBuffer();
 
                 while (res.moveToNext()) {
-                    if (res.getString(1).equals(test.username)) {
-                        buffer.append("Challenge Name:" + res.getString(1) + "\n");
-                        buffer.append("Challenge Description:" + res.getString(10) + "\n");
-                        buffer.append("Start Date:" + res.getString(3) + "End Date" + res.getString(4) + "\n");
+                    if (res.getString(2).equals(test.getUsername())) {
+                        buffer.append("Challenge Name: " + res.getString(1) + "\n");
+                        buffer.append("Challenge Description: " + res.getString(10) + "\n");
+                        buffer.append("Start Date: " + res.getString(3) + "End Date" + res.getString(4) + "\n");
+                        buffer.append("type: " + res.getString(5)+"\n");
+                        buffer.append("difficulty: " + res.getString(6)+"\n");
+                        buffer.append("Team or sinlge: "+ res.getString(7)+"\n");
+                        buffer.append("Availibility: " + res.getString(8)+"\n");
+                        buffer.append("Hazards: " + res.getString(9)+ "\n");
                     }
                     showMessage("Challenges", buffer.toString());
                 }
