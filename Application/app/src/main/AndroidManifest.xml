@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ForgotUserActivity"></activity>
         <activity android:name=".ChallengeSearchActivity" />
-        <activity android:name=".ChallengeActivity">
+        <activity android:name=".CoachActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
