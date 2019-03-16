@@ -1,11 +1,15 @@
 package com.example.challengerva;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -13,14 +17,17 @@ import android.widget.ListView;
 import android.view.Menu;
 
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 
-public class ChallengeSearchActivity extends AppCompatActivity {
+public class ChallengeSearchActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     SearchView searchView;
+
+    MenuItem searchMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +39,6 @@ public class ChallengeSearchActivity extends AppCompatActivity {
 
         //call intent method for searching
         handleIntent(getIntent());
-
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -73,13 +79,22 @@ public class ChallengeSearchActivity extends AppCompatActivity {
         return true;
     }
 
-    DBHelper db = new DBHelper(this);
-    private void handleIntent(Intent intent){
-        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            //process cursor and display results
-        }
+    /**
+     * Set action bar
+     *      1. properties
+     *      2. title with custom font
+     */
+    private void setActionBar() {
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setTitle("Friends");
+
+        Typeface typeface = Typeface.createFromAsset(this.getAssets(), "fonts/vegur_2.otf");
+        int titleId = getResources().getIdentifier("action_bar_title", "id", "android");
+        TextView actionBarTitle = (TextView) (this.findViewById(titleId));
+        actionBarTitle.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        actionBarTitle.setTypeface(typeface);
     }
+
     public void displayChallenges(){
         ListView challengeList = (ListView) findViewById(R.id.challengeListView);
         //create an array list
@@ -95,8 +110,18 @@ public class ChallengeSearchActivity extends AppCompatActivity {
                 challengeArray.add(challengeData.getString(1));
                 ListAdapter listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,challengeArray);
                 challengeList.setAdapter(listAdapter);
-                
+
             }
         }
     }
+
+    
+//    DBHelper db = new DBHelper(this);
+//    private void handleIntent(Intent intent){
+//        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
+//            String query = intent.getStringExtra(SearchManager.QUERY);
+//            //process cursor and display results
+//        }
+//    }
+
 }
