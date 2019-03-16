@@ -13,13 +13,13 @@
 
         <activity android:name=".ForgotUserActivity"/>
         <activity android:name=".CoachActivity"/>
+        <activity android:name=".RegisterActivity"/>
 
 
         <activity android:name=".ChallengeActivity"/>
-        <activity android:name=".LoginActivity" />
 
 
-        <activity android:name=".ChallengeSearchActivity">
+        <activity android:name=".LoginActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

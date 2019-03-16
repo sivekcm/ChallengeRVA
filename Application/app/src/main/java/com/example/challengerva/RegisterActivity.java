@@ -3,6 +3,7 @@ package com.example.challengerva;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -324,13 +325,13 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public static boolean passIsValid(String password)
     {
-        if (password.matches("^[a-zA-Z0-9]*$") && password.length() >= 8)
+        if (!password.matches("^[a-zA-Z0-9]*$") && password.length() < 8)
         {
-            return true;
+            return false;
         }
         else
         {
-            return false;
+            return true;
         }
     }
 
@@ -407,6 +408,19 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public static boolean emailIsValid(String email)
     {
+        if (!email.contains("@") || !email.contains("."))
+        {
+            return false;
+        }
+        if (!Character.toString(email.charAt(0)).matches("^[a-zA-Z]*$") ||
+                !Character.toString(email.charAt(email.length()-1)).matches("^[a-zA-Z]*$"))
+        {
+            return false;
+        }
+        if (email.lastIndexOf(".") < email.indexOf("@"))
+        {
+            return false;
+        }
         return true;
     }
 

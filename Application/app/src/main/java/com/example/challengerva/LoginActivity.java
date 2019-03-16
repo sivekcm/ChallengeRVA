@@ -68,7 +68,12 @@ public class LoginActivity extends AppCompatActivity {
                 else if (userData.getCount() == 1)
                 {
                     Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_LONG).show();
-                    Cursor cursor = db.getUserData(username, password);
+                    User user = new User(userData);
+                    Log.d("LoginActivity",user.getUsername());
+                    Intent intent = new Intent(LoginActivity.this, CoachActivity.class);
+                    intent.putExtra("User Object", user);
+
+                    startActivity(intent);
                 }
 
 
@@ -86,8 +91,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextView forgotUser = findViewById(R.id.forgotUserTextView);
-        forgotUser.setOnClickListener(new View.OnClickListener() {
+        forgotUserTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toForgotUser = new Intent(getApplicationContext(), ForgotUserActivity.class);
