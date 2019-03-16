@@ -74,6 +74,7 @@ public class ChallengeSearchActivity extends AppCompatActivity {
                 challengeArray.add(challengeData.getString(1));
                 ListAdapter listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,challengeArray);
                 challengeList.setAdapter(listAdapter);
+                
             }
         }
     }
