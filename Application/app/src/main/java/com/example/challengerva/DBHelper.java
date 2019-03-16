@@ -234,12 +234,11 @@ public class DBHelper extends SQLiteOpenHelper
 
     /************************************************************************
      * insertChallenge method
-     * @param challengeID: id for challenge (unique)
      * @param name: name of challenge
      * @param coach: the username (not name) of the user that is the coach of the challenge
      * @param startDate: start date of challenge "YYYY-MM-DD"
      * @param endDate: end date of challenge "YYYY-MM-DD"
-     * @param type: type, e.g Strength,Cardio, etc
+     * @param type: type, e.g Strength, Cardio, etc
      * @param diff: the difficulty
      * @param teamOrSingle: if challenge is team or single
      * @param availability: if challenge is open or closed
@@ -741,6 +740,32 @@ public class DBHelper extends SQLiteOpenHelper
         return false;
     }
 
+    /*****************************************************************
+     * userFromEmail method
+     * @param searchEmail: the email to be checked
+     * @return the cursor object created by a query
+     *
+     * This method returns a cursor object after querying a
+     * database with an email
+     */
+    public Cursor userFromEmail(String searchEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT username FROM User WHERE email = ?", new String[] {searchEmail});
+    }
+
+    /******************************************************
+     * getChallengeData(int challengeID)
+     * @param challengeID
+     * @return A cursor object containing the challenge with the specified challengeID
+     */
+    public Cursor getChallengeData(int challengeID)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?",new String[] {Integer.valueOf(challengeID).toString()});
+        return cursor;
+    }
+
     /****************************************************
      * getChallengeData()
      * @return A cursor object containing every challenge in the database
@@ -825,9 +850,5 @@ public class DBHelper extends SQLiteOpenHelper
                 new String[] {username, password});
         return cursor;
     }
-
-
-
-
 }
 
