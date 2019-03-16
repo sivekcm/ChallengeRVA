@@ -90,7 +90,7 @@ public class DBHelper extends SQLiteOpenHelper
         //Stores user information
         //Unique usernames
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_USER + "(" +
-                "username TEXT PRIMARY KEY, " +
+                "username TEXT COLLATE NOCASE PRIMARY KEY, " +
                 "password TEXT NOT NULL, " +
                 "first_name TEXT NOT NULL, " +
                 "last_name TEXT NOT NULL, " +
@@ -722,7 +722,7 @@ public class DBHelper extends SQLiteOpenHelper
     /******************************************************************
      * userIsAvail method
      * @param username: the username to be checked
-     * @return: true if username is available, false if it is taken
+     * @return true if username is available, false if it is taken
      *
      * This method checks if the username entered by the user
      * is already taken (i.e already exists in the database).
@@ -731,7 +731,7 @@ public class DBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
         //queries the database to find if username is in the User table.
-        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ?",new String[] {username});
+        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ? COLLATE NOCASE",new String[] {username});
         //If query returns no data
         if (cursor.getCount() == 0)
         {

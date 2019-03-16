@@ -9,13 +9,13 @@ public class Coach extends User{
      */
     public Coach(){
         super.username = username;
-        super.password = password;
+      //  super.password = password;
 
     }
 
     public Coach(String user, String pw) {
         this.username = user;
-        this.password = pw;
+       // this.password = pw;
     }
     public boolean verifyPassword(){
         return false;
