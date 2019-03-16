@@ -10,7 +10,8 @@ public class AlertMessage {
      * @param message the content of the message*
      * Creates a popup message on the screen with information.
      */
-    public static void AlertMessage(String title, String message, Context thisContext) {
+
+    public static void alertMessage(String title, String message, Context thisContext) {
         AlertDialog.Builder alert = new AlertDialog.Builder(thisContext);
         alert.setCancelable(true);
         alert.setTitle(title);

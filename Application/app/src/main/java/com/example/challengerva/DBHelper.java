@@ -90,7 +90,7 @@ public class DBHelper extends SQLiteOpenHelper
         //Stores user information
         //Unique usernames
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_USER + "(" +
-                "username TEXT PRIMARY KEY, " +
+                "username TEXT COLLATE NOCASE PRIMARY KEY, " +
                 "password TEXT NOT NULL, " +
                 "first_name TEXT NOT NULL, " +
                 "last_name TEXT NOT NULL, " +
@@ -234,12 +234,11 @@ public class DBHelper extends SQLiteOpenHelper
 
     /************************************************************************
      * insertChallenge method
-     * @param challengeID: id for challenge (unique)
      * @param name: name of challenge
      * @param coach: the username (not name) of the user that is the coach of the challenge
      * @param startDate: start date of challenge "YYYY-MM-DD"
      * @param endDate: end date of challenge "YYYY-MM-DD"
-     * @param type: type, e.g Strength,Cardio, etc
+     * @param type: type, e.g Strength, Cardio, etc
      * @param diff: the difficulty
      * @param teamOrSingle: if challenge is team or single
      * @param availability: if challenge is open or closed
@@ -722,7 +721,7 @@ public class DBHelper extends SQLiteOpenHelper
     /******************************************************************
      * userIsAvail method
      * @param username: the username to be checked
-     * @return: true if username is available, false if it is taken
+     * @return true if username is available, false if it is taken
      *
      * This method checks if the username entered by the user
      * is already taken (i.e already exists in the database).
@@ -731,7 +730,7 @@ public class DBHelper extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
         //queries the database to find if username is in the User table.
-        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ?",new String[] {username});
+        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ? COLLATE NOCASE",new String[] {username});
         //If query returns no data
         if (cursor.getCount() == 0)
         {
@@ -739,6 +738,32 @@ public class DBHelper extends SQLiteOpenHelper
         }
         //if the query returns data, then the username was found.
         return false;
+    }
+
+    /*****************************************************************
+     * userFromEmail method
+     * @param searchEmail: the email to be checked
+     * @return the cursor object created by a query
+     *
+     * This method returns a cursor object after querying a
+     * database with an email
+     */
+    public Cursor userFromEmail(String searchEmail)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.rawQuery("SELECT username FROM User WHERE email = ?", new String[] {searchEmail});
+    }
+
+    /******************************************************
+     * getChallengeData(int challengeID)
+     * @param challengeID
+     * @return A cursor object containing the challenge with the specified challengeID
+     */
+    public Cursor getChallengeData(int challengeID)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?",new String[] {Integer.valueOf(challengeID).toString()});
+        return cursor;
     }
 
     /****************************************************
@@ -825,9 +850,5 @@ public class DBHelper extends SQLiteOpenHelper
                 new String[] {username, password});
         return cursor;
     }
-
-
-
-
 }
 

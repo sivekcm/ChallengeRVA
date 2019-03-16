@@ -286,4 +286,5 @@
             android:text="Coach" />
 
     </RadioGroup>
+
 </android.support.constraint.ConstraintLayout>

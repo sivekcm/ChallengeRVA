@@ -53,23 +53,27 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!hasAllFields(username,password))
                 {
-                    AlertMessage.AlertMessage("Missing Fields",
-                            "Please fill in every required field",
-                            LoginActivity.this);
+                    AlertMessage.alertMessage("Missing Fields",
+                            "Please fill in every required field",LoginActivity.this);
                 }
                 Cursor userData = db.getUserData(username,password);
 
                 if (hasAllFields(username, password) && userData.getCount() == 0)
                 {
-                    AlertMessage.AlertMessage("Invalid Credentials",
-                            "We could not find an account with this username or password",
-                            LoginActivity.this);
+                    AlertMessage.alertMessage("Invalid Credentials",
+                            "We could not find an account with this username or password",LoginActivity.this);
+
                     passEditText.setText("");
                 }
                 else if (userData.getCount() == 1)
                 {
                     Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_LONG).show();
-                    Cursor cursor = db.getUserData(username, password);
+                    User user = new User(userData);
+                    Log.d("LoginActivity",user.getUsername());
+                    Intent intent = new Intent(LoginActivity.this, CoachActivity.class);
+                    intent.putExtra("User Object", user);
+
+                    startActivity(intent);
                 }
 
 
@@ -87,12 +91,21 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextView forgotUser = findViewById(R.id.forgotUserTextView);
-        forgotUser.setOnClickListener(new View.OnClickListener() {
+        forgotUserTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent toForgotUser = new Intent(getApplicationContext(), ForgotUserActivity.class);
                 startActivity(toForgotUser);
+
+            }
+        });
+
+        final TextView forgotPassword = findViewById(R.id.forgotPassTextView);
+        forgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toForgotPass = new Intent(getApplicationContext(), ForgotPasswordActivity.class);
+                startActivity(toForgotPass);
 
             }
         });

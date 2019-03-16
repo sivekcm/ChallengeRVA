@@ -56,10 +56,14 @@ public class CoachActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.coach_profile);
 
+        Intent intent = getIntent();
+        final User user = intent.getParcelableExtra("User Object");
+
         //Initializes textViews to their respective UI elements
         coachNameTxtView = (TextView)findViewById(R.id.coachNameTxtView);
         statusTxtView = (TextView)findViewById(R.id.statusTxtView);
         coachUserNameTxtView = (TextView)findViewById(R.id.coachUserNameTxtView);
+        
         //Initializes Buttons to their respective UI elements
         changeUserNameBtn = (Button)findViewById(R.id.changeUserNameBtn);
         changePasswordBtn = (Button)findViewById(R.id.changeUserNameBtn);
@@ -67,31 +71,34 @@ public class CoachActivity extends AppCompatActivity {
         createChallengeBtn = (Button)findViewById(R.id.createChallengeBtn);
         viewChallengesBtn = (Button)findViewById(R.id.viewAll);
 
-        //Initializing a test user object
-        final User test = new User();
-        test.setUsername("test");
-        test.firstName = "test";
+
         //Setting the name and user name text views to the coach name and user name
-        coachNameTxtView.setText(test.firstName);
-        coachUserNameTxtView.setText(test.username);
+        coachNameTxtView.setText(user.getFirstName());
+        coachUserNameTxtView.setText(user.getUsername());
         //Creating new instance of DBHelper to use database methods
         final DBHelper challenge = new DBHelper(CoachActivity.this);
-        //Inserting test challenge information
-        challenge.insertChallenge("testChall", "teat", "2019", "2019", "cardio", 4, "team", "availible", "none", "basic test challenge");
-        //Calling the viewAll method
-        viewAllChallenges();
+        
+      
         //Calling inProgress method
         inProgress();
         //Calling openChallengeActivity method
         openChallengeActivity();
+        //Inserting test challenge information 
+        challenge.insertChallenge("testChall", "jacobobeast", "2019-03-16", "2019-04-19", "cardio", 4, "team", "availible", "none", "basic test challenge");
+
+        viewAll(user);
+
     }
     /**
      * view all method - displays all challenges lead by the coach using alert message
      * @param : none
      * @return : none
      */
-        public void viewAllChallenges(){
-            viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
+
+
+        public void viewAll(final User user){
+        viewChallengesBtn = findViewById(R.id.viewAll);
+          viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
                     DBHelper db = new DBHelper(CoachActivity.this);
                 /**
                  * OnClick method - based on Chris's RegisterActivity
@@ -113,15 +120,21 @@ public class CoachActivity extends AppCompatActivity {
                          test.firstName = "test";
 
                         while (res.moveToNext()) {
-                         if (res.getString(2).equals(test.getUsername())) {
+                         if (res.getString(2).equals(user.getUsername())) {
                                 buffer.append("Challenge Name: " + res.getString(1) + "\n");
                                 buffer.append("Challenge Description: " + res.getString(10) + "\n");
                                 buffer.append("Start Date: " + res.getString(3) + "End Date" + res.getString(4) + "\n");
                                 buffer.append("type: " + res.getString(5)+"\n");
                                 buffer.append("difficulty: " + res.getString(6)+"\n");
+
                                 buffer.append("Team or single: "+ res.getString(7)+"\n");
                                 buffer.append("Availability: " + res.getString(8)+"\n");
                                 buffer.append("Hazards: " + res.getString(9)+ "\n");
+
+                                buffer.append("Team or sinlge: "+ res.getString(7)+"\n");
+                                buffer.append("Availibility: " + res.getString(8)+"\n");
+                                buffer.append("Hazards: " + res.getString(9)+ "\n\n\n");
+
                             }
                             showMessage("Challenges", buffer.toString());
                     }
