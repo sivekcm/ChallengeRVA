@@ -168,22 +168,26 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
         android:textSize="18sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/registerPassEditText"
-        app:layout_constraintStart_toEndOf="@+id/registerUserTextView" />
+        app:layout_constraintStart_toEndOf="@+id/registerUserTextView"
+        app:layout_constraintTop_toBottomOf="@+id/registerDescTextView" />
 
     <EditText
         android:id="@+id/registerPassEditText"
-        android:layout_width="wrap_content"
+        android:layout_width="214dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:inputType="textPassword"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="162dp"
-        tools:layout_editor_absoluteY="178dp" />
+        app:layout_constraintStart_toEndOf="@+id/registerPassTextView"
+        app:layout_constraintTop_toBottomOf="@+id/registerDescTextView" />
 
     <EditText
         android:id="@+id/registerRePassEditText"
@@ -255,6 +259,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <RadioGroup
+        android:id="@+id/registerTypeRG"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -281,4 +286,5 @@
             android:text="Coach" />
 
     </RadioGroup>
+
 </android.support.constraint.ConstraintLayout>

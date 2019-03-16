@@ -1,12 +1,11 @@
 package com.example.challengerva;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 
-
-public class User {
-    protected String oldUsername;
+public class User implements Parcelable {
     protected String username;
-    protected String password;
     protected String firstName;
     protected String lastName;
     protected String birthDate;
@@ -16,12 +15,17 @@ public class User {
     protected UserType accountType;
     protected int challengesCompleted;
 
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
 
-    //Enumeration used to determine type of account
-    enum UserType
-    {
-        ATHLETE, COACH;
-    }
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     //Default Constructor
     public User(){
@@ -31,10 +35,9 @@ public class User {
     //Constructor
     public User(Cursor userCursor)
     {
-        setUsername(userCursor.getString(0));
-        oldUsername = this.username;
-        setPassword(userCursor.getString(1));
+        userCursor.moveToNext();
 
+        this.username = userCursor.getString(0);
         this.firstName = userCursor.getString(2);
         this.lastName = userCursor.getString(3);
         this.birthDate = userCursor.getString(4);
@@ -42,17 +45,60 @@ public class User {
         this.email = userCursor.getString(6);
         this.challengesCompleted = userCursor.getInt(7);
 
-        if(userCursor.getString(8) == "true")
+        if (userCursor.getString(8).equals("Y"))
+        {
             this.isPrivate = true;
-        else this.isPrivate = false;
+        }
+        else
+            this.isPrivate = false;
 
-        if(userCursor.getString(9) == "coach")
+        if (userCursor.getString(9).equals("Coach"))
+        {
             this.accountType = UserType.COACH;
-        else this.accountType = UserType.ATHLETE;
-
-
+        }
+        else
+            this.accountType = UserType.ATHLETE;
 
     }
+
+    protected User(Parcel in) {
+        username = in.readString();
+        firstName = in.readString();
+        lastName = in.readString();
+        birthDate = in.readString();
+        joinDate = in.readString();
+        email = in.readString();
+        isPrivate = in.readByte() != 0;
+        accountType = UserType.valueOf(in.readString());
+        challengesCompleted = in.readInt();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(username);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(birthDate);
+        dest.writeString(joinDate);
+        dest.writeString(email);
+        dest.writeByte((byte) (isPrivate ? 1 : 0));
+        dest.writeString(this.accountType.name());
+        dest.writeInt(challengesCompleted);
+    }
+
+
+    //Enumeration used to determine type of account
+    enum UserType
+    {
+        ATHLETE, COACH;
+    }
+
+
     /*
     Passes an array of the parameters of this User object
     @return an array with all parameters of this User object
@@ -60,9 +106,7 @@ public class User {
     public Object[] getParameters()
     {
         Object[] parameters = new Object[11];
-        parameters[0] = oldUsername;
         parameters[1] = username;
-        parameters[2] = password;
         parameters[3] = firstName;
         parameters[4] = lastName;
         parameters[5] = birthDate;
@@ -132,10 +176,10 @@ public class User {
     @Param inputPassword the parameter to be compared with the Username
      @return true if the parameter is the same, false if not
      */
-    public boolean equalsPassword(String inputPassword)
-    {
-        return inputPassword.equals(password);
-    }
+//    public boolean equalsPassword(String inputPassword)
+//    {
+//        return inputPassword.equals(password);
+//    }
     /*
     Adds a Challenge to the User, depending on User Type
     @Param newChallenge the Challenge object to be added
@@ -178,23 +222,67 @@ public class User {
         username = newUsername;
         return true;
     }
-    public String getUsername(){
-        return username;
-    }
+
     /*
-    Sets the Password to something new
-    @Param newPassword the new Password
-    @return true if successful,false if not
-     */
-    public boolean setPassword(String newPassword)
-    {
-        //Invalid password case
-        if(isPasswordValid(newPassword) == -1)
-            throw new IllegalArgumentException("The password you entered does not meet the requirements.");
+ Sets the Password to something new
+ @Param newPassword the new Password
+ @return true if successful,false if not
+  */
+//    public boolean setPassword(String newPassword)
+//    {
+//        //Invalid password case
+//        if(isPasswordValid(newPassword) == -1)
+//            throw new IllegalArgumentException("The password you entered does not meet the requirements.");
+//
+//
+//        password = newPassword;
+//        return true;
+//    }
 
-
-        password = newPassword;
-        return true;
+    public String getUsername(){
+        return this.username;
     }
+
+    public String getFirstName()
+    {
+        return this.firstName;
+    }
+
+    public String getLastName()
+    {
+        return this.lastName;
+    }
+
+    public String getBirthDate()
+    {
+        return this.birthDate;
+    }
+
+    public String getJoinDate()
+    {
+        return this.joinDate;
+    }
+
+    public String getEmail()
+    {
+        return this.email;
+    }
+
+    public boolean isPrivate()
+    {
+        return this.isPrivate;
+    }
+
+    public UserType getAccountType()
+    {
+        return this.accountType;
+    }
+
+    public int getChallengesCompleted()
+    {
+        return this.challengesCompleted;
+    }
+
+
 
 }
