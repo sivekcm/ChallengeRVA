@@ -751,7 +751,7 @@ public class DBHelper extends SQLiteOpenHelper
     public Cursor userFromEmail(String searchEmail)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.rawQuery("SELECT username FROM User WHERE email = ?", new String[] {searchEmail});
+        return db.rawQuery("SELECT * FROM User WHERE email = ?", new String[] {searchEmail});
     }
 
     /******************************************************
@@ -810,7 +810,7 @@ public class DBHelper extends SQLiteOpenHelper
     public Cursor getChallengeCoach(String coach)
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE coach",new String[] {coach});
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE coach = ?",new String[] {coach});
         return cursor;
     }
 

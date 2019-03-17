@@ -3,6 +3,7 @@ package com.example.challengerva;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
@@ -55,6 +56,9 @@ public class ChallengeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createchallenge_form);
 
+        Intent intent = getIntent();
+        final User user = intent.getParcelableExtra("User Object");
+
         createChallengeTextView = findViewById(R.id.createChallengeTextView);
         challengeTypeTextView = findViewById(R.id.challengeTypeTextView);
         registrationTypeTextView = findViewById(R.id.registrationTypeTextView);
@@ -82,26 +86,37 @@ public class ChallengeActivity extends AppCompatActivity{
                 DBHelper db = new DBHelper(ChallengeActivity.this);
 
                 String name = challengeNameEditText.getText().toString();
+                String coach = user.getUsername();
                 String description = challengeDescriptionEditText.getText().toString();
                 String start = startDateEditText.getText().toString();
                 String end = endDateEditText.getText().toString();
                 String type = registrationTypeListSpinner.toString();
-                int diff = Integer.parseInt(difficultyEditText.getText().toString());
+                int diff = 0;
+                if (!difficultyEditText.getText().toString().isEmpty()) {
+                    diff = Integer.parseInt(difficultyEditText.getText().toString());
+                }
                 String category = challengeTypeListSpinner.toString();
                 int count_ID = 0; //default value
 
 
 
                 //convert dates to SQL format for db
-                if(!start.equals("Start Date")){
+                if(!start.equals("")){
                     start = formatDate(start);
                 }
-                if(!end.equals("End Date")){
+                if(!end.equals("")){
                     end = formatDate(end);
                 }
 
+                //Validate that all fields are present
+                if (!hasAllFields(name,description,String.valueOf(diff),start,end))
+                {
+                    AlertMessage.alertMessage("Empty Fields","Please make sure all required " +
+                            "fields have been filled out", ChallengeActivity.this);
+                }
+
                 //Validate the challenge name for a challenge
-                if(!nameIsValid(name)){
+                else if(!nameIsValid(name)){
                     AlertMessage.alertMessage("Challenge Name Not Found",
                             "Please enter a name for the created challenge.", ChallengeActivity.this);
 
@@ -122,7 +137,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
                     success = db.insertChallenge(
                                     name,
-                                    "1",
+                                    coach,
                                     start,
                                     end,
                                     challengeTypeListSpinner.getSelectedItem().toString(),
@@ -259,6 +274,16 @@ public class ChallengeActivity extends AppCompatActivity{
             return true;
         }
         return false;
+    }
+
+    public static boolean hasAllFields(String name, String desc, String diff,
+                                       String startDate, String endDate)
+    {
+        if (name.isEmpty() || desc.isEmpty() || diff.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
+        {
+            return false;
+        }
+        return true;
     }
 
 }
