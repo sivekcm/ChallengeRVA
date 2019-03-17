@@ -196,6 +196,11 @@ public class RegisterActivity extends AppCompatActivity {
                            "Please enter a valid email address",RegisterActivity.this);
                 }
 
+                else if (!db.emailIsAvail(email))
+                {
+                    AlertMessage.alertMessage("email taken","email is taken",RegisterActivity.this);
+                }
+
                 //Will get to this else statements only if all information is present and valid
                 else
                 {
