@@ -15,7 +15,7 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="TextView"
+        android:text="Register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -171,7 +171,6 @@
         android:layout_marginTop="16dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/registerUserTextView"
         app:layout_constraintTop_toBottomOf="@+id/registerDescTextView" />
@@ -224,7 +223,6 @@
         android:layout_marginTop="260dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/registerFirstTextView"
         app:layout_constraintTop_toBottomOf="@+id/registerDescTextView" />
@@ -238,7 +236,6 @@
         android:layout_marginTop="320dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Name"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/registerLastTextView"
         app:layout_constraintTop_toBottomOf="@+id/registerDescTextView" />
@@ -252,7 +249,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="16dp"
-        android:text="Button"
+        android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"

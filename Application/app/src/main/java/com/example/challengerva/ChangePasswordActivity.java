@@ -31,12 +31,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 DBHelper db = new DBHelper(ChangePasswordActivity.this);
                 //Invalid Password
                 if(!RegisterActivity.passIsValid(newPassword))
-                    AlertMessage.AlertMessage("Invalid Password", "Invalid Password, " +
+                    AlertMessage.alertMessage("Invalid Password", "Invalid Password, " +
                             "please make sure it meets minimum requirements", ChangePasswordActivity.this);
 
                 //Passwords do not match
                 else if(!RegisterActivity.passMatch(newPassword, reenterPassword))
-                    AlertMessage.AlertMessage("Do not match", "Passwords do not match."
+                    AlertMessage.alertMessage("Do not match", "Passwords do not match."
                             , ChangePasswordActivity.this);
 
                 //Successfully changes password

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
     protected String username;
+    protected String password;
     protected String firstName;
     protected String lastName;
     protected String birthDate;
@@ -38,6 +39,7 @@ public class User implements Parcelable {
         userCursor.moveToNext();
 
         this.username = userCursor.getString(0);
+        this.password = userCursor.getString(1);
         this.firstName = userCursor.getString(2);
         this.lastName = userCursor.getString(3);
         this.birthDate = userCursor.getString(4);
@@ -107,6 +109,7 @@ public class User implements Parcelable {
     {
         Object[] parameters = new Object[11];
         parameters[1] = username;
+        parameters[2] = password;
         parameters[3] = firstName;
         parameters[4] = lastName;
         parameters[5] = birthDate;
@@ -114,8 +117,8 @@ public class User implements Parcelable {
         parameters[7] = email;
         parameters[8] = challengesCompleted;
         if(isPrivate)
-            parameters[9] = "true";
-        else parameters[9] = "false";
+            parameters[9] = "Y";
+        else parameters[9] = "N";
         if (accountType == UserType.COACH)
             parameters[10] = "coach";
         else parameters[10] = "athlete";
@@ -228,16 +231,16 @@ public class User implements Parcelable {
  @Param newPassword the new Password
  @return true if successful,false if not
   */
-//    public boolean setPassword(String newPassword)
-//    {
-//        //Invalid password case
-//        if(isPasswordValid(newPassword) == -1)
-//            throw new IllegalArgumentException("The password you entered does not meet the requirements.");
-//
-//
-//        password = newPassword;
-//        return true;
-//    }
+    public boolean setPassword(String newPassword)
+    {
+        //Invalid password case
+        if(isPasswordValid(newPassword) == -1)
+            throw new IllegalArgumentException("The password you entered does not meet the requirements.");
+
+
+        password = newPassword;
+        return true;
+    }
 
     public String getUsername(){
         return this.username;
