@@ -31,12 +31,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 DBHelper db = new DBHelper(ChangePasswordActivity.this);
                 //Invalid Password
                 if(!RegisterActivity.passIsValid(newPassword))
-                    AlertMessage.AlertMessage("Invalid Password", "Invalid Password, " +
+                    AlertMessage.alertMessage("Invalid Password", "Invalid Password, " +
                             "please make sure it meets minimum requirements", ChangePasswordActivity.this);
 
                 //Passwords do not match
                 else if(!RegisterActivity.passMatch(newPassword, reenterPassword))
-                    AlertMessage.AlertMessage("Do not match", "Passwords do not match."
+                    AlertMessage.alertMessage("Do not match", "Passwords do not match."
                             , ChangePasswordActivity.this);
 
                 //Successfully changes password
@@ -44,8 +44,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Cursor userCursor = db.userFromEmail(userEmail);
                     userCursor.moveToFirst();
                     User updatedUser = new User(userCursor);
-                    updatedUser.setPassword(newPassword);
-                    db.updateUser(updatedUser.getParameters());
+                    Object[] userParameters = updatedUser.getParameters();
+                    userParameters[2] = newPassword;
+                    db.updateUser(userParameters);
+
+                    Intent intent = new Intent(ChangePasswordActivity.this, CoachActivity.class);
+                    intent.putExtra("User Object", updatedUser);
+                    startActivity(intent);
 
 
                 }

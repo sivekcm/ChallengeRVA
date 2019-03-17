@@ -77,13 +77,13 @@ public class CoachActivity extends AppCompatActivity {
         coachUserNameTxtView.setText(user.getUsername());
         //Creating new instance of DBHelper to use database methods
         final DBHelper challenge = new DBHelper(CoachActivity.this);
-        
-      
+
+
         //Calling inProgress method
         inProgress();
         //Calling openChallengeActivity method
-        openChallengeActivity();
-        //Inserting test challenge information 
+        openChallengeActivity(user);
+        //Inserting test challenge information
         challenge.insertChallenge("testChall", "jacobobeast", "2019-03-16", "2019-04-19", "cardio", 4, "team", "availible", "none", "basic test challenge");
 
         viewAll(user);
@@ -108,7 +108,7 @@ public class CoachActivity extends AppCompatActivity {
                  */
                     @Override
                     public void onClick(View v) {
-                        Cursor res = db.getChallengeData();
+                        Cursor res = db.getChallengeCoach(user.getUsername());
                          if (res.getCount() == 0) {
                           showMessage("Nothing Found", "You have no challenges");
                                return;
@@ -123,21 +123,19 @@ public class CoachActivity extends AppCompatActivity {
                          if (res.getString(2).equals(user.getUsername())) {
                                 buffer.append("Challenge Name: " + res.getString(1) + "\n");
                                 buffer.append("Challenge Description: " + res.getString(10) + "\n");
-                                buffer.append("Start Date: " + res.getString(3) + "End Date" + res.getString(4) + "\n");
+                                buffer.append("Start Date: " + res.getString(3) + "\n");
+                                buffer.append("End Date" + res.getString(4) + "\n");
                                 buffer.append("type: " + res.getString(5)+"\n");
                                 buffer.append("difficulty: " + res.getString(6)+"\n");
 
                                 buffer.append("Team or single: "+ res.getString(7)+"\n");
                                 buffer.append("Availability: " + res.getString(8)+"\n");
-                                buffer.append("Hazards: " + res.getString(9)+ "\n");
-
-                                buffer.append("Team or sinlge: "+ res.getString(7)+"\n");
-                                buffer.append("Availibility: " + res.getString(8)+"\n");
                                 buffer.append("Hazards: " + res.getString(9)+ "\n\n\n");
 
                             }
-                            showMessage("Challenges", buffer.toString());
+
                     }
+                        showMessage("Challenges", buffer.toString());
                 }
             });
             }
@@ -164,15 +162,16 @@ public class CoachActivity extends AppCompatActivity {
      * @return : none
      * Takes the user to the challenge activity when they click on the "make a challenge" button
      */
-    public void openChallengeActivityIntent(){
+    public void openChallengeActivityIntent(User user){
         Intent intent = new Intent(this, ChallengeActivity.class);
+        intent.putExtra("User Object",user);
         startActivity(intent);
     }
-    public void openChallengeActivity(){
+    public void openChallengeActivity(final User user){
         createChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openChallengeActivityIntent();
+                openChallengeActivityIntent(user);
             }
         });
     }

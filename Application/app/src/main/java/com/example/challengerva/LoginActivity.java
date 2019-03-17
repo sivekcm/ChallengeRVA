@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else if (userData.getCount() == 1)
                 {
-                    Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_LONG).show();
                     User user = new User(userData);
                     Log.d("LoginActivity",user.getUsername());
                     Intent intent = new Intent(LoginActivity.this, CoachActivity.class);
