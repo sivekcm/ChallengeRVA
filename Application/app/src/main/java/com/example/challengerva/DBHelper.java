@@ -437,6 +437,15 @@ public class DBHelper extends SQLiteOpenHelper
      */
     public boolean updateUser(Object[] parameterArray)
     {
+
+        //No Password Change
+        if(parameterArray[2] == null)
+        {
+            Cursor userCursor = getUserData((String)parameterArray[0]);
+            userCursor.moveToFirst();
+            parameterArray[2] = userCursor.getString(1);
+        }
+
         return updateUser((String) parameterArray[0], (String)parameterArray[1], (String)parameterArray[2], (String)parameterArray[3],
                 (String)parameterArray[4], (String)parameterArray[5], (String)parameterArray[6], (String)parameterArray[7],
                 (int)parameterArray[8], (String)parameterArray[9], (String)parameterArray[10]);

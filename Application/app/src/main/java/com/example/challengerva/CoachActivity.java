@@ -119,7 +119,7 @@ public class CoachActivity extends AppCompatActivity {
                                 buffer.append("type: " + res.getString(5)+"\n");
                                 buffer.append("difficulty: " + res.getString(6)+"\n");
                                 buffer.append("Team or sinlge: "+ res.getString(7)+"\n");
-                                buffer.append("Availibility: " + res.getString(8)+"\n");
+                                buffer.append("Availability: " + res.getString(8)+"\n");
                                 buffer.append("Hazards: " + res.getString(9)+ "\n\n\n");
                             }
                             showMessage("Challenges", buffer.toString());
