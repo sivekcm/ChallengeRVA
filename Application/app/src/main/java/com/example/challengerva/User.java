@@ -257,15 +257,15 @@ public class User implements Parcelable {
  @Param newPassword the new Password
  @return true if successful,false if not
   */
-  //  public boolean setPassword(String newPassword)
- // {
-        //Invalid password case
-  //      if(isPasswordValid(newPassword) == -1)
- //           throw new IllegalArgumentException("The password you entered does not meet the requirements.");
-
-
- //       password = newPassword;
- //       return true;
+//    public boolean setPassword(String newPassword)
+//    {
+//        //Invalid password case
+//        if(isPasswordValid(newPassword) == -1)
+//            throw new IllegalArgumentException("The password you entered does not meet the requirements.");
+//
+//
+//        password = newPassword;
+//        return true;
 //    }
 
     public String getUsername(){

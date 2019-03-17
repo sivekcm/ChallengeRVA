@@ -253,7 +253,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 //Creates the dialog box that pops up on click
                 DatePickerDialog dialog = new DatePickerDialog(RegisterActivity.this,
-                        android.R.style.Theme_Light_Panel,onDateSetListener,year,month,day);
+                        onDateSetListener,year,month,day);
 
                 //displays the dialog box
                 dialog.show();
@@ -329,14 +329,15 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public static boolean passIsValid(String password)
     {
-        if (!password.matches("^[a-zA-Z0-9]*$") && password.length() < 8)
+        if (password.length() < 8 || password.length() > 16)
         {
             return false;
         }
-        else
+        if (password.matches(".*[0-9].*") && password.matches(".*[A-Z].*") && password.matches(".*[a-z].*"))
         {
             return true;
         }
+        return false;
     }
 
     /****************************************************************
@@ -416,7 +417,7 @@ public class RegisterActivity extends AppCompatActivity {
         {
             return false;
         }
-        if (!Character.toString(email.charAt(0)).matches("^[a-zA-Z]*$") ||
+        if (!Character.toString(email.charAt(0)).matches("^[a-zA-Z]+$") ||
                 !Character.toString(email.charAt(email.length()-1)).matches("^[a-zA-Z]*$"))
         {
             return false;
