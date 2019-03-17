@@ -61,7 +61,8 @@
     <string name="change_password_header">Change Password</string>
     <string name="change_password_body">Enter your new Password</string>
     <string name="change_password_button">Set New Password</string>
-
+    <string name="app_label">label</string>
+    <string name="search_hint">search here</string>
 
 
 </resources>
