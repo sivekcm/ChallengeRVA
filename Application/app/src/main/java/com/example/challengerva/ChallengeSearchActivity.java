@@ -112,6 +112,7 @@ public class ChallengeSearchActivity{// extends AppCompatActivity implements Sea
 //                challengeList.setAdapter(listAdapter);
 //
 //            }
+
 //        }
 //    }
 //
