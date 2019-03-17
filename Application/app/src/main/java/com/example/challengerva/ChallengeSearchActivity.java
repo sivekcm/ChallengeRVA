@@ -37,8 +37,6 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Search
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setQueryHint("Search Challenge...");
 
-        //call intent method for searching
-        handleIntent(getIntent());
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -115,7 +113,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Search
         }
     }
 
-    
+
 //    DBHelper db = new DBHelper(this);
 //    private void handleIntent(Intent intent){
 //        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
