@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 public class User implements Parcelable {
     protected String username;
-    protected String password;
+    protected String oldUsername;
     protected String firstName;
     protected String lastName;
     protected String birthDate;
@@ -39,7 +39,7 @@ public class User implements Parcelable {
         userCursor.moveToNext();
 
         this.username = userCursor.getString(0);
-        this.password = userCursor.getString(1);
+        this.oldUsername = this.username;
         this.firstName = userCursor.getString(2);
         this.lastName = userCursor.getString(3);
         this.birthDate = userCursor.getString(4);
@@ -65,6 +65,7 @@ public class User implements Parcelable {
 
     protected User(Parcel in) {
         username = in.readString();
+        oldUsername = in.readString();
         firstName = in.readString();
         lastName = in.readString();
         birthDate = in.readString();
@@ -83,6 +84,7 @@ public class User implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(username);
+        dest.writeString(oldUsername);
         dest.writeString(firstName);
         dest.writeString(lastName);
         dest.writeString(birthDate);
@@ -108,8 +110,9 @@ public class User implements Parcelable {
     public Object[] getParameters()
     {
         Object[] parameters = new Object[11];
+        parameters[0] = oldUsername;
         parameters[1] = username;
-        parameters[2] = password;
+        parameters[2] = null;
         parameters[3] = firstName;
         parameters[4] = lastName;
         parameters[5] = birthDate;
@@ -123,6 +126,29 @@ public class User implements Parcelable {
             parameters[10] = "coach";
         else parameters[10] = "athlete";
         return parameters;
+    }
+
+    /**
+     * getOldUsername method
+     * @return the old username as a string
+     *
+     * This method returns the old username of the user object.
+     */
+    public String getOldUsername()
+    {
+       String gotOldUsername = this.oldUsername;
+       return gotOldUsername;
+    }
+
+    /**
+     * updateUsername method
+     *
+     * This method sets the oldUsername to the current username. For use after a database update
+     */
+    public void updateUsername()
+    {
+        this.oldUsername = this.username;
+        return;
     }
 
     /*
@@ -231,16 +257,16 @@ public class User implements Parcelable {
  @Param newPassword the new Password
  @return true if successful,false if not
   */
-    public boolean setPassword(String newPassword)
-    {
-        //Invalid password case
-        if(isPasswordValid(newPassword) == -1)
-            throw new IllegalArgumentException("The password you entered does not meet the requirements.");
-
-
-        password = newPassword;
-        return true;
-    }
+//    public boolean setPassword(String newPassword)
+//    {
+//        //Invalid password case
+//        if(isPasswordValid(newPassword) == -1)
+//            throw new IllegalArgumentException("The password you entered does not meet the requirements.");
+//
+//
+//        password = newPassword;
+//        return true;
+//    }
 
     public String getUsername(){
         return this.username;

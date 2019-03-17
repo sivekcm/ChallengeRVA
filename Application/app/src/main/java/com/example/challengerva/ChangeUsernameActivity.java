@@ -41,6 +41,11 @@ public class ChangeUsernameActivity extends AppCompatActivity {
                     User updatedUser = new User(userCursor);
                     updatedUser.setUsername(newUsername);
                     db.updateUser(updatedUser.getParameters());
+                    updatedUser.updateUsername();
+
+                    Intent intent = new Intent(ChangeUsernameActivity.this, CoachActivity.class);
+                    intent.putExtra("User Object", updatedUser);
+                    startActivity(intent);
 
 
                 }

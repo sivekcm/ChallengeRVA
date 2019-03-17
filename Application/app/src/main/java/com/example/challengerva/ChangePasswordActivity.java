@@ -44,8 +44,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Cursor userCursor = db.userFromEmail(userEmail);
                     userCursor.moveToFirst();
                     User updatedUser = new User(userCursor);
-                    updatedUser.setPassword(newPassword);
-                    db.updateUser(updatedUser.getParameters());
+                    Object[] userParameters = updatedUser.getParameters();
+                    userParameters[2] = newPassword;
+                    db.updateUser(userParameters);
+
+                    Intent intent = new Intent(ChangePasswordActivity.this, CoachActivity.class);
+                    intent.putExtra("User Object", updatedUser);
+                    startActivity(intent);
 
 
                 }

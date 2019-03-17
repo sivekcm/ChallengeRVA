@@ -22,6 +22,7 @@
                        android:resource="@xml/searchable"/>
         </activity>
 
+
         <activity android:name=".ChallengeActivity"/>
 
         <activity android:name=".ChangePasswordActivity"></activity>

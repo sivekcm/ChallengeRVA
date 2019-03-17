@@ -77,13 +77,13 @@ public class CoachActivity extends AppCompatActivity {
         coachUserNameTxtView.setText(user.getUsername());
         //Creating new instance of DBHelper to use database methods
         final DBHelper challenge = new DBHelper(CoachActivity.this);
-        
-      
+
+
         //Calling inProgress method
         inProgress();
         //Calling openChallengeActivity method
         openChallengeActivity(user);
-        //Inserting test challenge information 
+        //Inserting test challenge information
         challenge.insertChallenge("testChall", "jacobobeast", "2019-03-16", "2019-04-19", "cardio", 4, "team", "availible", "none", "basic test challenge");
 
         viewAll(user);
