@@ -15,14 +15,10 @@ Question    |          Person                                             | 3/19
 |            | Chris Sivek |   No
 |            | Shradda Adhikari |   No
 |            | Farhana Khan |  No
-| What insights have you made? | Adrienne Serra |   With previous sprints, A few times we 
-had slight overlaps of making the same functionality -> focus on the user stories 
-|            | Chris Sivek |   Previous sprint was good with everyone working together and 
-getting everything done on time should clean up and design of app in sprint 3 
-|            | Shradda Adhikari |   As a group need to work on not having anything last minute ->
-understand the differing weight of user stories 
-|            | Farhana Khan | Should have a sprint demo every week to demo what everyone has 
-been working on 
+| What insights have you made? | Adrienne Serra |   With previous sprints, A few times we had slight overlaps of making the same functionality -> focus on the user stories 
+|            | Chris Sivek |   Previous sprint was good with everyone working together and getting everything done on time should clean up and design of app in sprint 3 
+|            | Shradda Adhikari |   As a group need to work on not having anything last minute ->understand the differing weight of user stories 
+|            | Farhana Khan | Should have a sprint demo every week to demo what everyone has been working on 
 | Do any changes to the project need to be made as a result of your work? | Adrienne Serra |   No
 |            | Chris Sivek |   No
 |            | Shradda Adhikari |   No 
