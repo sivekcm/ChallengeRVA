@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.view.MenuInflater;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 public class ChallengeSearchActivity extends AppCompatActivity {
 
     SearchView searchView;
+    ListView searchListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class ChallengeSearchActivity extends AppCompatActivity {
 
         searchView = (SearchView) findViewById(R.id.searchView);
         searchView.setQueryHint("Search Challenge...");
+        searchListView = (ListView) findViewById(R.id.challengeListView);
 
         //call intent method for searching
         handleIntent(getIntent());
@@ -84,7 +87,7 @@ public class ChallengeSearchActivity extends AppCompatActivity {
         ListView challengeList = (ListView) findViewById(R.id.challengeListView);
         //create an array list
         ArrayList<String> challengeArray = new ArrayList<>();
-        Cursor challengeData = db.getChallengeData(query);
+        Cursor challengeData = db.getChallengeData();
         //If there is nothing in the database
         if (challengeData.getCount() == 0){
             Toast.makeText(ChallengeSearchActivity.this, "No Challenges", Toast.LENGTH_LONG).show();
@@ -94,8 +97,7 @@ public class ChallengeSearchActivity extends AppCompatActivity {
             while(challengeData.moveToNext()){
                 challengeArray.add(challengeData.getString(1));
                 ListAdapter listAdapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,challengeArray);
-                challengeList.setAdapter(listAdapter);
-                
+                searchListView.setAdapter(listAdapter);
             }
         }
     }
