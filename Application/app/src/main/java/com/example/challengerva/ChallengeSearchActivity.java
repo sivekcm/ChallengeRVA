@@ -1,5 +1,9 @@
 package com.example.challengerva;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> e5e1423230d57508f7e3fa009ce934d4d292b66c
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -127,7 +131,7 @@ public class ChallengeSearchActivity extends AppCompatActivity {
 //import java.util.ArrayList;
 //
 //
-public class ChallengeSearchActivity{// extends AppCompatActivity implements SearchView.OnQueryTextListener {
+//public class ChallengeSearchActivity{// extends AppCompatActivity implements SearchView.OnQueryTextListener {
 //
 //    SearchView searchView;
 //
@@ -228,5 +232,9 @@ public class ChallengeSearchActivity{// extends AppCompatActivity implements Sea
 ////        }
 ////    }
 //
+<<<<<<< HEAD
 >>>>>>> 7eb49f690032948639584635e4efdf9a12f5508c
+=======
+
+>>>>>>> e5e1423230d57508f7e3fa009ce934d4d292b66c
 }
