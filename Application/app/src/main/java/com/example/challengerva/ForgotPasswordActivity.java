@@ -33,10 +33,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                 //Checks for text in email field
                 if(email.length() == 0)
-                    AlertMessage.AlertMessage("No Text", "Please put your email in the text field.", thisContext);
+                    AlertMessage.alertMessage("No Text", "Please put your email in the text field.", thisContext);
                     //Checks for email in database
                 else if(checkCursor.getCount() == 0)
-                    AlertMessage.AlertMessage("User not found", "There is no account associated with this email.", thisContext);
+                    AlertMessage.alertMessage("User not found", "There is no account associated with this email.", thisContext);
                 else {
 
                     Intent changePasswordIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
