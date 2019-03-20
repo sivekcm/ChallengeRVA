@@ -85,17 +85,16 @@ public class CoachActivity extends AppCompatActivity {
         openChallengeActivity(user);
         //Inserting test challenge information
         challenge.insertChallenge("testChall", "jacobobeast", "2019-03-16", "2019-04-19", "cardio", 4, "team", "availible", "none", "basic test challenge");
-
+        //calling view all method
         viewAll(user);
 
     }
     /**
-     * view all method - displays all challenges lead by the coach using alert message
+     * view all method
      * @param : none
      * @return : none
+     * Displays all challenges lead by the coach using alert message
      */
-
-
         public void viewAll(final User user){
         viewChallengesBtn = findViewById(R.id.viewAll);
           viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
