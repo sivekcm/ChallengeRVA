@@ -27,7 +27,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = inputEmail.getText().toString();
                 DBHelper db = new DBHelper(thisContext);
-                Cursor checkCursor = db.userFromEmail(email);
+                Cursor checkCursor = db.getUserData("email",email);
                 checkCursor.moveToFirst();
 
 
