@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Rating;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,11 +39,10 @@ public class ChallengeActivity extends AppCompatActivity{
 
     EditText challengeNameEditText;
     EditText challengeDescriptionEditText;
-    EditText difficultyEditText;
     EditText startDateEditText;
     EditText endDateEditText;
 
-    SeekBar difficultySeekBar;
+    RatingBar difficultyRatingBar;
 
     Button submitChallengeBtn;
 
@@ -76,7 +77,7 @@ public class ChallengeActivity extends AppCompatActivity{
         startDateEditText = findViewById(R.id.startDateEditText);
         endDateEditText = findViewById(R.id.endDateEditText);
 
-        difficultySeekBar = findViewById(R.id.difficultySeekBar);
+        difficultyRatingBar = findViewById(R.id.difficultyRatingBar);
 
 
         submitChallengeBtn = findViewById(R.id.submitChallengeBtn);
@@ -97,9 +98,6 @@ public class ChallengeActivity extends AppCompatActivity{
                 String end = endDateEditText.getText().toString();
                 String type = registrationTypeListSpinner.toString();
                 int diff = 0;
-                if (!difficultyEditText.getText().toString().isEmpty()) {
-                    diff = Integer.parseInt(difficultyEditText.getText().toString());
-                }
                 String category = challengeTypeListSpinner.toString();
                 int count_ID = 0; //default value
 
@@ -166,8 +164,25 @@ public class ChallengeActivity extends AppCompatActivity{
             }
         });
 
+        /*******************************************************************
+         * Rating bar will identify the level of difficulty that a challenge
+         * will be
+         *
+         * ******************************************************************/
+        //will display the value from the difficulty variable automatically
+        difficultyRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                difficultyTextView.setText(String.valueOf(rating));
+            }
+        });
 
 
+        /*******************************************************************
+         * onClickListener set for start date and end dates, shown below. When
+         * a user clicks on the edit text box, a calendar will pop up for them
+         * to choose a date in the format DD/MM/YYYY
+         * ******************************************************************/
         startDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
