@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,8 +37,7 @@ public class ChangeUsernameActivity extends AppCompatActivity {
                     AlertMessage.alertMessage("Username Taken", "This Username" +
                             "is already taken. Please choose another.", ChangeUsernameActivity.this);
                 else{
-                    Cursor userCursor = db.userFromEmail(userEmail);
-                    userCursor.moveToFirst();
+                    Cursor userCursor = db.getUserData("email",userEmail);
                     User updatedUser = new User(userCursor);
                     updatedUser.setUsername(newUsername);
                     db.updateUser(updatedUser.getParameters());

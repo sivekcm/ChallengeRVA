@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertMessage.alertMessage("Missing Fields",
                             "Please fill in every required field",LoginActivity.this);
                 }
-                Cursor userData = db.getUserData(username,password);
+                Cursor userData = db.getUserData("username",username,"password",password);
 
                 if (hasAllFields(username, password) && userData.getCount() == 0)
                 {
