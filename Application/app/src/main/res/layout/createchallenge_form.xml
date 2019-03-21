@@ -38,11 +38,18 @@
             android:layout_height="wrap_content"
             android:hint="@string/challengeDescription"></EditText>
 
-        <EditText
-            android:id="@+id/difficultyEditText"
+        <SeekBar
+            android:id="@+id/difficultySeekBar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/difficulty"></EditText>
+            android:progress="10"/>
+
+        <TextView
+            android:id="@+id/difficultyTextView"
+            android:layout_width= "wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/difficulty"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
         <EditText
             android:id="@+id/startDateEditText"
@@ -104,6 +111,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
             android:text="@string/submitChallengeButton"></Button>
+
+
 
     </LinearLayout>
 </ScrollView>
