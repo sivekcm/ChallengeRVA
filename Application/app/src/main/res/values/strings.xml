@@ -64,5 +64,12 @@
     <string name="app_label">label</string>
     <string name="search_hint">search here</string>
 
+    <!--Search Challenge Below-->
+    <string name="challenge_name">Challenge Name</string>
+    <string name="challenge_coach">Challenge coach</string>
+    <string name="challenge_difficulty">Challenge difficulty</string>
+    <string name="challenge_description">Challenge desc</string>
+    <string name="challenge_category">Challenge cat</string>
+    <string name="challenge_duration">duration</string>
 
 </resources>
