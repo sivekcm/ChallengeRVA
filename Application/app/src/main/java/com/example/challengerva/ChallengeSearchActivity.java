@@ -1,4 +1,3 @@
-package com.example.challengerva;
 //
 //import android.app.SearchManager;
 //import android.content.Context;
@@ -23,7 +22,7 @@ package com.example.challengerva;
 //import java.util.ArrayList;
 //
 //
-public class ChallengeSearchActivity{// extends AppCompatActivity implements SearchView.OnQueryTextListener {
+//public class ChallengeSearchActivity{// extends AppCompatActivity implements SearchView.OnQueryTextListener {
 //
 //    SearchView searchView;
 //
@@ -123,5 +122,6 @@ public class ChallengeSearchActivity{// extends AppCompatActivity implements Sea
 ////            //process cursor and display results
 ////        }
 ////    }
-//
-}
+//  }
+
+

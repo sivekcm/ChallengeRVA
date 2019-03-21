@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class ChallengeActivity extends AppCompatActivity{
     TextView createChallengeTextView;
     TextView challengeTypeTextView;
     TextView registrationTypeTextView;
+    TextView difficultyTextView;
 
     Spinner challengeTypeListSpinner;
     Spinner registrationTypeListSpinner;
@@ -38,6 +40,8 @@ public class ChallengeActivity extends AppCompatActivity{
     EditText difficultyEditText;
     EditText startDateEditText;
     EditText endDateEditText;
+
+    SeekBar difficultySeekBar;
 
     Button submitChallengeBtn;
 
@@ -62,16 +66,17 @@ public class ChallengeActivity extends AppCompatActivity{
         createChallengeTextView = findViewById(R.id.createChallengeTextView);
         challengeTypeTextView = findViewById(R.id.challengeTypeTextView);
         registrationTypeTextView = findViewById(R.id.registrationTypeTextView);
+        difficultyTextView = findViewById(R.id.difficultyTextView);
 
         challengeTypeListSpinner = findViewById(R.id.ChallengeTypeSpinner);
         registrationTypeListSpinner = findViewById(R.id.registrationTypeSpinner);
 
         challengeNameEditText = findViewById(R.id.challengeNameEditText);
         challengeDescriptionEditText = findViewById(R.id.challengeDescriptionEditText);
-        difficultyEditText = findViewById(R.id.difficultyEditText);
         startDateEditText = findViewById(R.id.startDateEditText);
         endDateEditText = findViewById(R.id.endDateEditText);
 
+        difficultySeekBar = findViewById(R.id.difficultySeekBar);
 
 
         submitChallengeBtn = findViewById(R.id.submitChallengeBtn);
@@ -160,6 +165,8 @@ public class ChallengeActivity extends AppCompatActivity{
                 }
             }
         });
+
+
 
         startDateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
