@@ -688,16 +688,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM User WHERE email = ?", new String[]{searchEmail});
     }
 
-    /******************************************************
-     * getChallengeData(int challengeID)
-     * @param challengeID
-     * @return A cursor object containing the challenge with the specified challengeID
-     */
-    public Cursor getChallengeData(int challengeID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?", new String[]{Integer.valueOf(challengeID).toString()});
-        return cursor;
-    }
+
 
     /****************************************************
      * getChallengeData()
@@ -706,6 +697,76 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getChallengeData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Challenge", new String[]{});
+        return cursor;
+    }
+
+    /******************************************************
+     * getChallengeData(String column, String value)
+     * @param column: the column you wish to compare value to
+     * @param value: the value at which the column must equal.
+     * @return A cursor object containing the challenges where the specified column equals the value
+     */
+    public Cursor getChallengeData(String column, String value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE " + column + " = ?", new String[]{value});
+        return cursor;
+    }
+
+    /********************************************************
+     * getChallengeWildCard
+     * @param column
+     * @param wildcard
+     * @return a cursor object containing the challenges matching the indicated wildcard pattern
+     */
+    public Cursor getChallengeWildCard(String column, String wildcard) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE " + column + " LIKE '" + wildcard + "'", new String[]{});
+        return cursor;
+    }
+
+    /***********************************************************************
+     * getChallengeDataAsc
+     * @param column
+     * @return a cursor object containing the challenges ordered by column in ascending order
+     */
+    public Cursor getChallengeDataAsc(String column)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge ORDER BY " + column + " ASC", new String[] {});
+        return cursor;
+    }
+
+    /***********************************************************************
+     * getChallengeDataDesc
+     * @param column
+     * @return a cursor object containing the challenges ordered by column in descending order
+     */
+    public Cursor getChallengeDataDesc(String column)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge ORDER BY " + column + " DESC", new String[] {});
+        return cursor;
+    }
+
+    /************************************************************************
+     * getChallengeDataDateAsc
+     * @return a cursor object containing the challenges ordered by the most recent date to oldest
+     */
+    public Cursor getChallengeDataDateAsc()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CHALLENGE ORDER BY date(start_date) ASC", new String[]{});
+        return cursor;
+    }
+
+    /************************************************************************
+     * getChallengeDataDateDesc
+     * @return a cursor object containing the challenges ordered by the oldest date to the most recent
+     */
+    public Cursor getChallengeDataDateDesc()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CHALLENGE ORDER BY date(start_date) DESC", new String[]{});
         return cursor;
     }
 
@@ -756,8 +817,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /******************************************************
      * getUserData(String column)
-     * @param username: the username of the user
-     * @return A cursor object containing the user with the specified username from the user table
+     * @param column: the column you wish to compare value to
+     * @param value: the value at which the column must equal.
+     * @return A cursor object containing the users where the specified column equals value
      */
     public Cursor getUserData(String column, String value) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -767,9 +829,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /*****************************************************
      * getUserData(String username, String password)
-     * @param username: the username of the user
-     * @param password: the password of the user
-     * @return A cursor object containing the user with the specified username and password
+     * @param column1: the first column you wish to compare value1 to
+     * @param value1: the value at which the first column must equal.
+     * @param column2: the second column you wish to compare value2 to
+     * @param value2: the value at which the column2 must equal.
+     * @return A cursor object containing the users where column1 equals value1 and column2 equals value2
      */
     public Cursor getUserData(String column1, String value1, String column2, String value2) {
         SQLiteDatabase db = this.getWritableDatabase();

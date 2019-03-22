@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.TextView;
 
 public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder>
@@ -18,7 +19,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
     public ChallengeAdapter(Context cont, Cursor curs)
     {
         this.context = cont;
-        this.cursor = curs;
+        this.cursor = curs;;
     }
     public class ChallengeViewHolder extends RecyclerView.ViewHolder
     {
@@ -45,8 +46,17 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
     @Override
     public ChallengeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(this.context);
-        View view = inflater.inflate(R.layout.challenge,viewGroup,false);
-        return new ChallengeViewHolder(view);
+        if (this.getItemCount() != 0)
+        {
+            View view = inflater.inflate(R.layout.challenge,viewGroup,false);
+            return new ChallengeViewHolder(view);
+        }
+        else
+        {
+            View view = inflater.inflate(R.layout.empty_search,viewGroup,false);
+            return new ChallengeViewHolder(view);
+        }
+
     }
 
     @Override
@@ -77,4 +87,5 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
     public int getItemCount() {
         return cursor.getCount();
     }
+
 }
