@@ -26,6 +26,8 @@
     <string name="endDate">End Date</string>
     <string name="registrationType">Individual or Team Competition?</string>
     <string name="submitChallengeButton">Create Challenge!</string>
+    <string name="minTeam">Minimum Team Members</string>
+    <string name="maxTeam">Maximum Team Members</string>
 
     <!--Challenge Types Below -->
     <string name="challengeType1">Cardio</string>
@@ -38,7 +40,7 @@
     <string name="register_re_password">Re-enter password *</string>
     <string name="register_date">Pick a Date</string>
 
-    <!--Challange Search Below -->
+    <!--Challenge Search Below -->
     <string name="search_challenges_header"> Search Challenges by...</string>
     <string name="search_challenges_button">Search Challenges!</string>
     <string name="search_challenges_coach">Coach Username</string>

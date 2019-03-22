@@ -10,8 +10,9 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="100">
 
         <TextView
             android:id="@+id/createChallengeTextView"
@@ -20,7 +21,9 @@
             android:text="@string/createChallenge"
             android:textSize="10pt"
             android:textStyle="bold"
-            app:fontFamily="sans-serif"></TextView>
+            app:fontFamily="sans-serif">
+
+        </TextView>
 
         <!--Input Type for Challenge Specifications below-->
         <EditText
@@ -36,32 +39,60 @@
             android:id="@+id/challengeDescriptionEditText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/challengeDescription"></EditText>
+            android:hint="@string/challengeDescription">
 
-        <SeekBar
-            android:id="@+id/difficultySeekBar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:progress="10"/>
+        </EditText>
 
-        <TextView
-            android:id="@+id/difficultyTextView"
-            android:layout_width= "wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/difficulty"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-        <EditText
-            android:id="@+id/startDateEditText"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/startDate"></EditText>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/endDateEditText"
-            android:layout_width="fill_parent"
+            <TextView
+                android:id="@+id/difficultyTextView"
+                android:layout_width="117dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/difficulty"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                />
+
+            <RatingBar
+                android:id="@+id/difficultyRatingBar"
+                android:layout_width="243dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/Grey"
+                android:clickable="true"
+                android:numStars="5"
+                android:progressTint="@color/Golden"
+                android:stepSize="1.0" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/endDate"></EditText>
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/startDateEditText"
+                android:layout_width="202dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/startDate">
+
+            </EditText>
+
+            <EditText
+                android:id="@+id/endDateEditText"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:hint="@string/endDate">
+
+            </EditText>
+
+        </LinearLayout>
 
         <!--Drop-Down list for challenge type below-->
         <!--@param: ChallengeType1: Cardio type
@@ -82,7 +113,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:entries="@array/challengeTypeList"
-            android:prompt="@string/createChallenge"></Spinner>
+            android:prompt="@string/createChallenge">
+
+        </Spinner>
 
         <!--Drop-Down list for registration type below-->
         <!--@Param: RegistrationType1: Individual
@@ -102,7 +135,25 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:entries="@array/registrationTypeList"
-            android:prompt="@string/registrationType"></Spinner>
+            android:prompt="@string/registrationType">
+
+        </Spinner>
+
+        <EditText
+        android:id="@+id/minTeam"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/minTeam">
+
+        </EditText>
+
+        <EditText
+            android:id="@+id/maxTeam"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/maxTeam">
+
+        </EditText>
 
         <!--Button submission below-->
         <Button
@@ -110,7 +161,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            android:text="@string/submitChallengeButton"></Button>
+            android:text="@string/submitChallengeButton">
+
+        </Button>
 
 
 
