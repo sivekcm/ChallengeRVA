@@ -23,12 +23,13 @@
 
 
         <activity android:name=".ChallengeActivity"/>
+        <activity android:name=".LoginActivity"/>
 
         <activity android:name=".ChangePasswordActivity"></activity>
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".ChangeUsernameActivity" />
         <activity android:name=".ForgotUserActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ChallengeSearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

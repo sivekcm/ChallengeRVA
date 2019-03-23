@@ -66,5 +66,24 @@
     <string name="app_label">label</string>
     <string name="search_hint">search here</string>
 
+    <!--Search Challenge Below-->
+    <string name="challenge_name">Challenge Name</string>
+    <string name="challenge_coach">Challenge coach</string>
+    <string name="challenge_difficulty">Challenge difficulty</string>
+    <string name="challenge_description">Challenge desc</string>
+    <string name="challenge_category">Challenge cat</string>
+    <string name="challenge_duration">duration</string>
+    <string name="empty_search">No results found</string>
+    <string-array name="filters">
+        <item>Select Filter</item>
+        <item>difficulty (low - high)</item>
+        <item>difficulty (high - low)</item>
+        <item>Start Date (closest - furthest)</item>
+        <item>Start Date (furthest - closest)</item>
+        <item>Type (Lifting)</item>
+        <item>Type (Cardio)</item>
+        <item>Type (Health)</item>
+    </string-array>
+
 
 </resources>
