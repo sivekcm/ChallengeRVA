@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CoachHomeActivity">
+
+    <Button
+        android:id="@+id/coachHomeYourChallengesBtn"
+        android:layout_width="181dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="68dp"
+        android:text="@string/home_coach_your_challenges"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/coachHomeProfileBtn"
+        android:layout_width="181dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/coach_home_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/coachHomeYourChallengesBtn"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/coachHomeLeaderboardBtn"
+        android:layout_width="181dp"
+        android:layout_height="163dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/coach_home_leaderboard"
+        app:layout_constraintEnd_toEndOf="@+id/coachHomeYourChallengesBtn"
+        app:layout_constraintStart_toStartOf="@+id/coachHomeYourChallengesBtn"
+        app:layout_constraintTop_toBottomOf="@+id/coachHomeYourChallengesBtn" />
+
+    <Button
+        android:id="@+id/coachHomeLogoutBtn"
+        android:layout_width="181dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:text="@string/logout"
+        app:layout_constraintEnd_toEndOf="@+id/coachHomeProfileBtn"
+        app:layout_constraintStart_toStartOf="@+id/coachHomeProfileBtn"
+        app:layout_constraintTop_toBottomOf="@+id/coachHomeProfileBtn" />
+</android.support.constraint.ConstraintLayout>
