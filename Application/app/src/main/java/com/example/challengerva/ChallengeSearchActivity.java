@@ -1,9 +1,4 @@
 package com.example.challengerva;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> e5e1423230d57508f7e3fa009ce934d4d292b66c
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -106,7 +101,7 @@ public class ChallengeSearchActivity extends AppCompatActivity {
             }
         }
     }
-=======
+
 //
 //import android.app.SearchManager;
 //import android.content.Context;
@@ -232,9 +227,4 @@ public class ChallengeSearchActivity extends AppCompatActivity {
 ////        }
 ////    }
 //
-<<<<<<< HEAD
->>>>>>> 7eb49f690032948639584635e4efdf9a12f5508c
-=======
-
->>>>>>> e5e1423230d57508f7e3fa009ce934d4d292b66c
 }
