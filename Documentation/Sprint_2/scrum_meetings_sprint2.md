@@ -7,17 +7,14 @@ Question    |          Person                                             | 3/19
 |            | Chris Sivek | Demo android code with team |alter future efforts | Worked on displaying challenges when searching for them (Challenge Search Activity), change username/password | Finished basic functionality of search and filter challenges | 
 |            | Shradda Adhikari | Demo android code with team |  planning sprint 2 | planned what was going to be in the athlete UI | Still working on the UI |
 |            | Farhana Khan | Demo android code with team | modifications need to be made to challenges | Adding new features to challenge form | Adding new features to challenge form 
-
 | What will you accomplish before the next meeting? | Adrienne Serra | Update user stories with team |Research on email verification or phone verification | MailGun research and email verification | Work on other project efforts -> Public/private profiles of user 
 |            | Chris Sivek | Update User stories with team | Searching challenges | continue to work on search functionality on challenges via filters identifying characteristics of challenge |  improve filtering of challenges a little and make activities for individual challenges. | 
 |            | Shradda Adhikari | Update User stories with team | Team Creation and Athelte Profile | User interface with working buttons |  User interface with working buttons 
 |            | Farhana Khan | Update user stories with team | Edit Challenge Form | Finalize challenge form with TA’s recommendations | Finalize challenge form with TA’s recommendations 
-
 | Do you have anything that's getting in the way of doing your work? | Adrienne Serra |   No | Essay due tonight | Work tomorrow evening | Work | 
 |            | Chris Sivek |   No | Quiz tomorrow | None | None | 
 |            | Shradda Adhikari |   No | Paper deadline tonight | Work all day tomorrow | Other priorities during the day tomorrow  
 |            | Farhana Khan |  No | Work deadline tonight | Out of town all morning/afternoon | Deadline for school work tomorrow 
-
 | What insights have you made? | Adrienne Serra |   With previous sprints, A few times we had slight overlaps of making the same functionality -> focus on the user stories | SMS is easier than email | The way SMS verifications send is through the phone number on testing android device -> may not work on emulator | Email implemenatation may change the foundation of our code 
 |            | Chris Sivek |   Previous sprint was good with everyone working together and getting everything done on time should clean up and design of app in sprint 3 | None | None | Combining search and filters may take some redundant code unless I can find a better way to do it.
 |            | Shradda Adhikari |   As a group need to work on not having anything last minute ->understand the differing weight of user stories |Requirements changed a little bit with challenges and I also gained insight in communications with the client | None | None 
