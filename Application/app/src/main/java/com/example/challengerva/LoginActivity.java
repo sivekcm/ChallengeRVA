@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                     AlertMessage.alertMessage("Missing Fields",
                             "Please fill in every required field",LoginActivity.this);
                 }
-                Cursor userData = db.getUserData(username,password);
+                Cursor userData = db.getUserData("username",username,"password",password);
 
                 if (hasAllFields(username, password) && userData.getCount() == 0)
                 {
@@ -70,7 +70,15 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_LONG).show();
                     User user = new User(userData);
                     Log.d("LoginActivity",user.getUsername());
-                    Intent intent = new Intent(LoginActivity.this, CoachActivity.class);
+                    Intent intent = null;
+                    if (user.getAccountType().equals(User.UserType.ATHLETE))
+                    {
+                        intent = new Intent(LoginActivity.this,AthleteHomeActivity.class);
+                    }
+                    else
+                    {
+                        intent = new Intent(LoginActivity.this,CoachHomeActivity.class);
+                    }
                     intent.putExtra("User Object", user);
 
                     startActivity(intent);

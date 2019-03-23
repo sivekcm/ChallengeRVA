@@ -26,6 +26,8 @@
     <string name="endDate">End Date</string>
     <string name="registrationType">Individual or Team Competition?</string>
     <string name="submitChallengeButton">Create Challenge!</string>
+    <string name="minTeam">Minimum Team Members</string>
+    <string name="maxTeam">Maximum Team Members</string>
 
     <!--Challenge Types Below -->
     <string name="challengeType1">Cardio</string>
@@ -38,7 +40,7 @@
     <string name="register_re_password">Re-enter password *</string>
     <string name="register_date">Pick a Date</string>
 
-    <!--Challange Search Below -->
+    <!--Challenge Search Below -->
     <string name="search_challenges_header"> Search Challenges by...</string>
     <string name="search_challenges_button">Search Challenges!</string>
     <string name="search_challenges_coach">Coach Username</string>
@@ -63,6 +65,33 @@
     <string name="change_password_button">Set New Password</string>
     <string name="app_label">label</string>
     <string name="search_hint">search here</string>
+
+    <!--Search Challenge Below-->
+    <string name="challenge_name">Challenge Name</string>
+    <string name="challenge_coach">Challenge coach</string>
+    <string name="challenge_difficulty">Challenge difficulty</string>
+    <string name="challenge_description">Challenge desc</string>
+    <string name="challenge_category">Challenge cat</string>
+    <string name="challenge_duration">duration</string>
+    <string name="empty_search">No results found</string>
+    <string-array name="filters">
+        <item>Select Filter</item>
+        <item>difficulty (low - high)</item>
+        <item>difficulty (high - low)</item>
+        <item>Start Date (closest - furthest)</item>
+        <item>Start Date (furthest - closest)</item>
+        <item>Type (Lifting)</item>
+        <item>Type (Cardio)</item>
+        <item>Type (Health)</item>
+    </string-array>
+    <string name="title_activity_athlete_home">AthleteHomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="home_coach_your_challenges">Your challenges</string>
+    <string name="coach_home_profile">profile</string>
+    <string name="coach_home_leaderboard">Leaderboards</string>
+    <string name="logout">logout</string>
 
 
 </resources>

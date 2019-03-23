@@ -4,6 +4,14 @@
     <item android:id="@+id/search"
         android:title="Search"
         android:icon="@drawable/search"
-        app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.widget.SearchView" />
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.support.v7.widget.SearchView" />
+
+    <item android:id="@+id/filter"
+        android:title="Filter results"
+        android:icon="@drawable/ic_filter"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.Spinner"
+        />
+
 </menu>
