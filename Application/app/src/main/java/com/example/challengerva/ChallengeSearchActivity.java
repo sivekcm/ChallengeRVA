@@ -2,6 +2,9 @@
 package com.example.challengerva;
 
 
+import android.app.SearchManager;
+import android.content.Intent;
+
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -197,5 +200,4 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
 }

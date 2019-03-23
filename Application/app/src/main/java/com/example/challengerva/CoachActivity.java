@@ -39,9 +39,6 @@ public class CoachActivity extends AppCompatActivity {
     TextView coachUserNameTxtView;
 
     //Declares Buttons
-    Button changeUserNameBtn;
-    Button changePasswordBtn;
-    Button changeDisplayNameBtn;
     Button createChallengeBtn;
     Button viewChallengesBtn;
 
@@ -65,9 +62,6 @@ public class CoachActivity extends AppCompatActivity {
         coachUserNameTxtView = (TextView)findViewById(R.id.coachUserNameTxtView);
         
         //Initializes Buttons to their respective UI elements
-        changeUserNameBtn = (Button)findViewById(R.id.changeUserNameBtn);
-        changePasswordBtn = (Button)findViewById(R.id.changeUserNameBtn);
-        changeDisplayNameBtn = (Button)findViewById(R.id.changeDisplayNameBtn);
         createChallengeBtn = (Button)findViewById(R.id.createChallengeBtn);
         viewChallengesBtn = (Button)findViewById(R.id.viewAll);
 
@@ -79,8 +73,6 @@ public class CoachActivity extends AppCompatActivity {
         final DBHelper challenge = new DBHelper(CoachActivity.this);
 
 
-        //Calling inProgress method
-        inProgress();
         //Calling openChallengeActivity method
         openChallengeActivity(user);
         //Inserting test challenge information
@@ -139,22 +131,6 @@ public class CoachActivity extends AppCompatActivity {
                         showMessage("Challenges", buffer.toString());
                 }
             });
-            }
-
-            public void inProgress() {
-                changeUserNameBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMessage("Coming Soon", "");
-                    }
-                });
-                changeDisplayNameBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMessage("Coming Soon", "");
-
-                    }
-                });
             }
 
     /**
