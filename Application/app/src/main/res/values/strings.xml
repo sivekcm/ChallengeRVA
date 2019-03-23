@@ -84,6 +84,14 @@
         <item>Type (Cardio)</item>
         <item>Type (Health)</item>
     </string-array>
+    <string name="title_activity_athlete_home">AthleteHomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="home_coach_your_challenges">Your challenges</string>
+    <string name="coach_home_profile">profile</string>
+    <string name="coach_home_leaderboard">Leaderboards</string>
+    <string name="logout">logout</string>
 
 
 </resources>
