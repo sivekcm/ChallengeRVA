@@ -163,7 +163,7 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/logType"
+                android:id="@+id/logRange"
                 android:layout_width="192dp"
                 android:layout_height="wrap_content"
                 android:hint="@string/logType" >

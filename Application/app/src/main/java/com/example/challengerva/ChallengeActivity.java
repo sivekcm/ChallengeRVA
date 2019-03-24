@@ -41,6 +41,9 @@ public class ChallengeActivity extends AppCompatActivity{
     EditText challengeDescriptionEditText;
     EditText startDateEditText;
     EditText endDateEditText;
+    EditText minTeamEditText;
+    EditText maxTeamEditText;
+    EditText logRangeEditText;
 
     RatingBar difficultyRatingBar;
 
@@ -76,6 +79,9 @@ public class ChallengeActivity extends AppCompatActivity{
         challengeDescriptionEditText = findViewById(R.id.challengeDescriptionEditText);
         startDateEditText = findViewById(R.id.startDateEditText);
         endDateEditText = findViewById(R.id.endDateEditText);
+        minTeamEditText = findViewById(R.id.minTeam);
+        maxTeamEditText = findViewById(R.id.maxTeam);
+        logRangeEditText = findViewById(R.id.logRange);
 
         difficultyRatingBar = findViewById(R.id.difficultyRatingBar);
 
@@ -99,7 +105,9 @@ public class ChallengeActivity extends AppCompatActivity{
                 String type = registrationTypeListSpinner.toString();
                 int diff = 0;
                 String category = challengeTypeListSpinner.toString();
-                int count_ID = 0; //default value
+                int minTeam = Integer.parseInt(minTeamEditText.getText().toString());
+                int maxTeam = Integer.parseInt(maxTeamEditText.getText().toString());
+                int logRange = Integer.parseInt(logRangeEditText.getText().toString());
 
 
 
@@ -148,7 +156,10 @@ public class ChallengeActivity extends AppCompatActivity{
                                     registrationTypeListSpinner.getSelectedItem().toString(),
                                     "open",
                                     "1",
-                                    description);
+                                    description,
+                                    minTeam,
+                                    maxTeam,
+                                    logRange);
 
                     if(success){
                             Toast.makeText(ChallengeActivity.this,
