@@ -9,6 +9,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -33,8 +34,8 @@ public class AthleteProfileActivity extends AppCompatActivity{
     Button athleteViewChallengesBtn;
     Button athleteViewFriendsBtn;
 
-    //Declaring ListView
-    ListView athleteListView;
+    //Declaring Recycler View
+    RecyclerView athleteChallengesRView;
 
     Intent intent = getIntent();
     final User user = intent.getParcelableExtra("User Object");
@@ -52,8 +53,8 @@ public class AthleteProfileActivity extends AppCompatActivity{
         athleteViewChallengesBtn = (Button)findViewById(R.id.createChallengeBtn);
         athleteViewFriendsBtn = (Button)findViewById(R.id.athleteViewFriendsBtn);
 
-        //Initializing listview
-        athleteListView = (ListView)findViewById(R.id.athelteListView);
+        //Initializing Recycler View
+        athleteChallengesRView = (RecyclerView) findViewById(R.id.athleteChallengesRView);
 
         //Setting the name and user name text views to the athlete name and user name
         athleteNameTxtView.setText(user.getFirstName());
