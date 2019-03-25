@@ -118,6 +118,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 "availability TEXT NOT NULL, " +
                 "health_hazards TEXT, " +
                 "description TEXT, " +
+                "min_team TEXT NOT NULL," +
+                "max_team TEXT NOT NULL," +
+                "log_range TEXT NOT NULL," +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
                 ") ");
 
