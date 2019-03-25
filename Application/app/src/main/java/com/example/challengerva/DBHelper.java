@@ -39,6 +39,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL9 = "availability";
     public static final String CHAL_COL10 = "health_hazards";
     public static final String CHAL_COL11 = "description";
+    public static final String CHAL_COL12 = "minTeam";
+    public static final String CHAL_COL13 = "maxTeam";
+    public static final String CHAL_COL14 = "logRange";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -251,7 +254,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertChallenge(String name, String coach,
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
-                                   String hazards, String description) {
+                                   String hazards, String description, int minTeam, int maxTeam, int logRange) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -264,6 +267,9 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL9, availability);
         cv.put(CHAL_COL10, hazards);
         cv.put(CHAL_COL11, description);
+        cv.put(CHAL_COL12, minTeam);
+        cv.put(CHAL_COL13, maxTeam);
+        cv.put(CHAL_COL14, logRange);
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
