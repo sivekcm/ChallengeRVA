@@ -5,29 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="16dp"
-    android:orientation="vertical"
 
+    android:orientation="vertical"
     tools:context=".ChallengeSearchActivity">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        />
-
-    <SearchView
-        android:id="@+id/searchView"
-        android:elevation="2dp"
-        android:background="#fff"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/challengeRV"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-    </SearchView>
-
-    <ListView
-        android:id="@+id/challengeListView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="4dp"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
