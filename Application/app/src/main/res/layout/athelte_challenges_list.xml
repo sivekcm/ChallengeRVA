@@ -5,13 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/athelteListView"
-        android:layout_width="398dp"
-        android:layout_height="646dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="77dp" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -20,4 +13,11 @@
         android:textSize="30sp"
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="16dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/athleteChallengesRView"
+        android:layout_width="395dp"
+        android:layout_height="658dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="65dp" />
 </android.support.constraint.ConstraintLayout>
