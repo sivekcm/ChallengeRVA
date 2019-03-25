@@ -29,6 +29,7 @@
     <string name="minTeam">Minimum Team Members</string>
     <string name="maxTeam">Maximum Team Members</string>
     <string name="measurement">Set Measurement for Logs here</string>
+    <string name="registerChallengeButton">Register for Challenge!</string>
 
     <!--Challenge Types Below -->
     <string name="challengeType1">Cardio</string>
