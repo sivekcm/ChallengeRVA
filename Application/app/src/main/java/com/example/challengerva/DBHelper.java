@@ -45,12 +45,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
-    public static final String TEAM_COL1 = "team_id";
+    public static final String TEAM_COL1 = "team_name";
     public static final String TEAM_COL2 = "challenge_id";
-    public static final String TEAM_COL3 = "user1";
-    public static final String TEAM_COL4 = "user2";
-    public static final String TEAM_COL5 = "user3";
-    public static final String TEAM_COL6 = "user4";
+    public static final String TEAM_COL3 = "user";
 
     //Leaderboard Table
     public static final String TABLE_LEADERBOARD = "LeaderBoard";
@@ -63,6 +60,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PART_COL1 = "username";
     public static final String PART_COL2 = "challenge_id";
     public static final String PART_COL3 = "join_date";
+    public static final String PART_COL4 = "completed";
 
     /***************************
      * DBHeler Constructor
@@ -128,18 +126,12 @@ public class DBHelper extends SQLiteOpenHelper {
         //Stores team data
         //unique team id and challenge id
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TEAM + "(" +
-                "team_id INTEGER NOT NULL, " +
+                "team_name TEXT NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
-                "user1 TEXT, " +
-                "user2 TEXT, " +
-                "user3 TEXT, " +
-                "user4 TEXT, " +
-                "PRIMARY KEY(team_id, challenge_id), " +
+                "user TEXT, " +
+                "PRIMARY KEY(team_name, challenge_id), " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE, " +
-                "FOREIGN KEY(user1) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL, " +
-                "FOREIGN KEY(user2) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL, " +
-                "FOREIGN KEY(user3) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL, " +
-                "FOREIGN KEY(user4) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
+                "FOREIGN KEY(user) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
                 ") ");
 
         //Leaderboard table
@@ -161,10 +153,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 "username TEXT, " +
                 "challenge_id INTEGER, " +
                 "join_date DATE NOT NULL, " +
+                "completed TEXT NOT NULL," +
                 "PRIMARY KEY(username, challenge_id), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
                 ") ");
+
     }
 
     /*********************************
@@ -282,28 +276,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**********************************************************************
      * insertTeam method
-     * @param team_id: id for team
+     * @param team_name: name for team
      * @param challenge_id id for challenge referring to challenge table (unique pairing with team id)
-     * @param user1
-     * @param user2
-     * @param user3
-     * @param user4
+     * @param user
      * @return false if insert fails, true if data is inserted successfully
      *
      * This method inserts a new data entry in the the team table. No two data
      * entries may have the same team_id and challenge_id pairing. team id and
      * challenge id cannot be null.
      */
-    public boolean insertTeam(int team_id, int challenge_id, String user1,
-                              String user2, String user3, String user4) {
+    public boolean insertTeam(String team_name, int challenge_id, String user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(TEAM_COL1, team_id);
+        cv.put(TEAM_COL1, team_name);
         cv.put(TEAM_COL2, challenge_id);
-        cv.put(TEAM_COL3, user1);
-        cv.put(TEAM_COL4, user2);
-        cv.put(TEAM_COL5, user3);
-        cv.put(TEAM_COL6, user4);
+        cv.put(TEAM_COL3, user);
+
 
         long num = db.insert(TABLE_TEAM, null, cv);
         if (num == -1) {
@@ -344,6 +332,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param username: the user
      * @param challengeID: the id of the challenge (unique pairing with username)
      * @param joinDate: date that user joined challenge "YYYY-MM-DD"
+     * @param completed: if the user has completed the challenge (keeps track of the user's past challenges)
      * @return false if insert fails, true if data is inserted successfully
      *
      * this method inserts a new data entry (a full row) into the participates table.
@@ -353,12 +342,14 @@ public class DBHelper extends SQLiteOpenHelper {
      * may have the same username and challengeID pairing. All dates must be formatted
      * "YYYY-MM-DD" otherwise insert will fail. No parameters are allowed to be null.
      */
-    public boolean insertParticipates(String username, int challengeID, String joinDate) {
+    public boolean insertParticipates(String username, int challengeID, String joinDate, String completed) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(PART_COL1, username);
         cv.put(PART_COL2, challengeID);
         cv.put(PART_COL3, joinDate);
+        cv.put(PART_COL4, completed);
+
 
         long num = db.insert(TABLE_PARTICIPATES, null, cv);
         if (num == -1) {
@@ -422,7 +413,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //No Password Change
         if (parameterArray[2] == null) {
-            Cursor userCursor = getUserData((String) parameterArray[0]);
+            Cursor userCursor = getUserData("username",parameterArray[0].toString());
             userCursor.moveToFirst();
             parameterArray[2] = userCursor.getString(1);
         }
@@ -480,32 +471,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**********************************************************************
      * updateTeam method
-     * @param oldTeam_id: team id of the row you want to change
-     * @param oldChallenge_id: challenge id of the row you want to change (paired with team id)
-     * @param newTeam_id: the Team id you want to replace the old one with
-     * @param newChallenge_id: the challenge id you want to replace the old one with
-     * @param user1
-     * @param user2
-     * @param user3
-     * @param user4
+     * @param oldTeamName: team id of the row you want to change
+     * @param oldChallengeID: challenge id of the row you want to change (paired with team id)
+     * @param newTeamName: the Team id you want to replace the old one with
+     * @param newChallengeID: the challenge id you want to replace the old one with
+     * @param user
      * @return false if update fails, true if data is updated successfully
      *
      * This method updates the data of a row at the specified Team_id and
      * challenge_id pairing. Team_id and challenge_id must already exist
      * or else update will fail.
      */
-    public boolean updateTeam(int oldTeam_id, int oldChallenge_id, int newTeam_id, int newChallenge_id, String user1,
-                              String user2, String user3, String user4) {
+    public boolean updateTeam(String oldTeamName, int oldChallengeID, String newTeamName, int newChallengeID, String user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(TEAM_COL1, newTeam_id);
-        cv.put(TEAM_COL2, newChallenge_id);
-        cv.put(TEAM_COL3, user1);
-        cv.put(TEAM_COL4, user2);
-        cv.put(TEAM_COL5, user3);
-        cv.put(TEAM_COL6, user4);
+        cv.put(TEAM_COL1, newTeamName);
+        cv.put(TEAM_COL2, newChallengeID);
+        cv.put(TEAM_COL3, user);
 
-        long result = db.update(TABLE_TEAM, cv, "team_id = ? AND challenge_id = ?", new String[]{Integer.valueOf(oldTeam_id).toString(), Integer.valueOf(oldChallenge_id).toString()});
+        long result = db.update(TABLE_TEAM, cv, "team_name = ? AND challenge_id = ?", new String[]{oldTeamName, Integer.valueOf(oldChallengeID).toString()});
         if (result > 0) {
             return true;
         } else {
@@ -550,6 +534,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param newUsername: the username you want to replace the old one with
      * @param newChallengeID: the challenge id you want to replace the old one with
      * @param joinDate: date that user joined challenge "YYYY-MM-DD"
+     * @param completed: whether the user has completed the challenge or not
      * @return false if update fails, true if data is updated successfully
      *
      * this method updates a row in the participates table at the specified username
@@ -559,12 +544,13 @@ public class DBHelper extends SQLiteOpenHelper {
      * challengeID must already exist or the update will fail. All dates must be formatted
      * "YYYY-MM-DD" otherwise insert will fail. No parameters are allowed to be null.
      */
-    public boolean updateParticipates(String oldUsername, int oldChallengeID, String newUsername, int newChallengeID, String joinDate) {
+    public boolean updateParticipates(String oldUsername, int oldChallengeID, String newUsername, int newChallengeID, String joinDate, String completed) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(PART_COL1, newUsername);
         cv.put(PART_COL2, newChallengeID);
         cv.put(PART_COL3, joinDate);
+        cv.put(PART_COL4, completed);
 
         long result = db.update(TABLE_PARTICIPATES, cv, "username = ? AND challenge_id = ?", new String[]{oldUsername, Integer.valueOf(oldChallengeID).toString()});
         if (result > 0) {
@@ -640,16 +626,16 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /*****************************************************
      * deleteTeam
-     * @param team_id: team id at the row to be deleted
-     * @param challenge_id: challenge_id at the row to be deleted
+     * @param teamName: team id at the row to be deleted
+     * @param challengeID: challenge_id at the row to be deleted
      * @return the number of rows that were deleted
      *
      * Deletes the row containing the specified team id
      * and challenge_id from the team table
      */
-    public int deleteTeam(int team_id, int challenge_id) {
+    public int deleteTeam(String teamName, int challengeID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_TEAM, "team_id = ? AND challenge_id = ?", new String[]{Integer.valueOf(team_id).toString(), Integer.valueOf(challenge_id).toString()});
+        return db.delete(TABLE_TEAM, "team_name = ? AND challenge_id = ?", new String[]{teamName, Integer.valueOf(challengeID).toString()});
     }
 
     /*******************************************************
@@ -669,36 +655,18 @@ public class DBHelper extends SQLiteOpenHelper {
     /****************************************************
      * deleteParticipates method
      * @param username: username at row to be deleted
-     * @param challenge_id: challenge_id at row to be deleted
+     * @param challengeID: challenge_id at row to be deleted
      * @return the number of rows that were deleted
      *
      * Deletes the row containing the specified username
      * and challenge_id from the participates table
      */
-    public int deleteParticipates(String username, Integer challenge_id) {
+    public int deleteParticipates(String username, int challengeID) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_PARTICIPATES, "username = ? AND challenge_id = ?", new String[]{username, Integer.valueOf(challenge_id).toString()});
+        return db.delete(TABLE_PARTICIPATES, "username = ? AND challenge_id = ?", new String[]{username, Integer.valueOf(challengeID).toString()});
     }
 
-    /******************************************************************
-     * userIsAvail method
-     * @param username: the username to be checked
-     * @return true if username is available, false if it is taken
-     *
-     * This method checks if the username entered by the user
-     * is already taken (i.e already exists in the database).
-     */
-    public boolean userIsAvail(String username) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //queries the database to find if username is in the User table.
-        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ? COLLATE NOCASE", new String[]{username});
-        //If query returns no data
-        if (cursor.getCount() == 0) {
-            return true;
-        }
-        //if the query returns data, then the username was found.
-        return false;
-    }
+
 
     /*****************************************************************
      * userFromEmail method
@@ -713,16 +681,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM User WHERE email = ?", new String[]{searchEmail});
     }
 
-    /******************************************************
-     * getChallengeData(int challengeID)
-     * @param challengeID
-     * @return A cursor object containing the challenge with the specified challengeID
-     */
-    public Cursor getChallengeData(int challengeID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE challenge = ?", new String[]{Integer.valueOf(challengeID).toString()});
-        return cursor;
-    }
+
 
     /****************************************************
      * getChallengeData()
@@ -731,6 +690,76 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getChallengeData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Challenge", new String[]{});
+        return cursor;
+    }
+
+    /******************************************************
+     * getChallengeData(String column, String value)
+     * @param column: the column you wish to compare value to
+     * @param value: the value at which the column must equal.
+     * @return A cursor object containing the challenges where the specified column equals the value
+     */
+    public Cursor getChallengeData(String column, String value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE " + column + " = ?", new String[]{value});
+        return cursor;
+    }
+
+    /********************************************************
+     * getChallengeWildCard
+     * @param column
+     * @param wildcard
+     * @return a cursor object containing the challenges matching the indicated wildcard pattern
+     */
+    public Cursor getChallengeWildCard(String column, String wildcard) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge WHERE " + column + " LIKE '" + wildcard + "'", new String[]{});
+        return cursor;
+    }
+
+    /***********************************************************************
+     * getChallengeDataAsc
+     * @param column
+     * @return a cursor object containing the challenges ordered by column in ascending order
+     */
+    public Cursor getChallengeDataAsc(String column)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge ORDER BY " + column + " ASC", new String[] {});
+        return cursor;
+    }
+
+    /***********************************************************************
+     * getChallengeDataDesc
+     * @param column
+     * @return a cursor object containing the challenges ordered by column in descending order
+     */
+    public Cursor getChallengeDataDesc(String column)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge ORDER BY " + column + " DESC", new String[] {});
+        return cursor;
+    }
+
+    /************************************************************************
+     * getChallengeDataDateAsc
+     * @return a cursor object containing the challenges ordered by the most recent date to oldest
+     */
+    public Cursor getChallengeDataDateAsc()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CHALLENGE ORDER BY date(start_date) ASC", new String[]{});
+        return cursor;
+    }
+
+    /************************************************************************
+     * getChallengeDataDateDesc
+     * @return a cursor object containing the challenges ordered by the oldest date to the most recent
+     */
+    public Cursor getChallengeDataDateDesc()
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM CHALLENGE ORDER BY date(start_date) DESC", new String[]{});
         return cursor;
     }
 
@@ -780,27 +809,84 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /******************************************************
-     * getUserData(String username)
-     * @param username: the username of the user
-     * @return A cursor object containing the user with the specified username from the user table
+     * getUserData(String column)
+     * @param column: the column you wish to compare value to
+     * @param value: the value at which the column must equal.
+     * @return A cursor object containing the users where the specified column equals value
      */
-    public Cursor getUserData(String username) {
+    public Cursor getUserData(String column, String value) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE username = ?", new String[]{username});
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE " + column + " = ?", new String[]{value});
         return cursor;
     }
 
     /*****************************************************
      * getUserData(String username, String password)
-     * @param username: the username of the user
-     * @param password: the password of the user
-     * @return A cursor object containing the user with the specified username and password
+     * @param column1: the first column you wish to compare value1 to
+     * @param value1: the value at which the first column must equal.
+     * @param column2: the second column you wish to compare value2 to
+     * @param value2: the value at which the column2 must equal.
+     * @return A cursor object containing the users where column1 equals value1 and column2 equals value2
      */
-    public Cursor getUserData(String username, String password) {
+    public Cursor getUserData(String column1, String value1, String column2, String value2) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE username = ? AND password = ?",
-                new String[]{username, password});
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE " + column1 + " = ? AND " + column2 + " = ?",
+                new String[]{value1, value2});
         return cursor;
+    }
+
+    /**********************************************************************
+     * getTeamData(String column, String value)
+     * @param column:the column you wish to compare value to
+     * @param value: the value at which column must equal
+     * @return A cursor object containing the Team where column equals value
+     */
+    public Cursor getTeamData(String column, String value)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column + " = ?",new String[] {value});
+        return cursor;
+    }
+
+    /**********************************************************************
+     * getParticipatesData(String column, String value)
+     * @param column:the column you wish to compare value to
+     * @param value: the value at which column must equal
+     * @return A cursor object containing the Team where column equals value
+     */
+    public Cursor getParticipatesData(String column, String value)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column + " = ?",new String[] {value});
+        return cursor;
+    }
+
+    public Cursor getParticipatesData(String column1, String value1, String column2, String value2)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column1 + " = ? AND " + column2 + " = ?",new String[] {value1,value2});
+        return cursor;
+    }
+
+
+    /******************************************************************
+     * userIsAvail method
+     * @param username: the username to be checked
+     * @return true if username is available, false if it is taken
+     *
+     * This method checks if the username entered by the user
+     * is already taken (i.e already exists in the database).
+     */
+    public boolean userIsAvail(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //queries the database to find if username is in the User table.
+        Cursor cursor = db.rawQuery("SELECT username FROM User WHERE username = ? COLLATE NOCASE", new String[]{username});
+        //If query returns no data
+        if (cursor.getCount() == 0) {
+            return true;
+        }
+        //if the query returns data, then the username was found.
+        return false;
     }
 
     public boolean emailIsAvail(String email) {

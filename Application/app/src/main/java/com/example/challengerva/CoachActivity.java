@@ -39,9 +39,6 @@ public class CoachActivity extends AppCompatActivity {
     TextView coachUserNameTxtView;
 
     //Declares Buttons
-    Button changeUserNameBtn;
-    Button changePasswordBtn;
-    Button changeDisplayNameBtn;
     Button createChallengeBtn;
     Button viewChallengesBtn;
 
@@ -65,9 +62,6 @@ public class CoachActivity extends AppCompatActivity {
         coachUserNameTxtView = (TextView)findViewById(R.id.coachUserNameTxtView);
         
         //Initializes Buttons to their respective UI elements
-        changeUserNameBtn = (Button)findViewById(R.id.changeUserNameBtn);
-        changePasswordBtn = (Button)findViewById(R.id.changeUserNameBtn);
-        changeDisplayNameBtn = (Button)findViewById(R.id.changeDisplayNameBtn);
         createChallengeBtn = (Button)findViewById(R.id.createChallengeBtn);
         viewChallengesBtn = (Button)findViewById(R.id.viewAll);
 
@@ -79,11 +73,10 @@ public class CoachActivity extends AppCompatActivity {
         final DBHelper challenge = new DBHelper(CoachActivity.this);
 
 
-        //Calling inProgress method
-        inProgress();
         //Calling openChallengeActivity method
         openChallengeActivity(user);
         //Inserting test challenge information
+<<<<<<< HEAD
         challenge.insertChallenge("testChall",
                 "jacobobeast",
                 "2019-03-16",
@@ -97,6 +90,11 @@ public class CoachActivity extends AppCompatActivity {
                 2,
                 5,
                 10);
+=======
+
+      //  challenge.insertChallenge("testChall", "jacobobeast", "2019-03-16", "2019-04-19", "cardio", 4, "team", "availible", "none", "basic test challenge");
+
+>>>>>>> 25be1f619df81f9878e41bed1f7241b60a863b85
         //calling view all method
         viewAll(user);
 
@@ -149,22 +147,6 @@ public class CoachActivity extends AppCompatActivity {
                         showMessage("Challenges", buffer.toString());
                 }
             });
-            }
-
-            public void inProgress() {
-                changeUserNameBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMessage("Coming Soon", "");
-                    }
-                });
-                changeDisplayNameBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showMessage("Coming Soon", "");
-
-                    }
-                });
             }
 
     /**

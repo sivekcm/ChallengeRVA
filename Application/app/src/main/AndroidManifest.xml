@@ -9,29 +9,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
-        <activity android:name=".CoachActivity"/>
+        <activity android:name=".CoachHomeActivity"></activity>
+        <activity android:name=".AthleteHomeActivity" />
+        <activity android:name=".CoachActivity" />
         <activity android:name=".RegisterActivity">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable"/>
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
-
-
-        <activity android:name=".ChallengeActivity"/>
-
-        <activity android:name=".ChangePasswordActivity"></activity>
+        <activity android:name=".ChallengeActivity" />
+        <activity android:name=".ChallengeSearchActivity" />
+        <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".ChangeUsernameActivity" />
         <activity android:name=".ForgotUserActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
