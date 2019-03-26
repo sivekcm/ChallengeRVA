@@ -54,7 +54,7 @@ public class AthleteProfileActivity extends AppCompatActivity{
         athleteViewFriendsBtn = (Button)findViewById(R.id.athleteViewFriendsBtn);
 
         //Initializing Recycler View
-        athleteChallengesRView = (RecyclerView) findViewById(R.id.athleteChallengesRView);
+        athleteChallengesRView = (RecyclerView) findViewById(R.id.athleteChallengeRV);
 
         //Setting the name and user name text views to the athlete name and user name
         athleteNameTxtView.setText(user.getFirstName());
