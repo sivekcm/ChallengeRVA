@@ -308,10 +308,9 @@ public class ChallengeActivity extends AppCompatActivity{
 
 
 
-    public static boolean hasAllFields(String name, String desc, String diff,
-                                       String startDate, String endDate)
+    public static boolean hasAllFields(String name, String desc, String startDate, String endDate)
     {
-        if (name.isEmpty() || desc.isEmpty() || diff.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
+        if (name.isEmpty() || desc.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
         {
             return false;
         }
