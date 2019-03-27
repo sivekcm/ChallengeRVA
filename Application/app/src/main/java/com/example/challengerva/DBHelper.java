@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 
 import java.util.ArrayList;
 
@@ -39,9 +40,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL9 = "availability";
     public static final String CHAL_COL10 = "health_hazards";
     public static final String CHAL_COL11 = "description";
-    public static final String CHAL_COL12 = "minTeam";
-    public static final String CHAL_COL13 = "maxTeam";
-    public static final String CHAL_COL14 = "logRange";
+    public static final String CHAL_COL12 = "min_team";
+    public static final String CHAL_COL13 = "max_team";
+    public static final String CHAL_COL14 = "log_range";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -865,6 +866,14 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column1 + " = ? AND " + column2 + " = ?",new String[] {value1,value2});
+        return cursor;
+    }
+
+    public Cursor getParticipatesDataInnerJoin(String username, String completed)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT username,challenge.name,challenge.start_date,challenge.end_date FROM participates INNER JOIN challenge ON Participates.challenge_id = challenge.challenge_ID WHERE username = ? AND completed = ?",
+                new String[] {username,completed});
         return cursor;
     }
 

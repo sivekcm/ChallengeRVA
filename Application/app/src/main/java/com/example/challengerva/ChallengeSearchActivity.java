@@ -50,7 +50,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
 
-        //Instantiates spinner and searchview
+        //Instantiates spinner and searchview for the menu
         MenuItem item = menu.findItem(R.id.search);
         MenuItem spinnerItem = menu.findItem(R.id.filter);
         SearchView searchView = (SearchView) item.getActionView();

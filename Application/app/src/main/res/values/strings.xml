@@ -99,6 +99,8 @@
     <string name="coach_home_profile">profile</string>
     <string name="coach_home_leaderboard">Leaderboards</string>
     <string name="logout">logout</string>
+    <string name="current_challenges">Current</string>
+    <string name="prev_challenges">Previous</string>
 
 
 </resources>
