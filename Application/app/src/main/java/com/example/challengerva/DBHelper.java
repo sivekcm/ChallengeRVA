@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_COL5 = "birth_date";
     public static final String USER_COL6 = "join_date";
     public static final String USER_COL7 = "email";
-    public static final String USER_COL8 = "challenges_comp";
+    public static final String USER_COL8 = "challenges_count";
     public static final String USER_COL9 = "private";
     public static final String USER_COL10 = "type";
 
@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_LEADERBOARD = "LeaderBoard";
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
-    public static final String LB_COL3 = "challenges_comp";
+    public static final String LB_COL3 = "challenges_count";
 
     //Participates Table
     public static final String TABLE_PARTICIPATES = "Participates";
@@ -96,7 +96,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "birth_date DATE NOT NULL, " +
                 "join_date DATE NOT NULL, " +
                 "email TEXT NOT NULL, " +
-                "challenges_comp INTEGER, " +
+                "challenges_count INTEGER, " +
                 "private TEXT NOT NULL, " +
                 "type TEXT NOT NULL" +
                 ") ");
@@ -140,10 +140,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD + "(" +
                 "rank INTEGER NOT NULL, " +
                 "username TEXT NOT NULL, " +
-                "challenges_comp INTEGER NOT NULL, " +
+                "challenges_count INTEGER NOT NULL, " +
                 "PRIMARY KEY(rank, username), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
-                "FOREIGN KEY(challenges_comp) REFERENCES " + TABLE_USER + "(challenges_comp) ON DELETE CASCADE" +
+                "FOREIGN KEY(challenges_count) REFERENCES " + TABLE_USER + "(challenges_count) ON DELETE CASCADE" +
                 ") ");
 
         //Participates table
@@ -305,19 +305,19 @@ public class DBHelper extends SQLiteOpenHelper {
      * insertLeaderBoard method
      * @param rank: the rank of the user
      * @param username: the user (unique pairing with rank
-     * @param challengesComp: the amount of challenges completed by user
+     * @param challengesCount: the amount of challenges completed by user
      * @return false if insert fails, true if data is inserted successfully
      *
      * This methods inserts a new data entry (a full row) into the leaderboard
      * table. No two data entries may have the same rank and username pairing.
      * Only challengesComp can be null
      */
-    public boolean insertLeaderBoard(int rank, String username, int challengesComp) {
+    public boolean insertLeaderBoard(int rank, String username, int challengesCount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LB_COL1, rank);
         cv.put(LB_COL2, username);
-        cv.put(LB_COL3, challengesComp);
+        cv.put(LB_COL3, challengesCount);
 
         long num = db.insert(TABLE_LEADERBOARD, null, cv);
         if (num == -1) {
@@ -512,12 +512,12 @@ public class DBHelper extends SQLiteOpenHelper {
      * otherwise update will fail. Only challengesComp can
      * be null.
      */
-    public boolean updateLeaderBoard(int oldRank, String oldUsername, int newRank, String newUsername, int challengesComp) {
+    public boolean updateLeaderBoard(int oldRank, String oldUsername, int newRank, String newUsername, int challengesCount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LB_COL1, newRank);
         cv.put(LB_COL2, newUsername);
-        cv.put(LB_COL3, challengesComp);
+        cv.put(LB_COL3, challengesCount);
 
         long result = db.update(TABLE_LEADERBOARD, cv, "rank = ? AND username = ?", new String[]{Integer.valueOf(oldRank).toString(), oldUsername});
         if (result > 0) {

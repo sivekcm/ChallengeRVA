@@ -23,7 +23,7 @@ import android.widget.Spinner;
 
 public class ChallengeSearchActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //Initialize variabales
+    //Initialize variables
     RecyclerView challengeRV;
     Spinner spinner;
     String[] filterArr;
