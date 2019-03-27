@@ -109,13 +109,14 @@ public class ChallengeActivity extends AppCompatActivity{
                 int maxTeam = Integer.parseInt(maxTeamEditText.getText().toString());
                 int logRange = Integer.parseInt(logRangeEditText.getText().toString());
 
-
+                //Execute onRatingBar
+                addListenerOnRatingBar();
 
                 //convert dates to SQL format for db
                 if(!start.equals("")){
                     start = formatDate(start);
                 }
-                if(!end.equals("")){
+                if(!end.equals("")) {
                     end = formatDate(end);
                 }
 
