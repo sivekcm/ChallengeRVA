@@ -15,13 +15,22 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
 
     private Context context;
     private Cursor cursor;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listen){
+        this.listener = listen;
+    }
 
     public ChallengeAdapter(Context cont, Cursor curs)
     {
         this.context = cont;
         this.cursor = curs;;
     }
-    public class ChallengeViewHolder extends RecyclerView.ViewHolder
+    public static class ChallengeViewHolder extends RecyclerView.ViewHolder
     {
         TextView challengeNameTextView;
         TextView challengeCoachTextView;
@@ -30,7 +39,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         TextView challengeDurTextView;
         TextView challengeDescTextView;
 
-        public ChallengeViewHolder(@NonNull View itemView) {
+        public ChallengeViewHolder(@NonNull View itemView, final OnItemClickListener listen) {
             super(itemView);
 
             challengeNameTextView = itemView.findViewById(R.id.searchChallengeNameTextView);
@@ -39,6 +48,20 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
             challengeCatTextView = itemView.findViewById(R.id.searchChallengeCatTextView);
             challengeDurTextView = itemView.findViewById(R.id.searchChallengeDurTextView);
             challengeDescTextView = itemView.findViewById(R.id.searchChallengeDescTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listen != null)
+                    {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                        {
+                            listen.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -49,12 +72,12 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         if (this.getItemCount() != 0)
         {
             View view = inflater.inflate(R.layout.challenge,viewGroup,false);
-            return new ChallengeViewHolder(view);
+            return new ChallengeViewHolder(view,listener);
         }
         else
         {
             View view = inflater.inflate(R.layout.empty_search,viewGroup,false);
-            return new ChallengeViewHolder(view);
+            return new ChallengeViewHolder(view,listener);
         }
 
     }

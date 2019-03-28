@@ -56,28 +56,28 @@ public class ViewChallengeActivity extends AppCompatActivity {
 
 
         //connect variables to database
-        view_challengeName = (TextView) challenge.getChallengeDataAsc("2");
-        view_coachName = (TextView) challenge.getChallengeDataAsc("3");
-        view_description = (TextView) challenge.getChallengeDataAsc("11");
-        view_startDate = (TextView) challenge.getChallengeDataAsc("4");
-        view_endDate = (TextView) challenge.getChallengeDataAsc("5");
-        view_difficulty = (TextView) challenge.getChallengeDataAsc("7");
-        view_teamType = (TextView) challenge.getChallengeDataAsc("8");
-        view_minTeam = (TextView) challenge.getChallengeDataAsc("12");
-        view_maxTeam = (TextView) challenge.getChallengeDataAsc("13");
-        view_Availability = (TextView) challenge.getChallengeDataAsc("14");
+//        view_challengeName = (TextView) challenge.getChallengeDataAsc("2");
+//        view_coachName = (TextView) challenge.getChallengeDataAsc("3");
+//        view_description = (TextView) challenge.getChallengeDataAsc("11");
+//        view_startDate = (TextView) challenge.getChallengeDataAsc("4");
+//        view_endDate = (TextView) challenge.getChallengeDataAsc("5");
+//        view_difficulty = (TextView) challenge.getChallengeDataAsc("7");
+//        view_teamType = (TextView) challenge.getChallengeDataAsc("8");
+//        view_minTeam = (TextView) challenge.getChallengeDataAsc("12");
+//        view_maxTeam = (TextView) challenge.getChallengeDataAsc("13");
+//        view_Availability = (TextView) challenge.getChallengeDataAsc("14");
 
 
-        registerChallengeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                /**Direct to team creation activity**/
-                //Intent intent = new Intent(TeamCreationActivity.this,TeamCreationActivity.class);
-                //startActivity(intent);
-
-            }
-        });
+//        registerChallengeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                /**Direct to team creation activity**/
+//                //Intent intent = new Intent(TeamCreationActivity.this,TeamCreationActivity.class);
+//                //startActivity(intent);
+//
+//            }
+//        });
 
 
 

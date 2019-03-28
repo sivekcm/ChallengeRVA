@@ -2,6 +2,7 @@
 package com.example.challengerva;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -155,6 +156,13 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
         challengeRV.setLayoutManager(new LinearLayoutManager(ChallengeSearchActivity.this));
         adapter = new ChallengeAdapter(ChallengeSearchActivity.this, cursor);
         challengeRV.swapAdapter(adapter,false);
+        adapter.setOnItemClickListener(new ChallengeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(ChallengeSearchActivity.this,ViewChallengeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
