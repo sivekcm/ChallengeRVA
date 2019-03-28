@@ -68,6 +68,7 @@ public class ViewChallengeActivity extends AppCompatActivity {
 //        view_Availability = (TextView) challenge.getChallengeDataAsc("14");
 
 
+
 //        registerChallengeButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

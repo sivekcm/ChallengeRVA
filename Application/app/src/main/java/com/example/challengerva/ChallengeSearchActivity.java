@@ -5,6 +5,7 @@ package com.example.challengerva;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -151,15 +152,23 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
      *
      * Displays the challenges contained in cursor on the recylcerview
      */
-    public void showResults(Cursor cursor)
+    public void showResults(final Cursor cursor)
     {
         challengeRV.setLayoutManager(new LinearLayoutManager(ChallengeSearchActivity.this));
         adapter = new ChallengeAdapter(ChallengeSearchActivity.this, cursor);
         challengeRV.swapAdapter(adapter,false);
+        toChallengeActivity(cursor,adapter);
+    }
+
+    public void toChallengeActivity(final Cursor cursor,ChallengeAdapter adapter)
+    {
         adapter.setOnItemClickListener(new ChallengeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                cursor.moveToPosition(position);
+                Challenge challenge = new Challenge(cursor);
                 Intent intent = new Intent(ChallengeSearchActivity.this,ViewChallengeActivity.class);
+                intent.putExtra("challenge",challenge);
                 startActivity(intent);
             }
         });
