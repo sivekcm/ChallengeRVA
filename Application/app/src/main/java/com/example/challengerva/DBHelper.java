@@ -63,6 +63,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PART_COL3 = "join_date";
     public static final String PART_COL4 = "completed";
 
+    //Notification Table
+    public static final String TABLE_NOTIFICATION = "Notification";
+    public static final String NOTIFICATION_COL1 = "username";
+    public static final String NOTIFICATION_COL2 = "type";
+
     /***************************
      * DBHeler Constructor
      * @param context: current context, usually "this"
@@ -160,6 +165,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
                 ") ");
 
+        //Notification table
+        //stores data of what notifications the user has
+        //unique username and type pairing
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NOTIFICATION + "(" +
+                "username TEXT, " +
+                "type TEXT, " +
+                "PRIMARY KEY(username,type), " +
+                "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
+                ") ");
     }
 
     /*********************************
@@ -353,6 +367,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         long num = db.insert(TABLE_PARTICIPATES, null, cv);
+        if (num == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean insertNotification(String username, NotificationType type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NOTIFICATION_COL1,username);
+        cv.put(NOTIFICATION_COL2,type.name());
+
+        long num = db.insert(TABLE_NOTIFICATION, null, cv);
         if (num == -1) {
             return false;
         } else {
@@ -561,6 +590,21 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean updateNotification(String currentUsername, String newUsername, NotificationType currentType, NotificationType newType)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NOTIFICATION_COL1,newUsername);
+        cv.put(NOTIFICATION_COL2,newType.name());
+
+        long num = db.update(TABLE_NOTIFICATION, cv, "username = ? AND type = ?", new String[] {currentUsername, currentType.name()});
+        if (num == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     /**********************************************************************************************
      * getStringData method
      * @param table: the table you want to get data from
@@ -665,6 +709,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public int deleteParticipates(String username, int challengeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_PARTICIPATES, "username = ? AND challenge_id = ?", new String[]{username, Integer.valueOf(challengeID).toString()});
+    }
+
+    public int deleteNotification(String username, NotificationType type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NOTIFICATION,"username = ? AND type = ?", new String[] {username,type.name()});
     }
 
 
