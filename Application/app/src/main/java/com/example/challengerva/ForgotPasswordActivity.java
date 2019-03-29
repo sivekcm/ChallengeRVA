@@ -5,14 +5,28 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.http.HTTP;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     EditText inputEmail;
     Button emailButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,5 +60,38 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void sendEmail(){
+        String email = inputEmail.getText().toString().trim();
+        String subject = "ChallengeRVA: Reset Password";
+        String text = "Time to reset password";
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            inputEmail.setError("Valid email required");
+            inputEmail.requestFocus();
+        }
+
+        RetrofitClient.getInstance()
+                .getApi()
+                .sendEmail("khanfr2@vcu.edu", email,  subject, text)
+                .enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try{
+                    JSONObject obj = new JSONObject(response.body().string());
+                    Toast.makeText(ForgotPasswordActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
+                } catch(JSONException | IOException e ){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(ForgotPasswordActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
     }
 }

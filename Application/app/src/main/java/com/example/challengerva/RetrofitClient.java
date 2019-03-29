@@ -14,12 +14,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
 
-    private static final String BASE_URL = "https://api.mailgun.net/v3/sandboxc241453a79904554a01be513a4783c14.mailgun.org/";
+    private static final String BASE_URL = "https://api.mailgun.net/v3/sandboxcb4a5f3301374edfba1ff4ff2b03de94.mailgun.org";
 
     private static final String API_USERNAME = "api";
 
     //you need to change the value to your API key
-    private static final String API_PASSWORD = "579769dd1dffd1fdcbe6a95006b5a6d8-c1fe131e-3317072c";
+    private static final String API_PASSWORD = "363c0c4d5df3662ebd563fcd7132b527-acb0b40c-0dd8701b";
 
     private static final String AUTH = "Basic " + Base64.encodeToString((API_USERNAME+":"+API_PASSWORD).getBytes(), Base64.NO_WRAP);
 
