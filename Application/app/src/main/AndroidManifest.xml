@@ -28,6 +28,7 @@
         <activity android:name=".ChallengeSearchActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".ViewChallengeActivity"/>
         <activity android:name=".ChangeUsernameActivity" />
         <activity android:name=".ForgotUserActivity" />
         <activity android:name=".LoginActivity">

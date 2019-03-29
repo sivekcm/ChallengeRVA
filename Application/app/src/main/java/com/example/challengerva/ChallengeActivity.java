@@ -104,7 +104,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 String end = endDateEditText.getText().toString();
                 String type = registrationTypeListSpinner.toString();
                 String category = challengeTypeListSpinner.toString();
-                int diff = Integer.parseInt(String.valueOf(difficultyRatingBar.getRating());
+                int diff = Integer.parseInt(String.valueOf(difficultyRatingBar.getRating()));
                 int minTeam = Integer.parseInt(minTeamEditText.getText().toString());
                 int maxTeam = Integer.parseInt(maxTeamEditText.getText().toString());
                 int logRange = Integer.parseInt(logRangeEditText.getText().toString());
@@ -308,7 +308,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
 
 
-    public static boolean hasAllFields(String name, String desc, String startDate, String endDate)
+    public static boolean hasAllFields(String name, String desc,String diff, String startDate, String endDate)
     {
         if (name.isEmpty() || desc.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
         {
