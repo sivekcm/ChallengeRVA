@@ -81,7 +81,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
         if (!cursor.moveToPosition(i)) {
             return;
         }
-        String name = cursor.getString(1);
+        String name = cursor.getString(0);
         //set the number of people enrolled
         //set the max number of people in that challenge
 

@@ -8,7 +8,7 @@
 
     <!--Use permission to use the Internet-->
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CoachHomeActivity"></activity>
+
         <activity android:name=".AthleteViewChallengeActivity"></activity>
         <activity android:name=".AthleteHomeActivity" />
         <activity android:name=".CoachActivity" />
@@ -35,6 +36,8 @@
         <activity android:name=".ForgotPasswordActivity"/>
         <activity android:name=".ViewChallengeActivity"/>
         <activity android:name=".ChangeUsernameActivity" />
+        <activity android:name=".AthleteCreateTeamActivity"/>
+        <activity android:name=".AthleteTeamSelectionActivity"/>
         <activity android:name=".ForgotUserActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

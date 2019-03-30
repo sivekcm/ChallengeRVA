@@ -32,8 +32,16 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
         createTeamTxtView = (TextView) findViewById(R.id.createTeamTxtView);
         challengeNameTxtView = (TextView) findViewById(R.id.challengeNameTxtView);
 
-        createTeamBtn = (Button) findViewById(R.id.createTeamBtn);
-        //joinTeamBtn = (Button)findViewById(R.id.joinTeamBtn);
+        createTeamBtn = (Button)findViewById(R.id.createTeamBtn);
+        joinTeamBtn = (Button)findViewById(R.id.joinTeamBtn);
+        joinTeamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AthleteCreateTeamActivity.this,AthleteTeamSelectionActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         //challengeNameTxtView.setText(db.getChallengeData("name", 3));
         createTeamBtn.setOnClickListener(new Button.OnClickListener() {
@@ -45,6 +53,3 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
     }
 
 }
-
-
-

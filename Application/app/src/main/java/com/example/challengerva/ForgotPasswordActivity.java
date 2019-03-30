@@ -22,6 +22,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.HTTP;
 
+import static java.net.HttpURLConnection.HTTP_OK;
+
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     EditText inputEmail;
@@ -53,10 +55,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     AlertMessage.alertMessage("User not found", "There is no account associated with this email.", thisContext);
                 else {
 
-                    //Intent changePasswordIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
-                    //changePasswordIntent.putExtra("userEmail", email);
-                    //startActivity(changePasswordIntent);
-                    sendEmail();
+                    Intent changePasswordIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                    changePasswordIntent.putExtra("userEmail", email);
+                    startActivity(changePasswordIntent);
+                    //sendEmail();
+                    //AlertMessage.alertMessage("Success", "Email sent", thisContext);
 
                 }
             }
@@ -79,11 +82,13 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try{
-                    JSONObject obj = new JSONObject(response.body().string());
-                    Toast.makeText(ForgotPasswordActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
-                } catch(JSONException | IOException e ){
-                    e.printStackTrace();
+                if(response.code() == HTTP_OK){
+                    try{
+                        JSONObject obj = new JSONObject(response.body().string());
+                        Toast.makeText(ForgotPasswordActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
+                    } catch(JSONException | IOException e){
+                        e.printStackTrace();
+                    }
                 }
             }
 
