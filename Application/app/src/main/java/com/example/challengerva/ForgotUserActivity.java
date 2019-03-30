@@ -10,8 +10,18 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.regex.Pattern;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ForgotUserActivity extends AppCompatActivity {
 
@@ -47,12 +57,45 @@ public class ForgotUserActivity extends AppCompatActivity {
                     AlertMessage.alertMessage("User not found", "There is no account associated with this email.", thisContext);
                 else {
 
-                    Intent changeUsernameIntent = new Intent(getApplicationContext(), ChangeUsernameActivity.class);
-                    changeUsernameIntent.putExtra("userEmail", email);
-                    startActivity(changeUsernameIntent);
-
+                    //Intent changeUsernameIntent = new Intent(getApplicationContext(), ChangeUsernameActivity.class);
+                    //changeUsernameIntent.putExtra("userEmail", email);
+                    //startActivity(changeUsernameIntent);
+                    sendEmail();
                 }
             }
         });
+    }
+
+    private void sendEmail(){
+        String email = inputEmail.getText().toString().trim();
+        String subject = "ChallengeRVA: Reset Password";
+        String text = "Time to reset password";
+
+        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            inputEmail.setError("Valid email required");
+            inputEmail.requestFocus();
+        }
+
+        RetrofitClient.getInstance()
+                .getApi()
+                .sendEmail("khanfr2@vcu.edu", email,  subject, text)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try{
+                            JSONObject obj = new JSONObject(response.body().string());
+                            Toast.makeText(ForgotUserActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
+                        } catch(JSONException | IOException e ){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Toast.makeText(ForgotUserActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
     }
 }

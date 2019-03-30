@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.challengerva">
 
+    <!--Use permission to use the Internet-->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!--<uses-permission android:name="android.permission.INTERNET" /> -->
+        <uses-permission android:name="android.permission.INTERNET" />
         <activity android:name=".AthleteViewChallengeActivity"></activity>
         <activity android:name=".CoachHomeActivity" />
         <activity android:name=".AthleteHomeActivity" />
@@ -27,7 +30,7 @@
         <activity android:name=".ChallengeActivity" />
         <activity android:name=".ChallengeSearchActivity" />
         <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".ForgotPasswordActivity"/>
         <activity android:name=".ViewChallengeActivity"/>
         <activity android:name=".ChangeUsernameActivity" />
         <activity android:name=".ForgotUserActivity" />
