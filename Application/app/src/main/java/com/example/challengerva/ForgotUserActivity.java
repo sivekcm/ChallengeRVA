@@ -23,6 +23,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static java.net.HttpURLConnection.HTTP_OK;
+
 public class ForgotUserActivity extends AppCompatActivity {
 
     EditText inputEmail;
@@ -57,10 +59,10 @@ public class ForgotUserActivity extends AppCompatActivity {
                     AlertMessage.alertMessage("User not found", "There is no account associated with this email.", thisContext);
                 else {
 
-                    //Intent changeUsernameIntent = new Intent(getApplicationContext(), ChangeUsernameActivity.class);
-                    //changeUsernameIntent.putExtra("userEmail", email);
-                    //startActivity(changeUsernameIntent);
-                    sendEmail();
+                    Intent changeUsernameIntent = new Intent(getApplicationContext(), ChangeUsernameActivity.class);
+                    changeUsernameIntent.putExtra("userEmail", email);
+                    startActivity(changeUsernameIntent);
+                    //sendEmail();
                 }
             }
         });
@@ -82,11 +84,16 @@ public class ForgotUserActivity extends AppCompatActivity {
                 .enqueue(new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        try{
-                            JSONObject obj = new JSONObject(response.body().string());
-                            Toast.makeText(ForgotUserActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
-                        } catch(JSONException | IOException e ){
-                            e.printStackTrace();
+                        if(response.code() == HTTP_OK){
+                            try{
+                                JSONObject obj = new JSONObject(response.body().string());
+                                Toast.makeText(ForgotUserActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
+                            } catch(JSONException | IOException e ){
+                                e.printStackTrace();
+                            }
+                        }
+                        else{
+                            AlertMessage.alertMessage("HTTP_OK Failure", "Failure", ForgotUserActivity.this);
                         }
                     }
 
