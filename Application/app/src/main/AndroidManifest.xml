@@ -35,6 +35,8 @@
         <activity android:name=".ForgotPasswordActivity"/>
         <activity android:name=".ViewChallengeActivity"/>
         <activity android:name=".ChangeUsernameActivity" />
+        <activity android:name=".AthleteCreateTeamActivity"/>
+        <activity android:name=".AthleteTeamSelectionActivity"/>
         <activity android:name=".ForgotUserActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>

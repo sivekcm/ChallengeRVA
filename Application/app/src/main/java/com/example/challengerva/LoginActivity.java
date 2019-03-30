@@ -72,6 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("LoginActivity","" + db.insertChallenge("fourth challenge","jonathan","2019-03-26","2019-04-26",
                             "cardio",2,"team","Y","none","this is the desc",
                             3,4,2));
+                    db.insertTeam("team 2", 1, "username");
                     User user = new User(userData);
                     Log.d("LoginActivity",user.getUsername());
                     Intent intent = null;

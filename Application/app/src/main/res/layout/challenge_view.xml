@@ -103,7 +103,16 @@
         android:textStyle="bold">
 
     </TextView>
+    <!--Button submission below-->
+    <Button
+        android:id="@+id/registerChallengeBtn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/registerChallengeButton"
+        android:textColor="@color/White">
 
+    </Button>
     <TextView
         android:id="@+id/view_Availability"
         android:layout_width="match_parent"
@@ -115,16 +124,7 @@
     </TextView>
 
 
-    <!--Button submission below-->
-    <Button
-        android:id="@+id/registerChallengeBtn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/White"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/registerChallengeButton">
 
-    </Button>
 
 
 </LinearLayout>

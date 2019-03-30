@@ -34,6 +34,13 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
 
         createTeamBtn = (Button)findViewById(R.id.createTeamBtn);
         joinTeamBtn = (Button)findViewById(R.id.joinTeamBtn);
+        joinTeamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AthleteCreateTeamActivity.this,AthleteTeamSelectionActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //challengeNameTxtView.setText(db.getChallengeData("name", 3));
 
