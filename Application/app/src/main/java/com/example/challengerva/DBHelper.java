@@ -533,7 +533,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param oldUsername: the username of the row you want to update (paired with oldRank)
      * @param newRank: The rank you want to replace the old one with.
      * @param newUsername: the username you want to replace the old one with.
-     * @param challengesComp: the amount of challenges completed by user
+     * @param challengesCount: the amount of challenges completed by user
      * @return false if update fails, true if data is updated successfully
      *
      * This methods updates a row in the leaderboard
