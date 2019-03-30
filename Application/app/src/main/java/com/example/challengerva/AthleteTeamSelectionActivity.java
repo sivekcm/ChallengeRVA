@@ -26,6 +26,7 @@ public class AthleteTeamSelectionActivity extends AppCompatActivity {
         challengeNameTxtView = (TextView)findViewById(R.id.challengeNameTxtView);
         teamSelectionRecyclerView = findViewById(R.id.teamSelectionRecyclerView);
 
+        teamData = db.getTeamData("name", "");
         showResults(teamData);
 
         teamSelectionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
