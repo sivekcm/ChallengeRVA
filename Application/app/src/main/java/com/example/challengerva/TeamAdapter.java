@@ -83,7 +83,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
         }
         String name = cursor.getString(0);
         //set the number of people enrolled
-        //set the max number of people in that challenge 
+        //set the max number of people in that challenge
 
         viewHolder.teamNameTxtView.setText(name);
     }
