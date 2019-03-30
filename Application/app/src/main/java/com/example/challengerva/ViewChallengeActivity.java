@@ -2,35 +2,52 @@ package com.example.challengerva;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class ViewChallengeActivity extends AppCompatActivity {
+import java.util.Calendar;
+
+public class ViewChallengeActivity extends AppCompatActivity{
 
     //Declaration of variables implemented in UI
-    TextView view_challengeName;
-    TextView view_coachName;
-    TextView view_description;
-    TextView view_startDate;
-    TextView view_endDate;
-    TextView view_difficulty;
-    TextView view_teamType;
-    TextView view_minTeam;
-    TextView view_maxTeam;
-    TextView view_Availability;
+    TextView view_challengeName,
+            view_coachName,
+            view_description,
+            view_startDate,
+            view_endDate,
+            view_difficulty,
+            view_teamType,
+            view_minTeam,
+            view_maxTeam,
+            view_Availability;
+
+    String challenge_name,
+            coach_name,
+            description,
+            startDate,
+            endDate,
+            team_type,
+            availability;
+
+    int difficulty,
+        minTeam,
+        maxTeam;
 
     Button registerChallengeButton;
 
-    User user;
+    Challenge challenge;
 
-    /******************
+
+    /**********************
      * onCreate method
      * @descript: will run the activity upon launch
      * @param: (bundle) savedInstanceState
      *
-     */
+     **********************/
 
     protected void onCreate(Bundle savedInstanceState){
 
@@ -38,10 +55,10 @@ public class ViewChallengeActivity extends AppCompatActivity {
         setContentView(R.layout.challenge_view);
 
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("User Object");
+        challenge = intent.getParcelableExtra("Challenge Object");
 
         //instantiate DBHelper for database methods
-        final DBHelper challenge = new DBHelper(ViewChallengeActivity.this);
+        //final DBHelper challenge = new DBHelper(ViewChallengeActivity.this);
 
         view_challengeName = findViewById(R.id.view_challengeName);
         view_coachName = findViewById(R.id.view_coachName);
@@ -55,30 +72,48 @@ public class ViewChallengeActivity extends AppCompatActivity {
         view_Availability = findViewById(R.id.view_Availability);
 
 
-        //connect variables to database
-        view_challengeName = (TextView) challenge.getChallengeDataAsc("2");
-        view_coachName = (TextView) challenge.getChallengeDataAsc("3");
-        view_description = (TextView) challenge.getChallengeDataAsc("11");
-        view_startDate = (TextView) challenge.getChallengeDataAsc("4");
-        view_endDate = (TextView) challenge.getChallengeDataAsc("5");
-        view_difficulty = (TextView) challenge.getChallengeDataAsc("7");
-        view_teamType = (TextView) challenge.getChallengeDataAsc("8");
-        view_minTeam = (TextView) challenge.getChallengeDataAsc("12");
-        view_maxTeam = (TextView) challenge.getChallengeDataAsc("13");
-        view_Availability = (TextView) challenge.getChallengeDataAsc("14");
-
-
         registerChallengeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 /**Direct to team creation activity**/
-                //Intent intent = new Intent(TeamCreationActivity.this,TeamCreationActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(ViewChallengeActivity.this,AthleteCreateTeamActivity.class);
+                startActivity(intent);
 
             }
         });
 
+        challenge_name = challenge.getChallengeName();
+        coach_name = challenge.getCoachAssigned();
+        description = challenge.getChallengeDescription();
+        startDate = challenge.getStartDate();
+        endDate = challenge.getEndDate();
+        difficulty = challenge.getDifficulty();
+        team_type = challenge.getType();
+        minTeam = challenge.getMinTeam();
+        maxTeam = challenge.getMaxTeam();
+
+        //Check for availability
+
+        //Defaults to today's date
+        Calendar date = Calendar.getInstance();
+        int year = date.get(Calendar.YEAR);
+        int month = date.get(Calendar.MONTH);
+        int day = date.get(Calendar.DAY_OF_MONTH);
+        String currentDate = year + "-"  + month + "-" + day;
+
+        if(startDate.compareTo(currentDate)> 0){
+            availability = "Not Available";
+        }
+        else if(startDate.compareTo(currentDate) < 0){
+            availability = "Available";
+        }
+        else if(startDate.compareTo(currentDate) == 0){
+            availability = "Starts today, register quickly!";
+        }
+        else{
+            availability = "Conditional for availability didn't work booohoo";
+        }
 
 
     }

@@ -1,49 +1,93 @@
 package com.example.challengerva;
 
-public class Challenge {
-    private String challengeName;
-    private String challengeDescription;
-    private String type;
-    private String coachAssigned;
-    private int difficulty;
-    private int startDateYear;
-    private int startDateMonth;
-    private int startDateDay;
-    private int endDateYear;
-    private int endDateMonth;
-    private int endDateDay;
-    private int interval;
-    private boolean open;
-    private boolean team;
-    private int startAge;
-    private int endAge;
+import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    /*
-    Default constructor when creating a challenge
-    */
-    public Challenge(String challengeName, String challengeDescription, String type, String coachAssigned, int difficulty,
-                     int startDateYear, int startDateMonth, int startDateDay, int endDateYear, int endDateMonth, int endDateDay, int interval,
-                     int startAge, int endAge, boolean open, boolean team){
-        setChallengeName(challengeName);
-        setChallengeDescription(challengeDescription);
-        setCoachAssigned(coachAssigned);
-        setDifficulty(difficulty);
-        setStartDate(startDateYear, startDateMonth, startDateDay);
-        setEndDate(endDateYear, endDateMonth, endDateDay);
-        setInterval(interval);
-        setStartAge(startAge);
-        setEndAge(endAge);
-        isOpen(open);
-        isTeam(team);
+public class Challenge implements Parcelable {
+    private String challengeName;
+    private String coachAssigned;
+    private String startDate;
+    private String endDate;
+    private String type;
+    private int difficulty;
+    private boolean team;
+    private boolean open;
+    private String healthHazards;
+    private String challengeDescription;
+    private int minTeam;
+    private int maxTeam;
+    private int logRange;
+
+    public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
+        @Override
+        public Challenge createFromParcel(Parcel in) {
+            return new Challenge(in);
+        }
+
+        @Override
+        public Challenge[] newArray(int size) {
+            return new Challenge[size];
+        }
+    };
+
+    public Challenge(Parcel in)
+    {
+        this.challengeName = in.readString();
+        this.coachAssigned = in.readString();
+        this.startDate = in.readString();
+        this.endDate = in.readString();
+        this.type = in.readString();
+        this.difficulty = in.readInt();
+        this.team = in.readByte() != 0;
+        this.open = in.readByte() != 0;
+        this.minTeam = in.readInt();
+        this.maxTeam = in.readInt();
+        this.logRange = in.readInt();
 
     }
 
     /*
-    Check to see if a string exists
-    @param: string
-    @return: boolean true if string exists and false
-             if it does not
+    constructor when creating a challenge for a all instance variables
     */
+    public Challenge(Cursor cursor) {
+        this.challengeName = cursor.getString(1);
+        this.coachAssigned = cursor.getString(2);
+        this.startDate = cursor.getString(3);
+        this.endDate = cursor.getString(4);
+        this.type = cursor.getString(5);
+        this.difficulty = cursor.getInt(6);
+        if (cursor.getString(7).equals("team"))
+        {
+            this.team = true;
+        }
+        else
+        {
+            this.team = false;
+        }
+        if (cursor.getString(8).equals("Y"))
+        {
+            this.open = true;
+        }
+        else
+        {
+            this.open = false;
+        }
+        this.healthHazards = cursor.getString(9);
+        this.challengeDescription = cursor.getString(10);
+        this.minTeam = cursor.getInt(11);
+        this.maxTeam = cursor.getInt(12);
+        this.logRange = cursor.getInt(13);
+    }
+
+
+
+    /*
+        Check to see if a string exists
+        @param: string
+        @return: boolean true if string exists and false
+                 if it does not
+        */
     public boolean stringIsValid(String entry){
         if (entry.length() > 0){
             return true;
@@ -64,22 +108,7 @@ public class Challenge {
         return false;
     }
 
-    /*
-    Set the challenge description for a given challenge
-    @param: A "String" of the challenge's description and specifics
-    @return true if the challenge string exists and false if no
-            challenge description is given
-    */
-    public boolean setChallengeDescription(String description) {
-        if (stringIsValid(challengeDescription)) {
-            this.challengeDescription = description;
-            return true;
-        }
-        else {
-            throw new IllegalArgumentException("No challenge description was provided.");
-        }
 
-    }
 
     /*
     Return value for challenge description
@@ -90,12 +119,79 @@ public class Challenge {
         return challengeDescription;
     }
 
+    /*
+    Get the value for challenge name
+    @param: none
+    @return: challenge name
+    */
+    public String getChallengeName(){
+        return challengeName;
+    }
 
     /*
-    Set the challenge name for a new challenge
-    @param: name for challenge
-    @return: challenge name or throw argument if name not given
+    Return the type for the challenge
+    @param: none
+    @return: type for the challenge
     */
+    public String getType(){
+        return type;
+    }
+
+    /*
+    Get the coach name for challenge
+    @param: none
+    @return: coach assigned for challenge
+    */
+    public String getCoachAssigned(){
+        return coachAssigned;
+    }
+
+    /*
+    Return the value of the difficulty of challenge
+    @param: none
+    @return: difficulty
+    */
+    public int getDifficulty(){
+        return difficulty;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public boolean isTeam() {
+        return team;
+    }
+
+    public boolean isOpen() {
+        return open;
+    }
+
+    public String getHealthHazards() {
+        return healthHazards;
+    }
+
+    public int getMinTeam() {
+        return minTeam;
+    }
+
+    public int getMaxTeam() {
+        return maxTeam;
+    }
+
+    public int getLogRange() {
+        return logRange;
+    }
+
+    /*
+        Set the challenge name for a new challenge
+        @param: name for challenge
+        @return: challenge name or throw argument if name not given
+        */
     public void setChallengeName(String name){
         if (stringIsValid(name))
             this.challengeName = name;
@@ -105,12 +201,18 @@ public class Challenge {
     }
 
     /*
-    Get the value for challenge name
-    @param: none
-    @return: challenge name
-    */
-    public String getChallengeName(){
-        return challengeName;
+        Set the challenge description for a given challenge
+        @param: A "String" of the challenge's description and specifics
+        @return true if the challenge string exists and false if no
+                challenge description is given
+        */
+    public void setChallengeDescription(String description) {
+        if (stringIsValid(challengeDescription)) {
+            this.challengeDescription = description;
+        }
+        else {
+            throw new IllegalArgumentException("No challenge description was provided.");
+        }
     }
 
     /*
@@ -128,15 +230,6 @@ public class Challenge {
     }
 
     /*
-    Return the type for the challenge
-    @param: none
-    @return: type for the challenge
-    */
-    public String getType(){
-        return type;
-    }
-
-    /*
     Set the coach assigned for the challenge
     @param: name of coach assigned
     @return: coach assigned for challenge
@@ -146,15 +239,6 @@ public class Challenge {
             this.coachAssigned = coach;
         else
             throw new IllegalArgumentException("Coach name not provided.");
-    }
-
-    /*
-    Get the coach name for challenge
-    @param: none
-    @return: coach assigned for challenge
-    */
-    public String getCoachAssigned(){
-        return coachAssigned;
     }
 
     /*
@@ -169,147 +253,37 @@ public class Challenge {
             throw new IllegalArgumentException("Please state the difficulty of this challenge.");
     }
 
-    /*
-    Return the value of the difficulty of challenge
-    @param: none
-    @return: difficulty
-    */
-    public int getDifficulty(){
-        return difficulty;
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setHealthHazards(String healthHazards) {
+        this.healthHazards = healthHazards;
+    }
+
+    public void setMinTeam(int minTeam) {
+        this.minTeam = minTeam;
+    }
+
+    public void setMaxTeam(int maxTeam) {
+        this.maxTeam = maxTeam;
+    }
+
+    public void setLogRange(int logRange) {
+        this.logRange = logRange;
     }
 
     /*
-    Sets the start date of the challenge
-    @param: year, month, and day for the start date
-    @return: true if all values are correct values for dates and
-             false if not
-    */
-    public boolean setStartDate(int startDateYear, int startDateMonth, int startDateDay){
-        if (startDateYear >2019) {
-            this.startDateYear = startDateYear;
-            return true;
-        }
-        if ((startDateMonth > 0)&& (startDateMonth < 12)) {
-            this.startDateMonth = startDateMonth;
-            return true;
-        }
-        if ((startDateDay > 0) && (startDateDay < 31)){
-            this.startDateDay = startDateDay;
-            return true;
-        }
-        return false;
-    }
-
-    /*
-    Get the start date, month, and year
-    @param: none
-    @return: date, month and year
-    */
-    public int getStartDateYear(){
-        return startDateYear;
-    }
-    public int getStartDateMonth(){
-        return startDateMonth;
-    }
-    public int getStartDateDay(){
-        return startDateDay;
-    }
-
-    /*
-    Set the end date for the challenge
-    @param: year, monnth, and day for the end date of challenge
-    @return: true if completed date is a valid date and false
-             if not
-    */
-    public boolean setEndDate(int endDateYear, int endDateMonth, int endDateDay){
-        if (endDateYear > 2019){
-            this.endDateYear = endDateYear;
-            return true;
-        }
-        if ((endDateMonth > 0)&& (endDateMonth < 12)){
-            this.endDateMonth =endDateMonth;
-            return true;
-        }
-        if ((endDateDay > 0) && (endDateDay < 31)){
-            this.endDateDay = endDateDay;
-            return true;
-        }
-        return false;
-    }
-
-    /*
-    Get the end date's year, month, and day
-    @param: none
-    @return: end date's year, month, and day
-    */
-    public int getEndDateYear(){
-        return endDateYear;
-    }
-    public int getEndDateMonth(){
-        return endDateMonth;
-    }
-    public int getEndDateDay(){
-        return endDateDay;
-    }
-
-    /*
-    Set the end date's year, month, and day
-    @param: int interval
-    @return: end date's year, month, and day
-    */
-    public void setInterval(int interval) {
-        if(integerIsValid(interval))
-            this.interval = interval;
-    }
-
-    public int getInterval() {
-            return interval;
-    }
-
-    /*
-  Set the start age
-  @param: int start age
-  @return: return true if it is set
-  */
-    public boolean setStartAge(int startAge) {
-        if(integerIsValid(startAge)) {
-            this.startAge = startAge;
-            return true;
-        }
-        return false;
-    }
-
-    public int getStartAge() {
-            return startAge;
-    }
-    /*
-      Set the end age
-      @param: boolean end age
-      @return: true if the end age is set
-      */
-    public boolean setEndAge(int endAge) {
-        if(integerIsValid(endAge)) {
-            this.endAge = endAge;
-
-            return true;
-        }
-        return false;
-    }
-
-    public int getEndAge() {
-            return endAge;
-    }
-    /*
-       Set the status of the challenge
-       @param: boolean end age
-       @return: return true if the status of the challenge is open
-       */
-    public boolean isOpen(boolean open) {
-            if (open) {
-                this.open = open;
-                return true;
-            }
-            return false;
+           Set the status of the challenge
+           @param: boolean end age
+           @return: return true if the status of the challenge is open
+           */
+    public void setOpen(boolean open) {
+            this.open = open;
     }
 
 
@@ -318,14 +292,32 @@ public class Challenge {
      @param: boolean team
      @return: return true if the challenge is team based
      */
-    public boolean isTeam(boolean team) {
-        if(team) {
-            this.team = team;
-            return true;
-        }
-        return false;
+    public void setTeam(boolean team) {
+        this.team = team;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.challengeName);
+        dest.writeString(this.coachAssigned);
+        dest.writeString(this.startDate);
+        dest.writeString(this.endDate);
+        dest.writeString(this.type);
+        dest.writeInt(this.difficulty);
+        dest.writeByte((byte) (team ? 1 : 0));
+        dest.writeByte((byte) (open ? 1 : 0));
+        dest.writeString(this.healthHazards);
+        dest.writeString(this.challengeDescription);
+        dest.writeInt(this.minTeam);
+        dest.writeInt(this.maxTeam);
+        dest.writeInt(this.logRange);
+
+    }
 }
 
 
