@@ -53,9 +53,10 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     AlertMessage.alertMessage("User not found", "There is no account associated with this email.", thisContext);
                 else {
 
-                    Intent changePasswordIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
-                    changePasswordIntent.putExtra("userEmail", email);
-                    startActivity(changePasswordIntent);
+                    //Intent changePasswordIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
+                    //changePasswordIntent.putExtra("userEmail", email);
+                    //startActivity(changePasswordIntent);
+                    sendEmail();
 
                 }
             }
