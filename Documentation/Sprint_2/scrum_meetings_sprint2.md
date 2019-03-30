@@ -20,6 +20,6 @@ Question    |          Person                                             | 3/19
 |            | Shradda Adhikari |   As a group need to work on not having anything last minute ->understand the differing weight of user stories |Requirements changed a little bit with challenges and I also gained insight in communications with the client | None | None | None | None | None | None | No Updates |  RecyclerView Adapter 
 |            | Farhana Khan | Should have a sprint demo every week to demo what everyone has been working on Searches and Queries with database | None | None | None | Understand validation of team creation and how they are handled when challenges start | None | Understanding Intents and connections between pages | Understanding Intents and the structure of onClickListener buttons | Changes to ForgotPassActivity to implement emailing actions | Espresso test automation 
 | Do any changes to the project need to be made as a result of your work? | Adrienne Serra |   No | No | No | No | No | No | No | No | No | No
-|            | Chris Sivek |   No | No | No | No | No | No | No | No | No 
+|            | Chris Sivek |   No | No | No | No | No | No | No | No | No | No
 |            | Shradda Adhikari |   No  | No | No | No | No | No | No | No | No | No   
-|            | Farhana Khan | No  | Changes to challenge form | No | No | No | No | No | No | No 
+|            | Farhana Khan | No  | Changes to challenge form | No | No | No | No | No | No | No | No 
