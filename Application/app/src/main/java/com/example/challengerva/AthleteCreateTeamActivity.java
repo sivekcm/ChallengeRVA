@@ -13,11 +13,11 @@ import java.util.ArrayList;
 
 public class AthleteCreateTeamActivity extends AppCompatActivity {
     EditText teamNameEditTxt;
-    NumberPicker teamNumberPicker;
     TextView createTeamTxtView;
     TextView challengeNameTxtView;
     Button createTeamBtn;
-    ArrayList<User>teamMembers;
+    Button joinTeamBtn;
+    DBHelper db = new DBHelper(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -32,15 +32,11 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
         createTeamTxtView = (TextView)findViewById(R.id.createTeamTxtView);
         challengeNameTxtView = (TextView)findViewById(R.id.challengeNameTxtView);
 
-        //challengeNameTxtView.setText(Challenge);
         createTeamBtn = (Button)findViewById(R.id.createTeamBtn);
+        joinTeamBtn = (Button)findViewById(R.id.joinTeamBtn);
 
-        //create challenge and get the min and max number for the team
-        teamNumberPicker.setMinValue(2); //should be according to the challenge
-        teamNumberPicker.setMaxValue(100);
-        teamNumberPicker.setWrapSelectorWheel(false);
+        //challengeNameTxtView.setText(db.getChallengeData("name", 3));
 
-        teamMembers = new ArrayList<>();
     }
 }
 
