@@ -15,9 +15,6 @@ public class AthleteTeamSelectionActivity extends AppCompatActivity {
     DBHelper db = new DBHelper(this);
 
     Cursor teamData;
-    Cursor cursor;
-    Button currentBtn;
-    Button previousBtn;
     User user;
 
 
@@ -29,10 +26,10 @@ public class AthleteTeamSelectionActivity extends AppCompatActivity {
         challengeNameTxtView = (TextView)findViewById(R.id.challengeNameTxtView);
         teamSelectionRecyclerView = findViewById(R.id.teamSelectionRecyclerView);
 
-        String name = cursor.getString(1);
-        challengeNameTxtView.setText(name);
+        showResults(teamData);
 
-        //showResults(db.getTeamData();
+        teamSelectionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     public void showResults(Cursor cursor)
