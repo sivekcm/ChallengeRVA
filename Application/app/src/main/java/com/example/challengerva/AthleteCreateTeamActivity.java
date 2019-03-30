@@ -20,7 +20,7 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
     DBHelper db = new DBHelper(this);
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.athlete_create_team);
 
@@ -29,15 +29,22 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
 
 
         teamNameEditTxt = (EditText) findViewById(R.id.teamNameEditTxt);
-        createTeamTxtView = (TextView)findViewById(R.id.createTeamTxtView);
-        challengeNameTxtView = (TextView)findViewById(R.id.challengeNameTxtView);
+        createTeamTxtView = (TextView) findViewById(R.id.createTeamTxtView);
+        challengeNameTxtView = (TextView) findViewById(R.id.challengeNameTxtView);
 
-        createTeamBtn = (Button)findViewById(R.id.createTeamBtn);
-        joinTeamBtn = (Button)findViewById(R.id.joinTeamBtn);
+        createTeamBtn = (Button) findViewById(R.id.createTeamBtn);
+        //joinTeamBtn = (Button)findViewById(R.id.joinTeamBtn);
 
         //challengeNameTxtView.setText(db.getChallengeData("name", 3));
-
+        createTeamBtn.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                String teamName = teamNameEditTxt.getText().toString();
+                db.insertTeam(teamName, 000000, null);
+            }
+        });
     }
+
 }
+
 
 
