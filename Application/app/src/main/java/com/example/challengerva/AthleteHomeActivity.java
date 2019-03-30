@@ -1,10 +1,14 @@
 package com.example.challengerva;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import java.util.Calendar;
 
 public class AthleteHomeActivity extends AppCompatActivity {
 
@@ -25,10 +29,13 @@ public class AthleteHomeActivity extends AppCompatActivity {
         leaderboardBtn = findViewById(R.id.athleteHomeLeaderboardBtn);
         logoutBtn = findViewById(R.id.athleteHomeLogoutBtn);
 
+
+
+
         searchChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent searchIntent = new Intent(AthleteHomeActivity.this,ChallengeSearchActivity.class);
+                Intent searchIntent = new Intent(AthleteHomeActivity.this, ChallengeSearchActivity.class);
                 startActivity(searchIntent);
             }
         });
@@ -57,9 +64,10 @@ public class AthleteHomeActivity extends AppCompatActivity {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent logoutIntent = new Intent(AthleteHomeActivity.this,LoginActivity.class);
+                Intent logoutIntent = new Intent(AthleteHomeActivity.this, LoginActivity.class);
                 startActivity(logoutIntent);
             }
         });
     }
+
 }
