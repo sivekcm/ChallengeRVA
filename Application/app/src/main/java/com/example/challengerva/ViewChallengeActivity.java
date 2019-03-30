@@ -55,7 +55,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
         setContentView(R.layout.challenge_view);
 
         Intent intent = getIntent();
-        challenge = intent.getParcelableExtra("Challenge Object");
+        challenge = intent.getParcelableExtra("challenge");
 
         //instantiate DBHelper for database methods
         //final DBHelper challenge = new DBHelper(ViewChallengeActivity.this);
@@ -70,6 +70,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
         view_minTeam = findViewById(R.id.view_minTeam);
         view_maxTeam = findViewById(R.id.view_maxTeam);
         view_Availability = findViewById(R.id.view_Availability);
+        registerChallengeButton = findViewById(R.id.registerForChallengeBtn);
 
 
         registerChallengeButton.setOnClickListener(new View.OnClickListener() {

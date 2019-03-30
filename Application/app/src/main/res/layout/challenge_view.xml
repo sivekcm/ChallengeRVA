@@ -117,12 +117,12 @@
 
     <!--Button submission below-->
     <Button
-        android:id="@+id/registerChallengeBtn"
+        android:id="@+id/registerForChallengeBtn"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/White"
         android:background="@color/colorPrimaryDark"
-        android:text="@string/registerChallengeButton">
+        android:text="@string/registerChallengeButton"
+        android:textColor="@color/White">
 
     </Button>
 
