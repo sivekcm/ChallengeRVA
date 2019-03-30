@@ -23,6 +23,9 @@ public class AthleteHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_athlete_home);
 
+        Intent intent = getIntent();
+        final User user = intent.getParcelableExtra("User Object");
+
         searchChallengeBtn = findViewById(R.id.athleteHomeSearchChallengeBtn);
         athleteChallengeBtn = findViewById(R.id.athleteHomeYourChallengeBtn);
         profileBtn = findViewById(R.id.athleteHomeProfileBtn);
@@ -43,7 +46,9 @@ public class AthleteHomeActivity extends AppCompatActivity {
         athleteChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent challengeIntent = new Intent(AthleteHomeActivity.this,AthleteViewChallengeActivity.class);
+                challengeIntent.putExtra("User Object", user);
+                startActivity(challengeIntent);
             }
         });
 

@@ -2,19 +2,17 @@
 package com.example.challengerva;
 
 
-import android.app.SearchManager;
 import android.content.Intent;
-
 import android.database.Cursor;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,7 +21,7 @@ import android.widget.Spinner;
 
 public class ChallengeSearchActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    //Initialize variabales
+    //Initialize variables
     RecyclerView challengeRV;
     Spinner spinner;
     String[] filterArr;
@@ -54,7 +52,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
 
-        //Instantiates spinner and searchview
+        //Instantiates spinner and searchview for the menu
         MenuItem item = menu.findItem(R.id.search);
         MenuItem spinnerItem = menu.findItem(R.id.filter);
         SearchView searchView = (SearchView) item.getActionView();
@@ -154,11 +152,26 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
      *
      * Displays the challenges contained in cursor on the recylcerview
      */
-    public void showResults(Cursor cursor)
+    public void showResults(final Cursor cursor)
     {
         challengeRV.setLayoutManager(new LinearLayoutManager(ChallengeSearchActivity.this));
         adapter = new ChallengeAdapter(ChallengeSearchActivity.this, cursor);
         challengeRV.swapAdapter(adapter,false);
+        toChallengeActivity(cursor,adapter);
+    }
+
+    public void toChallengeActivity(final Cursor cursor,ChallengeAdapter adapter)
+    {
+        adapter.setOnItemClickListener(new ChallengeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                cursor.moveToPosition(position);
+                Challenge challenge = new Challenge(cursor);
+                Intent intent = new Intent(ChallengeSearchActivity.this,ViewChallengeActivity.class);
+                intent.putExtra("challenge",challenge);
+                startActivity(intent);
+            }
+        });
     }
 
 

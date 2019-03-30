@@ -68,6 +68,10 @@ public class LoginActivity extends AppCompatActivity {
                 else if (userData.getCount() == 1)
                 {
                     Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_LONG).show();
+                    db.insertParticipates("jacobobeast",3,"2019-03-26","Y");
+                    Log.d("LoginActivity","" + db.insertChallenge("fourth challenge","jonathan","2019-03-26","2019-04-26",
+                            "cardio",2,"team","Y","none","this is the desc",
+                            3,4,2));
                     User user = new User(userData);
                     Log.d("LoginActivity",user.getUsername());
                     Intent intent = null;

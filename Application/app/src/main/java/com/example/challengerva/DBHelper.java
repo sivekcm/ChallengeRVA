@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.os.strictmode.SqliteObjectLeakedViolation;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_COL5 = "birth_date";
     public static final String USER_COL6 = "join_date";
     public static final String USER_COL7 = "email";
-    public static final String USER_COL8 = "challenges_comp";
+    public static final String USER_COL8 = "challenges_count";
     public static final String USER_COL9 = "private";
     public static final String USER_COL10 = "type";
 
@@ -39,9 +40,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL9 = "availability";
     public static final String CHAL_COL10 = "health_hazards";
     public static final String CHAL_COL11 = "description";
-    public static final String CHAL_COL12 = "minTeam";
-    public static final String CHAL_COL13 = "maxTeam";
-    public static final String CHAL_COL14 = "logRange";
+    public static final String CHAL_COL12 = "min_team";
+    public static final String CHAL_COL13 = "max_team";
+    public static final String CHAL_COL14 = "log_range";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -53,7 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_LEADERBOARD = "LeaderBoard";
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
-    public static final String LB_COL3 = "challenges_comp";
+    public static final String LB_COL3 = "challenges_count";
 
     //Participates Table
     public static final String TABLE_PARTICIPATES = "Participates";
@@ -61,6 +62,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PART_COL2 = "challenge_id";
     public static final String PART_COL3 = "join_date";
     public static final String PART_COL4 = "completed";
+
+    //Notification Table
+    public static final String TABLE_NOTIFICATION = "Notification";
+    public static final String NOTIFICATION_COL1 = "username";
+    public static final String NOTIFICATION_COL2 = "type";
 
     /***************************
      * DBHeler Constructor
@@ -96,7 +102,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "birth_date DATE NOT NULL, " +
                 "join_date DATE NOT NULL, " +
                 "email TEXT NOT NULL, " +
-                "challenges_comp INTEGER, " +
+                "challenges_count INTEGER, " +
                 "private TEXT NOT NULL, " +
                 "type TEXT NOT NULL" +
                 ") ");
@@ -140,10 +146,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD + "(" +
                 "rank INTEGER NOT NULL, " +
                 "username TEXT NOT NULL, " +
-                "challenges_comp INTEGER NOT NULL, " +
+                "challenges_count INTEGER NOT NULL, " +
                 "PRIMARY KEY(rank, username), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
-                "FOREIGN KEY(challenges_comp) REFERENCES " + TABLE_USER + "(challenges_comp) ON DELETE CASCADE" +
+                "FOREIGN KEY(challenges_count) REFERENCES " + TABLE_USER + "(challenges_count) ON DELETE CASCADE" +
                 ") ");
 
         //Participates table
@@ -159,6 +165,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
                 ") ");
 
+        //Notification table
+        //stores data of what notifications the user has
+        //unique username and type pairing
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_NOTIFICATION + "(" +
+                "username TEXT, " +
+                "type TEXT, " +
+                "PRIMARY KEY(username,type), " +
+                "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
+                ") ");
     }
 
     /*********************************
@@ -305,19 +320,19 @@ public class DBHelper extends SQLiteOpenHelper {
      * insertLeaderBoard method
      * @param rank: the rank of the user
      * @param username: the user (unique pairing with rank
-     * @param challengesComp: the amount of challenges completed by user
+     * @param challengesCount: the amount of challenges completed by user
      * @return false if insert fails, true if data is inserted successfully
      *
      * This methods inserts a new data entry (a full row) into the leaderboard
      * table. No two data entries may have the same rank and username pairing.
      * Only challengesComp can be null
      */
-    public boolean insertLeaderBoard(int rank, String username, int challengesComp) {
+    public boolean insertLeaderBoard(int rank, String username, int challengesCount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LB_COL1, rank);
         cv.put(LB_COL2, username);
-        cv.put(LB_COL3, challengesComp);
+        cv.put(LB_COL3, challengesCount);
 
         long num = db.insert(TABLE_LEADERBOARD, null, cv);
         if (num == -1) {
@@ -352,6 +367,21 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
         long num = db.insert(TABLE_PARTICIPATES, null, cv);
+        if (num == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean insertNotification(String username, NotificationType type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NOTIFICATION_COL1,username);
+        cv.put(NOTIFICATION_COL2,type.name());
+
+        long num = db.insert(TABLE_NOTIFICATION, null, cv);
         if (num == -1) {
             return false;
         } else {
@@ -512,12 +542,12 @@ public class DBHelper extends SQLiteOpenHelper {
      * otherwise update will fail. Only challengesComp can
      * be null.
      */
-    public boolean updateLeaderBoard(int oldRank, String oldUsername, int newRank, String newUsername, int challengesComp) {
+    public boolean updateLeaderBoard(int oldRank, String oldUsername, int newRank, String newUsername, int challengesCount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LB_COL1, newRank);
         cv.put(LB_COL2, newUsername);
-        cv.put(LB_COL3, challengesComp);
+        cv.put(LB_COL3, challengesCount);
 
         long result = db.update(TABLE_LEADERBOARD, cv, "rank = ? AND username = ?", new String[]{Integer.valueOf(oldRank).toString(), oldUsername});
         if (result > 0) {
@@ -557,6 +587,21 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public boolean updateNotification(String currentUsername, String newUsername, NotificationType currentType, NotificationType newType)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(NOTIFICATION_COL1,newUsername);
+        cv.put(NOTIFICATION_COL2,newType.name());
+
+        long num = db.update(TABLE_NOTIFICATION, cv, "username = ? AND type = ?", new String[] {currentUsername, currentType.name()});
+        if (num == -1) {
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -664,6 +709,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public int deleteParticipates(String username, int challengeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_PARTICIPATES, "username = ? AND challenge_id = ?", new String[]{username, Integer.valueOf(challengeID).toString()});
+    }
+
+    public int deleteNotification(String username, NotificationType type)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_NOTIFICATION,"username = ? AND type = ?", new String[] {username,type.name()});
     }
 
 
@@ -865,6 +916,14 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column1 + " = ? AND " + column2 + " = ?",new String[] {value1,value2});
+        return cursor;
+    }
+
+    public Cursor getParticipatesDataInnerJoin(String username, String completed)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT username,challenge.name,challenge.start_date,challenge.end_date FROM participates INNER JOIN challenge ON Participates.challenge_id = challenge.challenge_ID WHERE username = ? AND completed = ?",
+                new String[] {username,completed});
         return cursor;
     }
 

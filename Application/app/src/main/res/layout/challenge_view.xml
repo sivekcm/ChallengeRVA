@@ -85,6 +85,26 @@
     </TextView>
 
     <TextView
+        android:id="@+id/view_minTeam"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="   Minimum number of team members required:"
+        android:textSize="8pt"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/view_maxTeam"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="   Maximum number of team members required:"
+        android:textSize="8pt"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
         android:id="@+id/view_Availability"
         android:layout_width="match_parent"
         android:layout_height="50dp"

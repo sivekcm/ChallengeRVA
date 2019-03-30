@@ -6,9 +6,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.regex.Pattern;
 
 public class ForgotUserActivity extends AppCompatActivity {
 
@@ -25,7 +28,7 @@ public class ForgotUserActivity extends AppCompatActivity {
         emailButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = inputEmail.getText().toString();
+                String email = inputEmail.getText().toString().trim();
                 DBHelper db = new DBHelper(thisContext);
                 Cursor checkCursor = db.getUserData("email",email);
                 checkCursor.moveToFirst();
@@ -35,6 +38,11 @@ public class ForgotUserActivity extends AppCompatActivity {
                 if(email.length() == 0)
                     AlertMessage.alertMessage("No Text", "Please put your email in the text field.", thisContext);
                     //Checks for email in database
+                else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    inputEmail.setError("Valid email required");
+                    inputEmail.requestFocus();
+                    return;
+                }
                 else if(checkCursor.getCount() == 0)
                     AlertMessage.alertMessage("User not found", "There is no account associated with this email.", thisContext);
                 else {

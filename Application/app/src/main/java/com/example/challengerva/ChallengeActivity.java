@@ -103,19 +103,20 @@ public class ChallengeActivity extends AppCompatActivity{
                 String start = startDateEditText.getText().toString();
                 String end = endDateEditText.getText().toString();
                 String type = registrationTypeListSpinner.toString();
-                int diff = 0;
                 String category = challengeTypeListSpinner.toString();
+                int diff = Integer.parseInt(String.valueOf(difficultyRatingBar.getRating()));
                 int minTeam = Integer.parseInt(minTeamEditText.getText().toString());
                 int maxTeam = Integer.parseInt(maxTeamEditText.getText().toString());
                 int logRange = Integer.parseInt(logRangeEditText.getText().toString());
 
-
+                //Execute onRatingBar
+                addListenerOnRatingBar();
 
                 //convert dates to SQL format for db
                 if(!start.equals("")){
                     start = formatDate(start);
                 }
-                if(!end.equals("")){
+                if(!end.equals("")) {
                     end = formatDate(end);
                 }
 
@@ -130,14 +131,6 @@ public class ChallengeActivity extends AppCompatActivity{
                 else if(!nameIsValid(name)){
                     AlertMessage.alertMessage("Challenge Name Not Found",
                             "Please enter a name for the created challenge.", ChallengeActivity.this);
-
-                }
-
-                //Validate the difficulty of the challenge
-                else if(!difficultyIsValid(diff))
-                {
-                    AlertMessage.alertMessage("Difficulty Out Of Range",
-                            "Please enter a difficulty level 1 to 3.", ChallengeActivity.this);
 
                 }
 
@@ -296,23 +289,28 @@ public class ChallengeActivity extends AppCompatActivity{
     }
 
     /**
-     * Check to see if a valid difficulty level is given
-     * @param difficulty (int)
-     * @return boolean value true if valid level given,
-     * false if another level is given or if a string is attempted
-     * to be passed through
+     * AddListenerOnRatingBar
+     * @descript when changing rating via scale, difficulty value will
+     * change in accordance to rating bar
+     * @return TextView of rating
      */
-    public static boolean difficultyIsValid(int difficulty){
-        if(difficulty >=1 && difficulty <= 3){
-            return true;
-        }
-        return false;
+    public void addListenerOnRatingBar(){
+
+        //if rating bar is changed from default
+        //display current difficulty rating
+        difficultyRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                difficultyTextView.setText(String.valueOf(rating));
+            }
+        });
     }
 
-    public static boolean hasAllFields(String name, String desc, String diff,
-                                       String startDate, String endDate)
+
+
+    public static boolean hasAllFields(String name, String desc,String diff, String startDate, String endDate)
     {
-        if (name.isEmpty() || desc.isEmpty() || diff.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
+        if (name.isEmpty() || desc.isEmpty() || startDate.isEmpty() || endDate.isEmpty())
         {
             return false;
         }
