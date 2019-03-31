@@ -8,8 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.NumberPicker;
 import android.widget.Button;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class AthleteCreateTeamActivity extends AppCompatActivity {
     EditText teamNameEditTxt;
@@ -18,6 +21,8 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
     Button createTeamBtn;
     Button joinTeamBtn;
     DBHelper db = new DBHelper(this);
+    Challenge challenge;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +30,8 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
         setContentView(R.layout.athlete_create_team);
 
         Intent intent = getIntent();
-        final User athlete = intent.getParcelableExtra("User Object");
+        user = intent.getParcelableExtra("User Object");
+        challenge = intent.getParcelableExtra("challenge");
 
 
         teamNameEditTxt = (EditText) findViewById(R.id.teamNameEditTxt);
@@ -38,6 +44,8 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AthleteCreateTeamActivity.this,AthleteTeamSelectionActivity.class);
+                intent.putExtra("User Object", user);
+                intent.putExtra("challenge", challenge);
                 startActivity(intent);
             }
         });
@@ -46,8 +54,26 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
         //challengeNameTxtView.setText(db.getChallengeData("name", 3));
         createTeamBtn.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
+                //Gets the current date, for determining the date the user signed up
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = new Date();
+                String currentDate = sdf.format(date);
                 String teamName = teamNameEditTxt.getText().toString();
-                db.insertTeam(teamName, 000000, null);
+                boolean teamSuccess = db.insertTeam(teamName, challenge.getChallengeID(),user.getUsername());
+                boolean partSuccess = db.insertParticipates(user.getUsername(),challenge.getChallengeID(),currentDate,"N");
+                if (teamSuccess && partSuccess)
+                {
+                    Toast.makeText(AthleteCreateTeamActivity.this,"Team Registration Successful",Toast.LENGTH_LONG);
+                }
+                else
+                {
+                    Toast.makeText(AthleteCreateTeamActivity.this,"Something went wrong",Toast.LENGTH_LONG);
+                }
+
+                Intent intent = new Intent(AthleteCreateTeamActivity.this,ViewChallengeActivity.class);
+                intent.putExtra("User Object", user);
+                intent.putExtra("challenge", challenge);
+                startActivity(intent);
             }
         });
     }

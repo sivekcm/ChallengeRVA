@@ -32,6 +32,7 @@ public class AthleteHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent searchIntent = new Intent(AthleteHomeActivity.this,ChallengeSearchActivity.class);
+                searchIntent.putExtra("User Object", user);
                 startActivity(searchIntent);
             }
         });
