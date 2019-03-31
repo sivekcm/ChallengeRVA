@@ -28,10 +28,14 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
     Cursor challengeData;
     ChallengeAdapter adapter;
     DBHelper db = new DBHelper(this);
+    User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_challenge_search);
+
+        Intent intent = getIntent();
+        user = intent.getParcelableExtra("User Object");
 
         //Sets recycle view upon opening activity
         challengeRV = findViewById(R.id.challengeRV);
@@ -169,6 +173,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
                 Challenge challenge = new Challenge(cursor);
                 Intent intent = new Intent(ChallengeSearchActivity.this,ViewChallengeActivity.class);
                 intent.putExtra("challenge",challenge);
+                intent.putExtra("User Object",user);
                 startActivity(intent);
             }
         });

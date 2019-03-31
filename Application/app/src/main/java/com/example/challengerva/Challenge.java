@@ -5,6 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Challenge implements Parcelable {
+    private int challengeID;
     private String challengeName;
     private String coachAssigned;
     private String startDate;
@@ -33,6 +34,7 @@ public class Challenge implements Parcelable {
 
     public Challenge(Parcel in)
     {
+        this.challengeID = in.readInt();
         this.challengeName = in.readString();
         this.coachAssigned = in.readString();
         this.startDate = in.readString();
@@ -51,13 +53,14 @@ public class Challenge implements Parcelable {
     constructor when creating a challenge for a all instance variables
     */
     public Challenge(Cursor cursor) {
+        this.challengeID = cursor.getInt(0);
         this.challengeName = cursor.getString(1);
         this.coachAssigned = cursor.getString(2);
         this.startDate = cursor.getString(3);
         this.endDate = cursor.getString(4);
         this.type = cursor.getString(5);
         this.difficulty = cursor.getInt(6);
-        if (cursor.getString(7).equals("team"))
+        if (cursor.getString(7).toLowerCase().equals("team"))
         {
             this.team = true;
         }
@@ -301,8 +304,13 @@ public class Challenge implements Parcelable {
         return 0;
     }
 
+    public int getChallengeID() {
+        return challengeID;
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.challengeID);
         dest.writeString(this.challengeName);
         dest.writeString(this.coachAssigned);
         dest.writeString(this.startDate);

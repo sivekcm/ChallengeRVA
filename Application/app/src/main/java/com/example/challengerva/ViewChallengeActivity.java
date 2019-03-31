@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class ViewChallengeActivity extends AppCompatActivity{
 
@@ -30,17 +33,22 @@ public class ViewChallengeActivity extends AppCompatActivity{
             description,
             startDate,
             endDate,
-            teamType,
             availability;
 
-    int difficulty,
-        minTeam,
-        maxTeam;
+    int challengeID,
+            difficulty,
+            minTeam,
+            maxTeam;
+
+    boolean isTeam;
 
     Button registerChallengeButton;
 
     Challenge challenge;
 
+    DBHelper db = new DBHelper(this);
+
+    User user;
 
     /**********************
      * onCreate method
@@ -56,6 +64,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
 
         Intent intent = getIntent();
         challenge = intent.getParcelableExtra("challenge");
+        user = intent.getParcelableExtra("User Object");
 
         //instantiate DBHelper for database methods
         //final DBHelper challenge = new DBHelper(ViewChallengeActivity.this);
@@ -78,21 +87,45 @@ public class ViewChallengeActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
 
-                /**Direct to team creation activity**/
-                Intent intent = new Intent(ViewChallengeActivity.this,AthleteCreateTeamActivity.class);
-                intent.putExtra("challenge",challenge);
-                startActivity(intent);
+                Intent intent;
+                if (isTeam) {
+                    /**Direct to team creation activity**/
+                    intent = new Intent(ViewChallengeActivity.this, AthleteCreateTeamActivity.class);
+                    intent.putExtra("challenge", challenge);
+                    intent.putExtra("User Object", user);
+                    startActivity(intent);
+                }
+                else
+                {
+                    //Gets the current date, for determining the date the user signed up
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date = new Date();
+                    String currentDate = sdf.format(date);
+                    boolean success = db.insertParticipates(user.getUsername(),challengeID,currentDate,"N");
+                    if (success)
+                    {
+                        Toast.makeText(ViewChallengeActivity.this,"Registration Successful",Toast.LENGTH_LONG);
+                    }
+                    else
+                    {
+                        Toast.makeText(ViewChallengeActivity.this,"Something went wrong",Toast.LENGTH_LONG);
+                    }
+
+                    intent = new Intent(ViewChallengeActivity.this, ChallengeSearchActivity.class);
+                    startActivity(intent);
+                }
 
             }
         });
 
+        challengeID = challenge.getChallengeID();
         challengeName = challenge.getChallengeName();
         coachName = challenge.getCoachAssigned();
         description = challenge.getChallengeDescription();
         startDate = challenge.getStartDate();
         endDate = challenge.getEndDate();
         difficulty = challenge.getDifficulty();
-        teamType = challenge.getType();
+        isTeam = challenge.isTeam();
         minTeam = challenge.getMinTeam();
         maxTeam = challenge.getMaxTeam();
 
@@ -123,10 +156,16 @@ public class ViewChallengeActivity extends AppCompatActivity{
         descriptionTextView.setText(description);
         startDateTextView.setText(startDate);
         endDateTextView.setText(endDate);
-        difficultyTextView.setText(difficulty);
-        teamTypeTextView.setText(teamType);
-        minTeamTextView.setText(minTeam);
-        maxTeamTextView.setText(maxTeam);
+        difficultyTextView.setText(String.valueOf(difficulty));
+        if (isTeam) {
+            teamTypeTextView.setText("Team");
+        }
+        else
+        {
+            teamTypeTextView.setText("Single");
+        }
+        minTeamTextView.setText(String.valueOf(minTeam));
+        maxTeamTextView.setText(String.valueOf(maxTeam));
         availabilityTextView.setText(availability);
 
 
