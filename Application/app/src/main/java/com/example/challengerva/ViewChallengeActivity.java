@@ -14,23 +14,23 @@ import java.util.Calendar;
 public class ViewChallengeActivity extends AppCompatActivity{
 
     //Declaration of variables implemented in UI
-    TextView view_challengeName,
-            view_coachName,
-            view_description,
-            view_startDate,
-            view_endDate,
-            view_difficulty,
-            view_teamType,
-            view_minTeam,
-            view_maxTeam,
-            view_Availability;
+    TextView challengeNameTextView,
+            coachNameTextView,
+            descriptionTextView,
+            startDateTextView,
+            endDateTextView,
+            difficultyTextView,
+            teamTypeTextView,
+            minTeamTextView,
+            maxTeamTextView,
+            availabilityTextView;
 
-    String challenge_name,
-            coach_name,
+    String challengeName,
+            coachName,
             description,
             startDate,
             endDate,
-            team_type,
+            teamType,
             availability;
 
     int difficulty,
@@ -60,17 +60,18 @@ public class ViewChallengeActivity extends AppCompatActivity{
         //instantiate DBHelper for database methods
         //final DBHelper challenge = new DBHelper(ViewChallengeActivity.this);
 
-        view_challengeName = findViewById(R.id.view_challengeName);
-        view_coachName = findViewById(R.id.view_coachName);
-        view_description = findViewById(R.id.view_description);
-        view_startDate = findViewById(R.id.view_startDate);
-        view_endDate = findViewById(R.id.view_endDate);
-        view_difficulty = findViewById(R.id.view_difficulty);
-        view_teamType = findViewById(R.id.view_teamType);
-        view_minTeam = findViewById(R.id.view_minTeam);
-        view_maxTeam = findViewById(R.id.view_maxTeam);
-        view_Availability = findViewById(R.id.view_Availability);
+        challengeNameTextView = findViewById(R.id.view_challengeName);
+        coachNameTextView = findViewById(R.id.view_coachName);
+        descriptionTextView = findViewById(R.id.view_description);
+        startDateTextView = findViewById(R.id.view_startDate);
+        endDateTextView = findViewById(R.id.view_endDate);
+        difficultyTextView = findViewById(R.id.view_difficulty);
+        teamTypeTextView = findViewById(R.id.view_teamType);
+        minTeamTextView = findViewById(R.id.view_minTeam);
+        maxTeamTextView = findViewById(R.id.view_maxTeam);
+        availabilityTextView = findViewById(R.id.view_Availability);
         registerChallengeButton = findViewById(R.id.registerChallengeBtn);
+
 
 
         registerChallengeButton.setOnClickListener(new View.OnClickListener() {
@@ -79,18 +80,19 @@ public class ViewChallengeActivity extends AppCompatActivity{
 
                 /**Direct to team creation activity**/
                 Intent intent = new Intent(ViewChallengeActivity.this,AthleteCreateTeamActivity.class);
+                intent.putExtra("challenge",challenge);
                 startActivity(intent);
 
             }
         });
 
-        challenge_name = challenge.getChallengeName();
-        coach_name = challenge.getCoachAssigned();
+        challengeName = challenge.getChallengeName();
+        coachName = challenge.getCoachAssigned();
         description = challenge.getChallengeDescription();
         startDate = challenge.getStartDate();
         endDate = challenge.getEndDate();
         difficulty = challenge.getDifficulty();
-        team_type = challenge.getType();
+        teamType = challenge.getType();
         minTeam = challenge.getMinTeam();
         maxTeam = challenge.getMaxTeam();
 
@@ -115,6 +117,17 @@ public class ViewChallengeActivity extends AppCompatActivity{
         else{
             availability = "Conditional for availability didn't work booohoo";
         }
+
+        challengeNameTextView.setText(challengeName);
+        coachNameTextView.setText(coachName);
+        descriptionTextView.setText(description);
+        startDateTextView.setText(startDate);
+        endDateTextView.setText(endDate);
+        difficultyTextView.setText(difficulty);
+        teamTypeTextView.setText(teamType);
+        minTeamTextView.setText(minTeam);
+        maxTeamTextView.setText(maxTeam);
+        availabilityTextView.setText(availability);
 
 
     }

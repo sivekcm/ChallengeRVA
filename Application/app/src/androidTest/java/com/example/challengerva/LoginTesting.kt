@@ -14,20 +14,20 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-
 @RunWith(JUnit4::class)
-class LoginUnitTest {
+class LoginTesting {
 
     private var username_toBe: String? = null
     private var password_toBe: String? = null
     private var wrong_password_toBe: String? = null
 
+    @JvmField
     @Rule
-    val activityTestRule = ActivityTestRule<LoginActivity>(LoginActivity::class.java)
+    public val activityTestRule = ActivityTestRule<LoginActivity>(LoginActivity::class.java)
 
     @Before
     fun setLogin() {
-        username_toBe = "chris1"
+        username_toBe = "username"
         password_toBe = "Password1"
         wrong_password_toBe = "wrongPassword1"
 
