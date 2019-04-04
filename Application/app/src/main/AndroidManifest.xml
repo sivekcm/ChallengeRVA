@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.challengerva">
 
-    <uses-permission android:name="com.android.alarm.permission.SET_ALARM"/>
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,9 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PublicProfileActivity"></activity>
 
-        <uses-permission android:name="android.permission.INTERNET" />
-        <activity android:name=".AthleteViewChallengeActivity"></activity>
+
+
+        <activity android:name=".AthleteViewChallengeActivity" />
         <activity android:name=".CoachHomeActivity" />
         <activity android:name=".AthleteHomeActivity" />
         <activity android:name=".CoachActivity" />
@@ -30,7 +33,7 @@
         <activity android:name=".ChallengeSearchActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".ViewChallengeActivity"/>
+        <activity android:name=".ViewChallengeActivity" />
         <activity android:name=".ChangeUsernameActivity" />
         <activity android:name=".ForgotUserActivity" />
         <activity android:name=".LoginActivity">
