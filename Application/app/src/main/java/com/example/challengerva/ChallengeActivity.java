@@ -104,7 +104,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 String end = endDateEditText.getText().toString();
                 String type = registrationTypeListSpinner.toString();
                 String category = challengeTypeListSpinner.toString();
-                int diff = Integer.parseInt(String.valueOf(difficultyRatingBar.getRating()));
+                int diff = Integer.parseInt(String.valueOf((int)difficultyRatingBar.getRating()));
                 int minTeam = Integer.parseInt(minTeamEditText.getText().toString());
                 int maxTeam = Integer.parseInt(maxTeamEditText.getText().toString());
                 int logRange = Integer.parseInt(logRangeEditText.getText().toString());

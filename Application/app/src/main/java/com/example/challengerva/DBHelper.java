@@ -63,6 +63,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PART_COL3 = "join_date";
     public static final String PART_COL4 = "completed";
 
+    //Log Table
+    public static final String TABLE_LOG = "Log";
+    public static final String LOG_COL1 = "username";
+    public static final String LOG_COL2 = "challenge_id";
+    public static final String LOG_COL3 = "log_date";
+    public static final String LOG_COL4 = "log_value";
+
     //Notification Table
     public static final String TABLE_NOTIFICATION = "Notification";
     public static final String NOTIFICATION_COL1 = "username";
@@ -161,6 +168,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 "join_date DATE NOT NULL, " +
                 "completed TEXT NOT NULL," +
                 "PRIMARY KEY(username, challenge_id), " +
+                "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
+                "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
+                ") ");
+
+        //Log table
+        //stores data of all the logs of a user for a challenge
+        //unique username, challenge id, and date pairing
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LOG + "(" +
+                "username TEXT NOT NULL, " +
+                "challenge_id INTEGER NOT NULL, " +
+                "log_date DATE NOT NULL, " +
+                "log_value INTEGER NOT NULL, " +
+                "PRIMARY KEY(username, challenge_id, log_date), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
                 ") ");
@@ -374,6 +394,23 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean insertLog(String username, int challengeID, String date, int value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(LOG_COL1, username);
+        cv.put(LOG_COL2, challengeID);
+        cv.put(LOG_COL3, date);
+        cv.put(LOG_COL4, value);
+
+
+        long num = db.insert(TABLE_LOG, null, cv);
+        if (num == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public boolean insertNotification(String username, NotificationType type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -533,7 +570,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param oldUsername: the username of the row you want to update (paired with oldRank)
      * @param newRank: The rank you want to replace the old one with.
      * @param newUsername: the username you want to replace the old one with.
-     * @param challengesComp: the amount of challenges completed by user
+     * @param challengesCount: the amount of challenges completed by user
      * @return false if update fails, true if data is updated successfully
      *
      * This methods updates a row in the leaderboard
@@ -709,6 +746,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public int deleteParticipates(String username, int challengeID) {
         SQLiteDatabase db = this.getWritableDatabase();
         return db.delete(TABLE_PARTICIPATES, "username = ? AND challenge_id = ?", new String[]{username, Integer.valueOf(challengeID).toString()});
+    }
+
+    public int deleteLog(String username, int challengeID)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LOG, "username = ? AND challenge_id = ?", new String[] {username,String.valueOf(challengeID)});
     }
 
     public int deleteNotification(String username, NotificationType type)
@@ -924,6 +967,13 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT username,challenge.name,challenge.start_date,challenge.end_date FROM participates INNER JOIN challenge ON Participates.challenge_id = challenge.challenge_ID WHERE username = ? AND completed = ?",
                 new String[] {username,completed});
+        return cursor;
+    }
+
+    public Cursor getLogData(String username, int challengeID)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ?",new String[] {username,String.valueOf(challengeID)});
         return cursor;
     }
 

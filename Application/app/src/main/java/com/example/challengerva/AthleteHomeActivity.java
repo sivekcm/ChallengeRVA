@@ -32,13 +32,11 @@ public class AthleteHomeActivity extends AppCompatActivity {
         leaderboardBtn = findViewById(R.id.athleteHomeLeaderboardBtn);
         logoutBtn = findViewById(R.id.athleteHomeLogoutBtn);
 
-
-
-
         searchChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent searchIntent = new Intent(AthleteHomeActivity.this, ChallengeSearchActivity.class);
+                Intent searchIntent = new Intent(AthleteHomeActivity.this,ChallengeSearchActivity.class);
+                searchIntent.putExtra("User Object", user);
                 startActivity(searchIntent);
             }
         });
@@ -74,5 +72,4 @@ public class AthleteHomeActivity extends AppCompatActivity {
             }
         });
     }
-
 }

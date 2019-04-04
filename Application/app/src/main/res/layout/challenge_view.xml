@@ -1,130 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:id="@+id/view_challengeName"
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:gravity="center"
-        android:text="Challenge Name"
-        android:textColor="@color/Orange"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="26dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_challengeName"
+            android:layout_width="match_parent"
+            android:layout_height="91dp"
+            android:gravity="center"
+            android:text="Challenge Name"
+            android:textColor="@color/Orange"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="26dp">
 
-    <TextView
-        android:id="@+id/view_coachName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="   Coach Name:"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_coachName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   Coach Name:"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_description"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:text="   Description:"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="   Description:"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_startDate"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="   Start Date:"
-        android:textColor="@color/colorAccent"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_startDate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   Start Date:"
+            android:textColor="@color/colorAccent"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_endDate"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="   End Date:"
-        android:textColor="@color/colorAccent"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_endDate"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   End Date:"
+            android:textColor="@color/colorAccent"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_difficulty"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="   Difficulty:"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_difficulty"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   Difficulty:"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_teamType"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="   Team Type:"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_teamType"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   Team Type:"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_minTeam"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="   Minimum number of team members required:"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_minTeam"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   Minimum number of team members required:"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_maxTeam"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="   Maximum number of team members required:"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_maxTeam"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   Maximum number of team members required:"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
-    <TextView
-        android:id="@+id/view_Availability"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="   Availability"
-        android:textSize="8pt"
-        android:textStyle="bold">
+        </TextView>
 
-    </TextView>
+        <TextView
+            android:id="@+id/view_Availability"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="   Availability"
+            android:textSize="8pt"
+            android:textStyle="bold">
 
+        </TextView>
 
-    <!--Button submission below-->
-    <Button
-        android:id="@+id/registerChallengeBtn"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/White"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/registerChallengeButton">
+        <!--Button submission below-->
+        <Button
+            android:id="@+id/registerChallengeBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/registerChallengeButton"
+            android:textColor="@color/White">
 
-    </Button>
+        </Button>
 
+    </LinearLayout>
 
-</LinearLayout>
+</ScrollView>
