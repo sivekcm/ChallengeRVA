@@ -16,7 +16,7 @@ public class AthleteTeamSelectionActivity extends AppCompatActivity {
     TeamAdapter adapter;
     DBHelper db = new DBHelper(this);
 
-    Cursor teamData;
+    Cursor cursor;
     User user;
     Challenge challenge;
 
@@ -34,12 +34,12 @@ public class AthleteTeamSelectionActivity extends AppCompatActivity {
         teamSelectionRecyclerView = findViewById(R.id.teamSelectionRecyclerView);
 
 
-        teamData = db.getTeamData("challenge_id",String.valueOf(challenge.getChallengeID()));
+        cursor = db.getTeamData("challenge_id",String.valueOf(challenge.getChallengeID()),"team_name");
 
-        showResults(teamData);
+        showResults(cursor);
 
         teamSelectionRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        toTeamActivity(cursor,adapter);
 
     }
 
@@ -50,17 +50,18 @@ public class AthleteTeamSelectionActivity extends AppCompatActivity {
         teamSelectionRecyclerView.swapAdapter(adapter,false);
     }
 
-    public void adapterOnClick(final Cursor cursor,ChallengeAdapter adapter)
+    public void toTeamActivity(final Cursor cursor,TeamAdapter adapter)
     {
-        adapter.setOnItemClickListener(new ChallengeAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new TeamAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 cursor.moveToPosition(position);
-                Challenge challenge = new Challenge(cursor);
-//                Intent intent = new Intent(AthleteTeamSelectionActivity.this,ViewChallengeActivity.class);
-//                intent.putExtra("challenge",challenge);
-//                intent.putExtra("User Object",user);
-//                startActivity(intent);
+                Team team = new Team(cursor);
+                Intent intent = new Intent(AthleteTeamSelectionActivity.this,TeamActivity.class);
+                intent.putExtra("challenge",challenge);
+                intent.putExtra("User Object",user);
+                intent.putExtra("team",team);
+                startActivity(intent);
             }
         });
     }

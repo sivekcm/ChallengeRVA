@@ -48,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TABLE_TEAM = "Team";
     public static final String TEAM_COL1 = "team_name";
     public static final String TEAM_COL2 = "challenge_id";
-    public static final String TEAM_COL3 = "user";
+    public static final String TEAM_COL3 = "username";
 
     //Leaderboard Table
     public static final String TABLE_LEADERBOARD = "LeaderBoard";
@@ -141,10 +141,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TEAM + "(" +
                 "team_name TEXT NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
-                "user TEXT, " +
-                "PRIMARY KEY(team_name, challenge_id), " +
+                "username TEXT, " +
+                "PRIMARY KEY(team_name, challenge_id, username), " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE, " +
-                "FOREIGN KEY(user) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
+                "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
                 ") ");
 
         //Leaderboard table
@@ -549,14 +549,14 @@ public class DBHelper extends SQLiteOpenHelper {
      * challenge_id pairing. Team_id and challenge_id must already exist
      * or else update will fail.
      */
-    public boolean updateTeam(String oldTeamName, int oldChallengeID, String newTeamName, int newChallengeID, String user) {
+    public boolean updateTeam(String oldTeamName, int oldChallengeID, String newTeamName, int newChallengeID, String oldUser, String newUser) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(TEAM_COL1, newTeamName);
         cv.put(TEAM_COL2, newChallengeID);
-        cv.put(TEAM_COL3, user);
+        cv.put(TEAM_COL3, newUser);
 
-        long result = db.update(TABLE_TEAM, cv, "team_name = ? AND challenge_id = ?", new String[]{oldTeamName, Integer.valueOf(oldChallengeID).toString()});
+        long result = db.update(TABLE_TEAM, cv, "team_name = ? AND challenge_id = ? AND username = ?", new String[]{oldTeamName, Integer.valueOf(oldChallengeID).toString(), oldUser});
         if (result > 0) {
             return true;
         } else {
@@ -715,9 +715,9 @@ public class DBHelper extends SQLiteOpenHelper {
      * Deletes the row containing the specified team id
      * and challenge_id from the team table
      */
-    public int deleteTeam(String teamName, int challengeID) {
+    public int deleteTeam(String teamName, int challengeID, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_TEAM, "team_name = ? AND challenge_id = ?", new String[]{teamName, Integer.valueOf(challengeID).toString()});
+        return db.delete(TABLE_TEAM, "team_name = ? AND challenge_id = ? AND username = ?", new String[]{teamName, Integer.valueOf(challengeID).toString(), username});
     }
 
     /*******************************************************
@@ -939,6 +939,20 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column + " = ?",new String[] {value});
+        return cursor;
+    }
+
+    public Cursor getTeamData(String column1, String value1, String column2, String value2)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column1 + " = ? AND " + column2 + " = ?",new String[] {value1,value2});
+        return cursor;
+    }
+
+    public Cursor getTeamData(String column, String value, String groupBy)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column + " = ? GROUP BY " + groupBy,new String[] {value});
         return cursor;
     }
 
