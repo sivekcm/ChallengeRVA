@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class AthleteProfileActivity extends AppCompatActivity{
+public class AthleteProfileActivity extends AppCompatActivity {
     //Declares Text View
     TextView athleteNameTxtView;
     TextView athleteProfileTxtView;
@@ -33,25 +33,32 @@ public class AthleteProfileActivity extends AppCompatActivity{
     //Declares Buttons
     Button athleteViewChallengesBtn;
     Button athleteViewFriendsBtn;
+    Button resetProfileBtn;
+    Button deleteAcctBtn;
 
     //Declaring Recycler View
     RecyclerView athleteChallengesRView;
 
+    final DBHelper db = new DBHelper(AthleteProfileActivity.this);
+
+
     Intent intent = getIntent();
     final User user = intent.getParcelableExtra("User Object");
 
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.athlete_profile);
 
         //Initializes textViews to their respective UI elements
-        athleteNameTxtView = (TextView)findViewById(R.id.coachNameTxtView);
-        athleteProfileTxtView = (TextView)findViewById(R.id.statusTxtView);
-        athleteUsernameTxtView = (TextView)findViewById(R.id.coachUserNameTxtView);
+        athleteNameTxtView = (TextView) findViewById(R.id.coachNameTxtView);
+        athleteProfileTxtView = (TextView) findViewById(R.id.statusTxtView);
+        athleteUsernameTxtView = (TextView) findViewById(R.id.coachUserNameTxtView);
 
         //Initializes Buttons to their respective UI elements
-        athleteViewChallengesBtn = (Button)findViewById(R.id.createChallengeBtn);
-        athleteViewFriendsBtn = (Button)findViewById(R.id.athleteViewFriendsBtn);
+        athleteViewChallengesBtn = (Button) findViewById(R.id.createChallengeBtn);
+        athleteViewFriendsBtn = (Button) findViewById(R.id.athleteViewFriendsBtn);
+        deleteAcctBtn = (Button) findViewById(R.id.deleteAcctBtn);
+        resetProfileBtn = (Button) findViewById(R.id.resetProfileBtn);
 
         //Initializing Recycler View
         athleteChallengesRView = (RecyclerView) findViewById(R.id.athleteChallengeRV);
@@ -60,14 +67,14 @@ public class AthleteProfileActivity extends AppCompatActivity{
         athleteNameTxtView.setText(user.getFirstName());
         athleteUsernameTxtView.setText(user.getUsername());
 
-        final DBHelper db = new DBHelper(AthleteProfileActivity.this);
     }
 
-    public void fillChallengesList(){
+    public void fillChallengesList() {
         ArrayList<String> athleteChallengeArray = new ArrayList<>();
 
 
     }
+
     public void showMessage(String title, String message) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setCancelable(true);
@@ -76,4 +83,20 @@ public class AthleteProfileActivity extends AppCompatActivity{
         builder.show();
     }
 
+    public void deleteAcct(final User user) {
+        deleteAcctBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String username = user.getUsername();
+                int deleted = db.deleteUser(username);
+                if (deleted > 0)
+                    Toast.makeText(AthleteProfileActivity.this, "Account Deleted", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(AthleteProfileActivity.this, "Account not Deleted", Toast.LENGTH_LONG).show();
+            }
+        }
+        );
+    }
 }
+
+
