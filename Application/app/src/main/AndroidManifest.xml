@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.challengerva">
+
+    <!--Allow use of external notifications-->
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+
     <!-- Allow to connect with internet and to know the current network state -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- Use permission to use the Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+
+    <!--Use permission to use the Internet-->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -12,10 +20,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity android:name=".LogChallengeActivity"></activity>
         <activity android:name=".OtherUserProfileActivity" />
         <activity android:name=".TeamActivity" />
-        <activity android:name=".CoachHomeActivity" />
+
+        <activity android:name=".PublicProfileActivity"></activity>
+        <activity android:name=".CoachHomeActivity"></activity>
         <activity android:name=".AthleteViewChallengeActivity" />
         <activity android:name=".AthleteHomeActivity" />
         <activity android:name=".CoachActivity" />

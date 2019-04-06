@@ -1,8 +1,11 @@
 package com.example.challengerva;
 
 import android.database.Cursor;
+import android.icu.util.Calendar;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import java.text.SimpleDateFormat;
 
 public class Challenge implements Parcelable {
     private int challengeID;
@@ -308,6 +311,99 @@ public class Challenge implements Parcelable {
     public void setTeam(boolean team) {
         this.team = team;
     }
+
+    /**
+     * isActiveToday method
+     * @return true if the current time is between the challenge's start and end dates, false if not.
+     *
+     * This method determines whether the challenge is currently active or not.
+     */
+    public boolean isActiveToday()
+    {
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd");
+        String todaysDate = formatDate.format(System.currentTimeMillis());
+
+        if((compareDates(todaysDate, this.startDate) != -1) && (compareDates(todaysDate, this.endDate) != 1))
+            return true;
+        else return false;
+
+
+    }
+
+    /**
+     * getYearFromDate Method
+     * @param date the String date to retrieve the year from in yyyy/MM/dd format
+     * @return an integer value of the year in the date
+     */
+    public int getYearFromDate(String date)
+    {
+        int year = Integer.parseInt(date.substring(0,4));
+        return year;
+    }
+
+    /**
+     * getMonthFromDate Method
+     * @param date the String date to retrieve the month from in yyyy/MM/dd format
+     * @return an integer value of the month in the date
+     */
+    public int getMonthFromDate(String date)
+    {
+        int month = Integer.parseInt(date.substring(5,7));
+        return month;
+    }
+
+    /**
+     * getDayFromDate Method
+     * @param date the String date to retrieve the day from in yyyy/MM/dd format
+     * @return an integer value of the day in the date
+     */
+    public int getDayFromDate(String date)
+    {
+        int day = Integer.parseInt(date.substring(8,10));
+        return day;
+    }
+
+    /**
+     * compareDates method
+     * @param date1 A String of a date in yyyy/MM/dd format
+     * @param date2 A String of a date in yyyy/MM/dd format
+     * @return -1 if first date is earlier, 1 if the second is earlier, 0 if they are the same
+     *
+     * This method determines which of two dates is earlier, or if they are the same.
+     */
+    public int compareDates(String date1, String date2)
+    {
+        int year1 = getYearFromDate(date1);
+        int month1 = getMonthFromDate(date1);
+        int day1 = getDayFromDate(date1);
+
+        int year2 = getYearFromDate(date2);
+        int month2 = getMonthFromDate(date2);
+        int day2 = getDayFromDate(date2);
+
+
+        if(year1 < year2)
+            return -1;
+        else if(year1 > year2)
+            return 1;
+        else
+        {
+            if(month1 < month2)
+                return -1;
+            else if(month1 > month2)
+                return 1;
+            else
+            {
+                if(day1 < day2)
+                    return -1;
+                else if(day1 > day2)
+                    return 1;
+                else
+                    return 0;
+            }
+        }
+    }
+
 
     @Override
     public int describeContents() {
