@@ -42,21 +42,29 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
             originUser = intent.getParcelableExtra("User Object");
         }
 
+        final boolean isLoggedTemp = user.isLoggedUser();
+
         currentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 challengeData = db.getParticipatesDataInnerJoin(user.getUsername(),"N");
-                showResults(challengeData);
+                adapter = new AthleteChallengeAdapter(AthleteViewChallengeActivity.this,challengeData,user);
+                showResults(adapter);
             }
         });
 
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                user.setLoggedUser(false);
                 challengeData = db.getParticipatesDataInnerJoin(user.getUsername(),"Y");
-                showResults(challengeData);
+                adapter = new AthleteChallengeAdapter(AthleteViewChallengeActivity.this,challengeData,user);
+                showResults(adapter);
+                user.setLoggedUser(isLoggedTemp);
             }
         });
+
+
 
 
     }
@@ -67,10 +75,9 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
      *
      * Displays the challenges contained in cursor on the recylcerview
      */
-    public void showResults(Cursor cursor)
+    public void showResults(AthleteChallengeAdapter adapter)
     {
         challengeRV.setLayoutManager(new LinearLayoutManager(AthleteViewChallengeActivity.this));
-        adapter = new AthleteChallengeAdapter(AthleteViewChallengeActivity.this, cursor);
         challengeRV.swapAdapter(adapter,false);
     }
 }

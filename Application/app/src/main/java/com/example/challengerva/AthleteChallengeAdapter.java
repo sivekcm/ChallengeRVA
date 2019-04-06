@@ -1,12 +1,15 @@
 package com.example.challengerva;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.time.temporal.Temporal;
@@ -15,6 +18,7 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
 
     private Context context;
     private Cursor cursor;
+    private User user;
 
     public AthleteChallengeAdapter(Context cont, Cursor curs)
     {
@@ -22,11 +26,19 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
         this.cursor = curs;
     }
 
+    public AthleteChallengeAdapter(Context cont, Cursor curs, User user)
+    {
+        this.context = cont;
+        this.cursor = curs;
+        this.user = user;
+    }
+
     public class AthleteChallengeViewHolder extends  RecyclerView.ViewHolder
     {
         TextView challengeNameTextView;
         TextView startDateTextView;
         TextView endDateTextView;
+        Button logBtn;
 
         public AthleteChallengeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -34,6 +46,7 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
             challengeNameTextView = itemView.findViewById(R.id.athleteChallengeNameTextView);
             startDateTextView = itemView.findViewById(R.id.athleteChallengeStartDateTextView);
             endDateTextView = itemView.findViewById(R.id.athleteChallengeEndDateTextView);
+            logBtn = itemView.findViewById(R.id.athleteChallengeLogBtn);
         }
     }
 
@@ -46,7 +59,7 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AthleteChallengeViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull final AthleteChallengeViewHolder viewHolder, int i) {
         if (!cursor.moveToPosition(i))
         {
             return;
@@ -62,6 +75,29 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
         viewHolder.challengeNameTextView.setText(name);
         viewHolder.startDateTextView.setText(startDate);
         viewHolder.endDateTextView.setText(endDate);
+        if (this.user.isLoggedUser())
+        {
+            final Intent intent = new Intent(this.context, LogChallengeActivity.class);
+            viewHolder.logBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DBHelper db = new DBHelper(context);
+                    Cursor cursor = db.getChallengeData("name",viewHolder.challengeNameTextView.getText().toString());
+                    cursor.moveToNext();
+                    Challenge challenge = new Challenge(cursor);
+                    intent.putExtra("activity", "AthleteViewChallengeActivity");
+                    intent.putExtra("User Object", user);
+                    intent.putExtra("challenge", challenge);
+
+
+                    context.startActivity(intent);
+                }
+            });
+        }
+        else
+        {
+            viewHolder.logBtn.setVisibility(View.GONE);
+        }
     }
 
     @Override

@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                             3,4,2));
                     db.insertTeam("team 2", 1, "username");
                     User user = new User(userData);
+                    user.setLoggedUser(true);
                     Log.d("LoginActivity",user.getUsername());
                     Intent intent = null;
                     if (user.getAccountType().equals(User.UserType.ATHLETE))

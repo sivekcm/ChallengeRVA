@@ -43,6 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL12 = "min_team";
     public static final String CHAL_COL13 = "max_team";
     public static final String CHAL_COL14 = "log_range";
+    public static final String CHAL_COL15 = "log_unit";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -129,9 +130,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "availability TEXT NOT NULL, " +
                 "health_hazards TEXT, " +
                 "description TEXT, " +
-                "min_team TEXT NOT NULL," +
-                "max_team TEXT NOT NULL," +
-                "log_range TEXT NOT NULL," +
+                "min_team INTEGER NOT NULL, " +
+                "max_team INTEGER NOT NULL, " +
+                "log_range INTEGER NOT NULL, " +
+                "log_unit TEXT NOT NULL, " +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
                 ") ");
 
@@ -284,7 +286,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertChallenge(String name, String coach,
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
-                                   String hazards, String description, int minTeam, int maxTeam, int logRange) {
+                                   String hazards, String description, int minTeam,
+                                   int maxTeam, int logRange, String logUnit) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -300,6 +303,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL12, minTeam);
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
+        cv.put(CHAL_COL15, logUnit);
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
