@@ -75,20 +75,20 @@ public class CoachActivity extends AppCompatActivity {
 
         //Calling openChallengeActivity method
         openChallengeActivity(user);
-        //Inserting test challenge information
-        challenge.insertChallenge("testChall",
-                "jacobobeast",
-                "2019-03-16",
-                "2019-04-19",
-                "cardio",
-                4,
-                "team",
-                "availible",
-                "none",
-                "basic test challenge",
-                2,
-                5,
-                10);
+//        //Inserting test challenge information
+//        challenge.insertChallenge("testChall",
+//                "jacobobeast",
+//                "2019-03-16",
+//                "2019-04-19",
+//                "cardio",
+//                4,
+//                "team",
+//                "availible",
+//                "none",
+//                "basic test challenge",
+//                2,
+//                5,
+//                10);
 
       //challenge.insertChallenge("testChall", "jacobobeast", "2019-03-16", "2019-04-19", "cardio", 4, "team", "availible", "none", "basic test challenge");
 

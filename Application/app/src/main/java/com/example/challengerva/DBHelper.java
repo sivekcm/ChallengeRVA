@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.strictmode.SqliteObjectLeakedViolation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DBHelper extends SQLiteOpenHelper {
     //Database
@@ -43,12 +45,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL12 = "min_team";
     public static final String CHAL_COL13 = "max_team";
     public static final String CHAL_COL14 = "log_range";
+    public static final String CHAL_COL15 = "log_unit";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
     public static final String TEAM_COL1 = "team_name";
     public static final String TEAM_COL2 = "challenge_id";
-    public static final String TEAM_COL3 = "user";
+    public static final String TEAM_COL3 = "username";
 
     //Leaderboard Table
     public static final String TABLE_LEADERBOARD = "LeaderBoard";
@@ -109,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "birth_date DATE NOT NULL, " +
                 "join_date DATE NOT NULL, " +
                 "email TEXT NOT NULL, " +
-                "challenges_count INTEGER, " +
+                "challenges_count INTEGER NOT NULL, " +
                 "private TEXT NOT NULL, " +
                 "type TEXT NOT NULL" +
                 ") ");
@@ -129,9 +132,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "availability TEXT NOT NULL, " +
                 "health_hazards TEXT, " +
                 "description TEXT, " +
-                "min_team TEXT NOT NULL," +
-                "max_team TEXT NOT NULL," +
-                "log_range TEXT NOT NULL," +
+                "min_team INTEGER NOT NULL, " +
+                "max_team INTEGER NOT NULL, " +
+                "log_range INTEGER NOT NULL, " +
+                "log_unit TEXT NOT NULL, " +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
                 ") ");
 
@@ -141,10 +145,10 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TEAM + "(" +
                 "team_name TEXT NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
-                "user TEXT, " +
-                "PRIMARY KEY(team_name, challenge_id), " +
+                "username TEXT, " +
+                "PRIMARY KEY(team_name, challenge_id, username), " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE, " +
-                "FOREIGN KEY(user) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
+                "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
                 ") ");
 
         //Leaderboard table
@@ -179,7 +183,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "username TEXT NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
                 "log_date DATE NOT NULL, " +
-                "log_value INTEGER NOT NULL, " +
+                "log_value REAL NOT NULL, " +
                 "PRIMARY KEY(username, challenge_id, log_date), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
@@ -284,7 +288,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertChallenge(String name, String coach,
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
-                                   String hazards, String description, int minTeam, int maxTeam, int logRange) {
+                                   String hazards, String description, int minTeam,
+                                   int maxTeam, int logRange, String logUnit) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -300,6 +305,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL12, minTeam);
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
+        cv.put(CHAL_COL15, logUnit);
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
@@ -394,7 +400,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertLog(String username, int challengeID, String date, int value) {
+    public boolean insertLog(String username, int challengeID, String date, double value) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LOG_COL1, username);
@@ -542,21 +548,20 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param oldChallengeID: challenge id of the row you want to change (paired with team id)
      * @param newTeamName: the Team id you want to replace the old one with
      * @param newChallengeID: the challenge id you want to replace the old one with
-     * @param user
      * @return false if update fails, true if data is updated successfully
      *
      * This method updates the data of a row at the specified Team_id and
      * challenge_id pairing. Team_id and challenge_id must already exist
      * or else update will fail.
      */
-    public boolean updateTeam(String oldTeamName, int oldChallengeID, String newTeamName, int newChallengeID, String user) {
+    public boolean updateTeam(String oldTeamName, int oldChallengeID, String newTeamName, int newChallengeID, String oldUser, String newUser) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(TEAM_COL1, newTeamName);
         cv.put(TEAM_COL2, newChallengeID);
-        cv.put(TEAM_COL3, user);
+        cv.put(TEAM_COL3, newUser);
 
-        long result = db.update(TABLE_TEAM, cv, "team_name = ? AND challenge_id = ?", new String[]{oldTeamName, Integer.valueOf(oldChallengeID).toString()});
+        long result = db.update(TABLE_TEAM, cv, "team_name = ? AND challenge_id = ? AND username = ?", new String[]{oldTeamName, Integer.valueOf(oldChallengeID).toString(), oldUser});
         if (result > 0) {
             return true;
         } else {
@@ -715,9 +720,9 @@ public class DBHelper extends SQLiteOpenHelper {
      * Deletes the row containing the specified team id
      * and challenge_id from the team table
      */
-    public int deleteTeam(String teamName, int challengeID) {
+    public int deleteTeam(String teamName, int challengeID, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_TEAM, "team_name = ? AND challenge_id = ?", new String[]{teamName, Integer.valueOf(challengeID).toString()});
+        return db.delete(TABLE_TEAM, "team_name = ? AND challenge_id = ? AND username = ?", new String[]{teamName, Integer.valueOf(challengeID).toString(), username});
     }
 
     /*******************************************************
@@ -942,6 +947,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getTeamData(String column1, String value1, String column2, String value2)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column1 + " = ? AND " + column2 + " = ?",new String[] {value1,value2});
+        return cursor;
+    }
+
+    public Cursor getTeamData(String column, String value, String groupBy)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column + " = ? GROUP BY " + groupBy,new String[] {value});
+        return cursor;
+    }
+
     /**********************************************************************
      * getParticipatesData(String column, String value)
      * @param column:the column you wish to compare value to
@@ -975,6 +994,31 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ?",new String[] {username,String.valueOf(challengeID)});
         return cursor;
+    }
+
+    public Cursor getLogData(String username, int challengeID, String date)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ? AND log_date = ?",new String[] {username,String.valueOf(challengeID),date});
+        return cursor;
+    }
+
+    public boolean hasLoggedToday(String username, int challengeID)
+    {
+        //Gets the current date, for determining the date the user signed up
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String currentDate = sdf.format(date);
+
+        Cursor cursor = getLogData(username,challengeID,currentDate);
+        if (cursor.getCount() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

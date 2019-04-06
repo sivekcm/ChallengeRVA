@@ -35,6 +35,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
     Spinner challengeTypeListSpinner;
     Spinner registrationTypeListSpinner;
+    Spinner logUnitSpinner;
 
 
     EditText challengeNameEditText;
@@ -74,6 +75,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
         challengeTypeListSpinner = findViewById(R.id.ChallengeTypeSpinner);
         registrationTypeListSpinner = findViewById(R.id.registrationTypeSpinner);
+        logUnitSpinner = findViewById(R.id.measurementTypeSpinner);
 
         challengeNameEditText = findViewById(R.id.challengeNameEditText);
         challengeDescriptionEditText = findViewById(R.id.challengeDescriptionEditText);
@@ -108,6 +110,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 int minTeam = Integer.parseInt(minTeamEditText.getText().toString());
                 int maxTeam = Integer.parseInt(maxTeamEditText.getText().toString());
                 int logRange = Integer.parseInt(logRangeEditText.getText().toString());
+                String logUnit = logUnitSpinner.getSelectedItem().toString();
 
                 //Execute onRatingBar
                 addListenerOnRatingBar();
@@ -152,7 +155,8 @@ public class ChallengeActivity extends AppCompatActivity{
                                     description,
                                     minTeam,
                                     maxTeam,
-                                    logRange);
+                                    logRange,
+                                    logUnit);
 
                     if(success){
                             Toast.makeText(ChallengeActivity.this,

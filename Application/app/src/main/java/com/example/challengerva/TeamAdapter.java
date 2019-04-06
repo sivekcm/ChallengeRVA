@@ -25,9 +25,9 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
         this.listener = listen;
     }
 
-    public TeamAdapter(Context contex, Cursor cursor)
+    public TeamAdapter(Context context, Cursor cursor)
     {
-        this.context = contex;
+        this.context = context;
         this.cursor = cursor;
     }
 

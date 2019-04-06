@@ -69,11 +69,12 @@ public class LoginActivity extends AppCompatActivity {
                 {
                     Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_LONG).show();
                     db.insertParticipates("jacobobeast",10,"2019-03-29","N");
-                    Log.d("LoginActivity","" + db.insertChallenge("fourth challenge","jonathan","2019-03-26","2019-04-26",
-                            "cardio",2,"team","Y","none","this is the desc",
-                            3,4,2));
+//                    Log.d("LoginActivity","" + db.insertChallenge("fourth challenge","jonathan","2019-03-26","2019-04-26",
+//                            "cardio",2,"team","Y","none","this is the desc",
+//                            3,4,2));
                     db.insertTeam("team 2", 1, "username");
                     User user = new User(userData);
+                    user.setLoggedUser(true);
                     Log.d("LoginActivity",user.getUsername());
                     Intent intent = null;
                     if (user.getAccountType().equals(User.UserType.ATHLETE))

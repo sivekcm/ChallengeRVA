@@ -15,6 +15,7 @@ public class User implements Parcelable {
     protected boolean isPrivate;
     protected UserType accountType;
     protected int challengesCompleted;
+    public boolean isLoggedUser;
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
@@ -74,6 +75,7 @@ public class User implements Parcelable {
         isPrivate = in.readByte() != 0;
         accountType = UserType.valueOf(in.readString());
         challengesCompleted = in.readInt();
+        isLoggedUser = in.readByte() != 0;
     }
 
     @Override
@@ -93,6 +95,7 @@ public class User implements Parcelable {
         dest.writeByte((byte) (isPrivate ? 1 : 0));
         dest.writeString(this.accountType.name());
         dest.writeInt(challengesCompleted);
+        dest.writeByte((byte) (isLoggedUser ? 1 : 0));
     }
 
 
@@ -310,6 +313,16 @@ public class User implements Parcelable {
     public int getChallengesCompleted()
     {
         return this.challengesCompleted;
+    }
+
+    public void setLoggedUser(boolean isLogged)
+    {
+        this.isLoggedUser = isLogged;
+    }
+
+    public boolean isLoggedUser()
+    {
+        return isLoggedUser;
     }
 
 

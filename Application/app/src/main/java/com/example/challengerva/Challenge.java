@@ -22,6 +22,7 @@ public class Challenge implements Parcelable {
     private int minTeam;
     private int maxTeam;
     private int logRange;
+    private String logUnit;
 
     public static final Creator<Challenge> CREATOR = new Creator<Challenge>() {
         @Override
@@ -46,9 +47,12 @@ public class Challenge implements Parcelable {
         this.difficulty = in.readInt();
         this.team = in.readByte() != 0;
         this.open = in.readByte() != 0;
+        this.healthHazards = in.readString();
+        this.challengeDescription = in.readString();
         this.minTeam = in.readInt();
         this.maxTeam = in.readInt();
         this.logRange = in.readInt();
+        this.logUnit = in.readString();
 
     }
 
@@ -84,6 +88,7 @@ public class Challenge implements Parcelable {
         this.minTeam = cursor.getInt(11);
         this.maxTeam = cursor.getInt(12);
         this.logRange = cursor.getInt(13);
+        this.logUnit = cursor.getString(14);
     }
 
 
@@ -191,6 +196,11 @@ public class Challenge implements Parcelable {
 
     public int getLogRange() {
         return logRange;
+    }
+
+    public String getLogUnit()
+    {
+        return logUnit;
     }
 
     /*
@@ -420,6 +430,7 @@ public class Challenge implements Parcelable {
         dest.writeInt(this.minTeam);
         dest.writeInt(this.maxTeam);
         dest.writeInt(this.logRange);
+        dest.writeString(this.logUnit);
 
     }
 }

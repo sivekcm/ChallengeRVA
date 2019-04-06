@@ -63,13 +63,12 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
                 boolean partSuccess = db.insertParticipates(user.getUsername(),challenge.getChallengeID(),currentDate,"N");
                 if (teamSuccess && partSuccess)
                 {
-                    Toast.makeText(AthleteCreateTeamActivity.this,"Team Registration Successful",Toast.LENGTH_LONG);
+                    Toast.makeText(AthleteCreateTeamActivity.this,"Team Registration Successful",Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    Toast.makeText(AthleteCreateTeamActivity.this,"Something went wrong",Toast.LENGTH_LONG);
+                    Toast.makeText(AthleteCreateTeamActivity.this,"Something went wrong",Toast.LENGTH_LONG).show();
                 }
-
                 Intent intent = new Intent(AthleteCreateTeamActivity.this,ViewChallengeActivity.class);
                 intent.putExtra("User Object", user);
                 intent.putExtra("challenge", challenge);
