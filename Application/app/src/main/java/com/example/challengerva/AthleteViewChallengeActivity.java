@@ -33,7 +33,7 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String fromActivity = intent.getStringExtra("activity");
-        if (fromActivity.equals("AthleteHomeActivity")) {
+        if (fromActivity.equals("AthleteHomeActivity") || fromActivity.equals("LogChallengeActivity")) {
             user = intent.getParcelableExtra("User Object");
         }
         else if (fromActivity.equals("OtherUserProfileActivity"))

@@ -165,6 +165,18 @@ public class ViewChallengeActivity extends AppCompatActivity{
             }
         });
 
+        logBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toLogIntent = new Intent(ViewChallengeActivity.this,LogChallengeActivity.class);
+                toLogIntent.putExtra("activity", "ViewChallengeActivity");
+                toLogIntent.putExtra("User Object", user);
+                toLogIntent.putExtra("challenge", challenge);
+
+                startActivity(toLogIntent);
+            }
+        });
+
 
 
         //Check for availability

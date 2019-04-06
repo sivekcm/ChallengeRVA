@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.strictmode.SqliteObjectLeakedViolation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DBHelper extends SQLiteOpenHelper {
     //Database
@@ -181,7 +183,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "username TEXT NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
                 "log_date DATE NOT NULL, " +
-                "log_value INTEGER NOT NULL, " +
+                "log_value REAL NOT NULL, " +
                 "PRIMARY KEY(username, challenge_id, log_date), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
@@ -398,7 +400,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertLog(String username, int challengeID, String date, int value) {
+    public boolean insertLog(String username, int challengeID, String date, double value) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LOG_COL1, username);
@@ -546,7 +548,6 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param oldChallengeID: challenge id of the row you want to change (paired with team id)
      * @param newTeamName: the Team id you want to replace the old one with
      * @param newChallengeID: the challenge id you want to replace the old one with
-     * @param user
      * @return false if update fails, true if data is updated successfully
      *
      * This method updates the data of a row at the specified Team_id and
@@ -993,6 +994,31 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ?",new String[] {username,String.valueOf(challengeID)});
         return cursor;
+    }
+
+    public Cursor getLogData(String username, int challengeID, String date)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ? AND log_date = ?",new String[] {username,String.valueOf(challengeID),date});
+        return cursor;
+    }
+
+    public boolean hasLoggedToday(String username, int challengeID)
+    {
+        //Gets the current date, for determining the date the user signed up
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String currentDate = sdf.format(date);
+
+        Cursor cursor = getLogData(username,challengeID,currentDate);
+        if (cursor.getCount() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

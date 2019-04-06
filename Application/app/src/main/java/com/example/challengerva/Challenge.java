@@ -44,6 +44,8 @@ public class Challenge implements Parcelable {
         this.difficulty = in.readInt();
         this.team = in.readByte() != 0;
         this.open = in.readByte() != 0;
+        this.healthHazards = in.readString();
+        this.challengeDescription = in.readString();
         this.minTeam = in.readInt();
         this.maxTeam = in.readInt();
         this.logRange = in.readInt();
@@ -191,6 +193,11 @@ public class Challenge implements Parcelable {
 
     public int getLogRange() {
         return logRange;
+    }
+
+    public String getLogUnit()
+    {
+        return logUnit;
     }
 
     /*

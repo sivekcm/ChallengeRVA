@@ -77,22 +77,32 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
         viewHolder.endDateTextView.setText(endDate);
         if (this.user.isLoggedUser())
         {
-            final Intent intent = new Intent(this.context, LogChallengeActivity.class);
-            viewHolder.logBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DBHelper db = new DBHelper(context);
-                    Cursor cursor = db.getChallengeData("name",viewHolder.challengeNameTextView.getText().toString());
-                    cursor.moveToNext();
-                    Challenge challenge = new Challenge(cursor);
-                    intent.putExtra("activity", "AthleteViewChallengeActivity");
-                    intent.putExtra("User Object", user);
-                    intent.putExtra("challenge", challenge);
+            final DBHelper db = new DBHelper(context);
+            final Cursor cursor = db.getChallengeData("name",viewHolder.challengeNameTextView.getText().toString());
+            cursor.moveToNext();
+            boolean hasLogged = db.hasLoggedToday(user.getUsername(),cursor.getInt(0));
+
+            if (!hasLogged) {
+                viewHolder.logBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(context, LogChallengeActivity.class);
+                        Challenge challenge = new Challenge(cursor);
+                        intent.putExtra("activity", "AthleteViewChallengeActivity");
+                        intent.putExtra("User Object", user);
+                        intent.putExtra("challenge", challenge);
 
 
-                    context.startActivity(intent);
-                }
-            });
+                        context.startActivity(intent);
+                    }
+                });
+            }
+            else
+            {
+                viewHolder.logBtn.setEnabled(false);
+                viewHolder.logBtn.setClickable(false);
+                viewHolder.logBtn.setBackgroundColor(context.getResources().getColor(R.color.Orange));
+            }
         }
         else
         {
