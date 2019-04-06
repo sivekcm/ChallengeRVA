@@ -42,6 +42,7 @@ public class AthleteHomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent challengeIntent = new Intent(AthleteHomeActivity.this,AthleteViewChallengeActivity.class);
                 challengeIntent.putExtra("User Object", user);
+                challengeIntent.putExtra("activity","AthleteHomeActivity");
                 startActivity(challengeIntent);
             }
         });

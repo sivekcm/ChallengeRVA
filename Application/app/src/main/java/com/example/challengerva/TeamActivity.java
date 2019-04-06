@@ -98,6 +98,7 @@ public class TeamActivity extends AppCompatActivity {
                 Cursor otherUserCursor = db.getUserData("username",otherUsername);
                 User otherUser = new User(otherUserCursor);
                 intent.putExtra("other user",otherUser);
+                intent.putExtra("User Object", user);
                 startActivity(intent);
             }
         });

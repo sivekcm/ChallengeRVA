@@ -109,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "birth_date DATE NOT NULL, " +
                 "join_date DATE NOT NULL, " +
                 "email TEXT NOT NULL, " +
-                "challenges_count INTEGER, " +
+                "challenges_count INTEGER NOT NULL, " +
                 "private TEXT NOT NULL, " +
                 "type TEXT NOT NULL" +
                 ") ");

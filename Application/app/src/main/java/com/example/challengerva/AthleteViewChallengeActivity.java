@@ -20,6 +20,7 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
     Button currentBtn;
     Button previousBtn;
     User user;
+    User originUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,15 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
         previousBtn = findViewById(R.id.athleteChallengesPreviousBtn);
 
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("User Object");
+        String fromActivity = intent.getStringExtra("activity");
+        if (fromActivity.equals("AthleteHomeActivity")) {
+            user = intent.getParcelableExtra("User Object");
+        }
+        else if (fromActivity.equals("OtherUserProfileActivity"))
+        {
+            user = intent.getParcelableExtra("other user");
+            originUser = intent.getParcelableExtra("User Object");
+        }
 
         currentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
