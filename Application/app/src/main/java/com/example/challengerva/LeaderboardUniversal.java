@@ -35,9 +35,11 @@ public class LeaderboardUniversal extends AppCompatActivity {
         leaderboard_user = findViewById(R.id.leaderboard_user);
         leaderboard_complete_count = findViewById(R.id.leaderboard_complete_count);
 
-        rank = Integer.parseInt(db.getUniversalLeaderboardData("1").toString());
-        user_count = Integer.parseInt(db.getUniversalLeaderboardData("3").toString());
-        username = db.getUniversalLeaderboardData("2").toString();
+        rank = Integer.parseInt(db.getUniversalLeaderBoardData("1").toString());
+        user_count = Integer.parseInt(db.getUniversalLeaderBoardData("3").toString());
+        username = db.getUniversalLeaderBoardData("2").toString();
+
+
 
 
     }
