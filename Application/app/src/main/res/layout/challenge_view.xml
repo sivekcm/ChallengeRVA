@@ -147,7 +147,7 @@
                 android:layout_weight="1"
                 android:id="@+id/challengeLogBtn"
                 android:text="Log"
-                android:background="@color/Orange"/>
+                android:background="@drawable/btn_design_orange"/>
 
             <Button
                 android:layout_width="fill_parent"
@@ -155,7 +155,7 @@
                 android:layout_weight="1"
                 android:id="@+id/challengeLeaderboardBtn"
                 android:text="Leaderboard"
-                android:background="@color/LightBlue"/>
+                android:background="@drawable/btn_design_blue"/>
 
             <Button
                 android:layout_width="fill_parent"
@@ -163,7 +163,7 @@
                 android:layout_weight="1"
                 android:id="@+id/viewTeamBtn"
                 android:text="Your Team"
-                android:background="@color/Orange"/>
+                android:background="@drawable/btn_design_orange"/>
 
         </LinearLayout>
 

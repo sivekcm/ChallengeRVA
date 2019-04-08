@@ -192,7 +192,7 @@
             android:id="@+id/submitChallengeBtn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@color/LightBlue"
+            android:background="@drawable/btn_design_yellow"
             android:text="@string/submitChallengeButton">
 
         </Button>
