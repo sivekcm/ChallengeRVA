@@ -16,7 +16,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="Search Challenges"
-        android:background="@color/Orange"
+        android:background="@drawable/btn_design_orange"
+        android:shap
         app:layout_constraintEnd_toStartOf="@+id/athleteHomeYourChallengeBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +28,7 @@
         android:layout_height="163dp"
         android:layout_marginTop="8dp"
         android:text="Profile"
-        android:background="@color/LightBlue"
+        android:background="@drawable/btn_design_blue"
         app:layout_constraintEnd_toEndOf="@+id/athleteHomeSearchChallengeBtn"
         app:layout_constraintStart_toStartOf="@+id/athleteHomeSearchChallengeBtn"
         app:layout_constraintTop_toBottomOf="@+id/athleteHomeSearchChallengeBtn" />
@@ -38,7 +39,7 @@
         android:layout_height="163dp"
         android:layout_marginTop="8dp"
         android:text="Leaderboards"
-        android:background="@color/Orange"
+        android:background="@drawable/btn_design_orange"
         app:layout_constraintEnd_toEndOf="@+id/athleteHomeProfileBtn"
         app:layout_constraintStart_toStartOf="@+id/athleteHomeProfileBtn"
         app:layout_constraintTop_toBottomOf="@+id/athleteHomeProfileBtn" />
@@ -49,7 +50,7 @@
         android:layout_height="163dp"
         android:layout_marginTop="8dp"
         android:text="Log Out"
-        android:background="@color/Orange"
+        android:background="@drawable/btn_design_orange"
         app:layout_constraintEnd_toEndOf="@+id/athleteHomeYourChallengeBtn"
         app:layout_constraintStart_toStartOf="@+id/athleteHomeYourChallengeBtn"
         app:layout_constraintTop_toBottomOf="@+id/athleteHomeYourChallengeBtn" />
@@ -62,7 +63,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="Your CHallenges"
-        android:background="@color/LightBlue"
+        android:background="@drawable/btn_design_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
