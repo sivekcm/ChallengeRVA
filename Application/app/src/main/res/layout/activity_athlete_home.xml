@@ -17,7 +17,6 @@
         android:layout_marginRight="8dp"
         android:text="Search Challenges"
         android:background="@drawable/btn_design_orange"
-        android:shap
         app:layout_constraintEnd_toStartOf="@+id/athleteHomeYourChallengeBtn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

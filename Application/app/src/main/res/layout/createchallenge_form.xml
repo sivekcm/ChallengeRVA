@@ -186,6 +186,28 @@
 
         </LinearLayout>
 
+        <RadioGroup
+            android:id="@+id/competitionType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.569"
+            >
+
+        <RadioButton
+            android:id="@+id/competing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Competing" />
+
+        <RadioButton
+            android:id="@+id/noncompeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Non-competing" />
+        </RadioGroup>
+
 
         <!--Button submission below-->
         <Button
