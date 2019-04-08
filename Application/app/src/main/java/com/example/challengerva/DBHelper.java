@@ -46,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL13 = "max_team";
     public static final String CHAL_COL14 = "log_range";
     public static final String CHAL_COL15 = "log_unit";
+    public static final String CHAL_COL16 = "competitionType";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -58,6 +59,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
     public static final String LB_COL3 = "challenges_count";
+
+    //Challenge specific LeaderBoard Table
+    public static final String TABLE_LEADERBOARD_CHALLENGE = "Universal LeaderBoard";
+    public static final String LBCHALL_COL1 = "rank";
+    public static final String LBCHALL_COL2 = "username";
+    public static final String LBCHALL_COL3 = "challenges_weight";
 
     //Participates Table
     public static final String TABLE_PARTICIPATES = "Participates";
@@ -136,6 +143,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "max_team INTEGER NOT NULL, " +
                 "log_range INTEGER NOT NULL, " +
                 "log_unit TEXT NOT NULL, " +
+                "competition_type TEXT NOT NULL, " +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
                 ") ");
 
@@ -162,6 +170,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenges_count) REFERENCES " + TABLE_USER + "(challenges_count) ON DELETE CASCADE" +
                 ") ");
+
+        //Challenge-specific LeaderBoard table
+        //Stores leaderBoard data for specified challenge
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD_CHALLENGE + "(" +
+                    "rank INTEGER NOT NULL, " +
+                    "username TEXT NOT NULL " +
+                    "challenges_weight DOUBLE NOT NULL, " +
+                    "PRIMARY KEY(rank, username), " +
+                    "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
+                    "FOREIGN KEY(challenges_weight) REFERENCES " + TABLE_USER + "(challenges_weight) ON DELETE CASCADE" +
+                    ") ");
 
         //Participates table
         //Stores data of what challenges a user is participating in
@@ -367,6 +386,23 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public boolean insertChallengeLeaderBoard(int rank, String username, int challengesCount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(LB_COL1, rank);
+        cv.put(LB_COL2, username);
+        cv.put(LB_COL3, challengesCount);
+
+        long num = db.insert(TABLE_LEADERBOARD, null, cv);
+        if (num == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
 
     /********************************************************************************
      * insertParticipates method
