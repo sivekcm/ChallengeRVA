@@ -296,6 +296,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param availability: if challenge is open or closed
      * @param hazards: possible health hazards
      * @param description: description of challenge
+     * @param competitionType: competing or non-competing challenge
      * @return false if insert fails, true if data is inserted successfully
      *
      * This method inserts a new data entry (a full row) into the challenge
@@ -308,7 +309,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
                                    String hazards, String description, int minTeam,
-                                   int maxTeam, int logRange, String logUnit) {
+                                   int maxTeam, int logRange, String logUnit, String competitionType) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -325,6 +326,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
         cv.put(CHAL_COL15, logUnit);
+        cv.put(CHAL_COL16, competitionType);
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
