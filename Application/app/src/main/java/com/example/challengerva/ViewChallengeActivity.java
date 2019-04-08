@@ -71,7 +71,6 @@ public class ViewChallengeActivity extends AppCompatActivity{
         user = intent.getParcelableExtra("User Object");
 
         //instantiate DBHelper for database methods
-        //final DBHelper challenge = new DBHelper(ViewChallengeActivity.this);
 
         challengeNameTextView = findViewById(R.id.view_challengeName);
         coachNameTextView = findViewById(R.id.view_coachName);

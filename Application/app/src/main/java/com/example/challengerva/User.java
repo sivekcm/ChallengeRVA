@@ -245,6 +245,7 @@ public class User implements Parcelable {
         return false;
     }
 
+
     /*
     Sets the Username to something new
     @Param newUsername the new Username

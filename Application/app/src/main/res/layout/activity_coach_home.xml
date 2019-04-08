@@ -14,6 +14,7 @@
         android:layout_marginLeft="24dp"
         android:layout_marginTop="68dp"
         android:text="@string/home_coach_your_challenges"
+        android:background="@color/Orange"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,19 +28,22 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="@string/coach_home_profile"
+        android:background="@color/LightBlue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/coachHomeYourChallengesBtn"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/coachHomeLeaderboardBtn"
-        android:layout_width="181dp"
-        android:layout_height="163dp"
+        android:layout_width="178dp"
+        android:layout_height="164dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:text="@string/coach_home_leaderboard"
+        android:background="@color/LightBlue"
         app:layout_constraintEnd_toEndOf="@+id/coachHomeYourChallengesBtn"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/coachHomeYourChallengesBtn"
         app:layout_constraintTop_toBottomOf="@+id/coachHomeYourChallengesBtn" />
 
@@ -51,7 +55,9 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/logout"
+        android:background="@color/Orange"
         app:layout_constraintEnd_toEndOf="@+id/coachHomeProfileBtn"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/coachHomeProfileBtn"
         app:layout_constraintTop_toBottomOf="@+id/coachHomeProfileBtn" />
 </android.support.constraint.ConstraintLayout>
