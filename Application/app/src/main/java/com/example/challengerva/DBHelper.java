@@ -53,7 +53,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TEAM_COL2 = "challenge_id";
     public static final String TEAM_COL3 = "username";
 
-    //Universal Leaderboard Table
+    //Universal LeaderBoard Table
     public static final String TABLE_LEADERBOARD = "Universal LeaderBoard";
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
@@ -151,8 +151,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
                 ") ");
 
-        //Universal Leaderboard table
-        //Stores leaderboard data
+        //Universal LeaderBoard table
+        //Stores leaderBoard data
         //unique rank and username pairing
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD + "(" +
                 "rank INTEGER NOT NULL, " +
@@ -353,7 +353,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * table. No two data entries may have the same rank and username pairing.
      * Only challengesComp can be null
      */
-    public boolean insertUniversalLeaderboard(int rank, String username, int challengesCount) {
+    public boolean insertUniversalLeaderBoard(int rank, String username, int challengesCount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LB_COL1, rank);
@@ -726,7 +726,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /*******************************************************
-     * deleteLeaderBoard method
+     * deleteLeaderoard method
      * @param rank: rank at the row to be deleted
      * @param username: username at the row to be deleted
      * @return the number of rows that were deleted
@@ -989,13 +989,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
     /**********************************************************************
-     * getUniversalLeaderboardsData(String column)
+     * getUniversalLeaderBoardsData(String column)
      * @param col:the column you wish to compare value to
      * @return A cursor object containing the Team of the entire column specified
      */
-    public Cursor getUniversalLeaderboardData(String col){
+    public Cursor getUniversalLeaderBoardData(String col){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Universal Leaderboard WHERE col", new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM Universal LeaderBoard WHERE col", new String[]{});
         return cursor;
     }
 
