@@ -62,6 +62,7 @@ public class ForgotUserActivity extends AppCompatActivity {
                     Intent changeUsernameIntent = new Intent(getApplicationContext(), ChangeUsernameActivity.class);
                     changeUsernameIntent.putExtra("userEmail", email);
                     startActivity(changeUsernameIntent);
+                    finish();
                     //sendEmail();
                 }
             }

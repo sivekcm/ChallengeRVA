@@ -44,7 +44,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
     boolean isTeam;
 
     Button registerChallengeButton,
-           logBtn,
+           previousLogsBtn,
            leaderboardBtn,
            viewTeamBtn;
 
@@ -84,7 +84,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
         maxTeamTextView = findViewById(R.id.view_maxTeam);
         availabilityTextView = findViewById(R.id.view_Availability);
         registerChallengeButton = findViewById(R.id.registerChallengeBtn);
-        logBtn = findViewById(R.id.challengeLogBtn);
+        previousLogsBtn = findViewById(R.id.challengeLogBtn);
         leaderboardBtn = findViewById(R.id.challengeLeaderboardBtn);
         viewTeamBtn = findViewById(R.id.viewTeamBtn);
 
@@ -105,6 +105,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
             if (isTeam)
             {
                 Cursor getTeamCursor = db.getTeamData("username",user.getUsername(),"challenge_id",String.valueOf(challenge.getChallengeID()));
+                getTeamCursor.moveToNext();
                 team = new Team(getTeamCursor);
             }
             else
@@ -113,7 +114,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
             }
         }
         else {
-            logBtn.setVisibility(View.GONE);
+            previousLogsBtn.setVisibility(View.GONE);
             leaderboardBtn.setVisibility(View.GONE);
             viewTeamBtn.setVisibility(View.GONE);
         }
@@ -148,6 +149,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
 
                     intent = new Intent(ViewChallengeActivity.this, ChallengeSearchActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
             }
@@ -165,15 +167,16 @@ public class ViewChallengeActivity extends AppCompatActivity{
             }
         });
 
-        logBtn.setOnClickListener(new View.OnClickListener() {
+        previousLogsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent toLogIntent = new Intent(ViewChallengeActivity.this,LogChallengeActivity.class);
-                toLogIntent.putExtra("activity", "ViewChallengeActivity");
-                toLogIntent.putExtra("User Object", user);
-                toLogIntent.putExtra("challenge", challenge);
+                Intent toLogViewIntent = new Intent(ViewChallengeActivity.this,LogViewActivity.class);
+                toLogViewIntent.putExtra("activity", "ViewChallengeActivity");
+                toLogViewIntent.putExtra("User Object", user);
+                toLogViewIntent.putExtra("challenge", challenge);
+                toLogViewIntent.putExtra("team", team);
 
-                startActivity(toLogIntent);
+                startActivity(toLogViewIntent);
             }
         });
 

@@ -58,6 +58,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     Intent changePasswordIntent = new Intent(getApplicationContext(), ChangePasswordActivity.class);
                     changePasswordIntent.putExtra("userEmail", email);
                     startActivity(changePasswordIntent);
+                    finish();
                     //sendEmail();
                     //AlertMessage.alertMessage("Success", "Email sent", thisContext);
 

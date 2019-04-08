@@ -28,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_COL8 = "challenges_count";
     public static final String USER_COL9 = "private";
     public static final String USER_COL10 = "type";
+    public static final String USER_COL11 = "image_data";
 
     //Challenge Table
     public static final String TABLE_CHALLENGE = "Challenge";
@@ -114,7 +115,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "email TEXT NOT NULL, " +
                 "challenges_count INTEGER NOT NULL, " +
                 "private TEXT NOT NULL, " +
-                "type TEXT NOT NULL" +
+                "type TEXT NOT NULL, " +
+                "image_data BLOB" +
                 ") ");
 
         //Challenge table
@@ -243,7 +245,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertUser(String username, String password, String fName,
                               String lName, String birthDate, String joinDate,
                               String email, int complChall, String priv,
-                              String type) {
+                              String type, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_COL1, username);
@@ -256,6 +258,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(USER_COL8, complChall);
         cv.put(USER_COL9, priv);
         cv.put(USER_COL10, type);
+        cv.put(USER_COL11, image);
 
         long num = db.insert(TABLE_USER, null, cv);
         if (num == -1) {
@@ -455,7 +458,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean updateUser(String oldUsername, String newUsername, String password, String fName,
                               String lName, String birthDate, String joinDate,
                               String email, int complChall, String priv,
-                              String type) {
+                              String type, byte[] image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_COL1, newUsername);
@@ -468,6 +471,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(USER_COL8, complChall);
         cv.put(USER_COL9, priv);
         cv.put(USER_COL10, type);
+        cv.put(USER_COL11, image);
 
         long result = db.update(TABLE_USER, cv, "username = ?", new String[]{oldUsername});
         if (result > 0) {
@@ -493,7 +497,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return updateUser((String) parameterArray[0], (String) parameterArray[1], (String) parameterArray[2], (String) parameterArray[3],
                 (String) parameterArray[4], (String) parameterArray[5], (String) parameterArray[6], (String) parameterArray[7],
-                (int) parameterArray[8], (String) parameterArray[9], (String) parameterArray[10]);
+                (int) parameterArray[8], (String) parameterArray[9], (String) parameterArray[10], (byte[]) parameterArray[11]);
     }
 
     /************************************************************************
@@ -934,6 +938,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getUserPassword(String username)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT password FROM User WHERE username = ?", new String[] {username});
+        return  cursor;
+    }
+
+    public Cursor getBitmapByUsername(String username){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT image_data FROM User WHERE username = ?", new String[] {username});
+        return cursor;
+    }
+
     /**********************************************************************
      * getTeamData(String column, String value)
      * @param column:the column you wish to compare value to
@@ -1000,6 +1017,13 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ? AND log_date = ?",new String[] {username,String.valueOf(challengeID),date});
+        return cursor;
+    }
+
+    public Cursor getLogDataInnerJoin(String teamName, int challengeID, String username)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT log.log_date, log.log_value, challenge.log_unit FROM log, team INNER JOIN challenge ON log.challenge_id = challenge.challenge_id WHERE team.team_name = ? AND team.challenge_id = ? AND log.username = ? GROUP BY log_date ORDER BY log_date",new String[] {teamName, String.valueOf(challengeID), username});
         return cursor;
     }
 
