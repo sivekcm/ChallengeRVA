@@ -15,6 +15,8 @@ public class User implements Parcelable {
     protected boolean isPrivate;
     protected UserType accountType;
     protected int challengesCompleted;
+    protected byte[] image;
+
     public boolean isLoggedUser;
 
     public static final Creator<User> CREATOR = new Creator<User>() {
@@ -62,6 +64,7 @@ public class User implements Parcelable {
         else
             this.accountType = UserType.ATHLETE;
 
+        this.image = userCursor.getBlob(10);
     }
 
     protected User(Parcel in) {
@@ -76,6 +79,8 @@ public class User implements Parcelable {
         accountType = UserType.valueOf(in.readString());
         challengesCompleted = in.readInt();
         isLoggedUser = in.readByte() != 0;
+        image = new byte[in.readInt()];
+        in.readByteArray(image);
     }
 
     @Override
@@ -96,6 +101,8 @@ public class User implements Parcelable {
         dest.writeString(this.accountType.name());
         dest.writeInt(challengesCompleted);
         dest.writeByte((byte) (isLoggedUser ? 1 : 0));
+        dest.writeInt(image.length);
+        dest.writeByteArray(image);
     }
 
 
@@ -112,7 +119,7 @@ public class User implements Parcelable {
      */
     public Object[] getParameters()
     {
-        Object[] parameters = new Object[11];
+        Object[] parameters = new Object[12];
         parameters[0] = oldUsername;
         parameters[1] = username;
         parameters[2] = null;
@@ -128,6 +135,7 @@ public class User implements Parcelable {
         if (accountType == UserType.COACH)
             parameters[10] = "coach";
         else parameters[10] = "athlete";
+        parameters[11] = image;
         return parameters;
     }
 
@@ -326,6 +334,12 @@ public class User implements Parcelable {
         return isLoggedUser;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
 
-
+    public void setImage(byte[] newImage)
+    {
+        this.image = newImage;
+    }
 }

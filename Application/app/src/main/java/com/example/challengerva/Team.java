@@ -42,7 +42,6 @@ public class Team implements Parcelable {
     }
 
     public Team(Cursor curosr) {
-        curosr.moveToNext();
         this.name = curosr.getString(0);
         this.challengeID = curosr.getInt(1);
         this.numOfUsers = curosr.getCount();

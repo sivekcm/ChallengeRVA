@@ -55,6 +55,7 @@ public class CoachHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent logoutIntent = new Intent(CoachHomeActivity.this,LoginActivity.class);
+                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(logoutIntent);
             }
         });
