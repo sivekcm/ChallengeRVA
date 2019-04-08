@@ -55,11 +55,14 @@ public class LogParentAdapter extends RecyclerView.Adapter<LogParentAdapter.LogP
         {
             return;
         }
-
+        db = new DBHelper(this.context);
         String username = cursorParent.getString(2);
+        Cursor imageCursor = db.getBitmapByUsername(username);
+        imageCursor.moveToNext();
+        logParentViewHolder.logImageView.setImageBitmap(Utils.getImage(imageCursor.getBlob(0)));
         logParentViewHolder.usernameTextView.setText(username);
 
-        db = new DBHelper(this.context);
+
         cursorChild = db.getLogDataInnerJoin(cursorParent.getString(0), cursorParent.getInt(1), cursorParent.getString(2));
         logParentViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false));
         LogChildAdapter adapter = new LogChildAdapter(this.context,cursorChild,cursorParent);

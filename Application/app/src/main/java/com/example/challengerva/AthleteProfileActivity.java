@@ -117,7 +117,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
 
                     int deletedChal = db.deleteChallenge(challengeIDSt);
                     int deletedLog = db.deleteLog(username, challegeID);
-                    int deletedTeam = db.deleteTeam(teamName, challegeID);
+                    int deletedTeam = db.deleteTeam(teamName, challegeID, user.getUsername());
                     // need cursors participates, notification, and leaderboard
 
                     //int deleted participate
@@ -152,7 +152,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
 
                     int deletedChal= db.deleteChallenge(challengeIDSt);
                     int deletedLog = db.deleteLog(username, challegeID);
-                    int deletedTeam = db.deleteTeam(teamName, challegeID);
+                    int deletedTeam = db.deleteTeam(teamName, challegeID, user.getUsername());
                     // need cursors participates, notification, and leaderboard
 
                     //int deleted participate

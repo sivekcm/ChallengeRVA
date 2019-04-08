@@ -11,7 +11,7 @@ public class Utils {
     public static byte[] getBytes(Bitmap bitmap)
     {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,0,stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG,20,stream);
         return stream.toByteArray();
     }
 
