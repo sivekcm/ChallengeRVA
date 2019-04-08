@@ -80,6 +80,8 @@ public class LogChallengeActivity extends AppCompatActivity {
                         toAthleteChallengeIntent.putExtra("activity", "LogChallengeActivity");
 
                         startActivity(toAthleteChallengeIntent);
+                        setResult(RESULT_OK);
+                        finish();
                     }
                     else
                     {
