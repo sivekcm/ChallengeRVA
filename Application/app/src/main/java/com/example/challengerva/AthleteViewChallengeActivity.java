@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 public class AthleteViewChallengeActivity extends AppCompatActivity {
@@ -71,7 +72,6 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
 
     /*************************************************
      * showResults method
-     * @param cursor the cursor containing the challenges to be displayed
      *
      * Displays the challenges contained in cursor on the recylcerview
      */

@@ -1,6 +1,7 @@
 package com.example.challengerva
 
 import android.support.test.espresso.Espresso
+import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.espresso.action.ViewActions
 import android.support.test.rule.ActivityTestRule
 import android.support.test.espresso.matcher.ViewMatchers.withId
@@ -27,7 +28,7 @@ class LoginTesting {
 
     @Before
     fun setLogin() {
-        username_toBe = "username"
+        username_toBe = "athlete1"
         password_toBe = "Password1"
         wrong_password_toBe = "wrongPassword1"
 
@@ -36,16 +37,22 @@ class LoginTesting {
     @Test
     fun loginSuccess(){
         Log.e("@Test", "Performing successful login")
-        Espresso.onView(withId(R.id.userTextView)).perform(ViewActions.typeText(username_toBe!!))
-        Espresso.onView(withId(R.id.passTextView)).perform(ViewActions.typeText(password_toBe!!))
+        Espresso.onView(withId(R.id.loginUserEditText)).perform(ViewActions.typeText(username_toBe!!))
+        Espresso.onView(withId(R.id.loginUserEditText)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(withId(R.id.loginPassEditText)).perform(ViewActions.typeText(password_toBe!!))
+        Espresso.onView(withId(R.id.loginPassEditText)).perform(ViewActions.closeSoftKeyboard());
         Espresso.onView(withId(R.id.loginBtn)).perform(ViewActions.click())
     }
 
     @Test
     fun loginFailure() {
         Log.e("@Test", "Performing login failure")
-        Espresso.onView(withId(R.id.userTextView)).perform(ViewActions.typeText(username_toBe!!))
-        Espresso.onView(withId(R.id.passTextView)).perform(ViewActions.typeText(wrong_password_toBe!!))
+        Espresso.onView(withId(R.id.loginUserEditText)).perform(ViewActions.typeText(username_toBe!!))
+        Espresso.onView(withId(R.id.loginUserEditText)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(withId(R.id.loginPassEditText)).perform(ViewActions.typeText(wrong_password_toBe!!))
+        Espresso.onView(withId(R.id.loginPassEditText)).perform(ViewActions.closeSoftKeyboard());
+        Espresso.onView(withId(R.id.loginBtn)).perform(ViewActions.click())
+
     }
 
 

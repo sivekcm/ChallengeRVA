@@ -50,6 +50,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Intent intent = new Intent(ChangePasswordActivity.this, CoachActivity.class);
                     intent.putExtra("User Object", updatedUser);
                     startActivity(intent);
+                    finish();
 
 
                 }

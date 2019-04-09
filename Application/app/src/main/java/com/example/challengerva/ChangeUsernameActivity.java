@@ -46,6 +46,7 @@ public class ChangeUsernameActivity extends AppCompatActivity {
                     Intent intent = new Intent(ChangeUsernameActivity.this, CoachActivity.class);
                     intent.putExtra("User Object", updatedUser);
                     startActivity(intent);
+                    finish();
 
 
                 }
