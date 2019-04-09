@@ -311,6 +311,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param availability: if challenge is open or closed
      * @param hazards: possible health hazards
      * @param description: description of challenge
+     * @param competitionType: competing or non-competing challenge
      * @param numberRatings: The total number of ratings
      * @param totalRating: The running total rating
      * @return false if insert fails, true if data is inserted successfully
@@ -344,6 +345,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
         cv.put(CHAL_COL15, logUnit);
+        cv.put(CHAL_COL16, competitionType);
 
         cv.put(CHAL_COL16, competitionType);
         cv.put(CHAL_COL17, numberRatings);
@@ -797,16 +799,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /*******************************************************
      * deleteLeaderoard method
-     * @param rank: rank at the row to be deleted
      * @param username: username at the row to be deleted
      * @return the number of rows that were deleted
      *
      * Deletes the row containing the specified team id and username
      * from the leaderboard table
      */
-    public int deleteLeaderBoard(int rank, String username) {
+    public int deleteLeaderBoard(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_LEADERBOARD, "rank = ? AND username = ?", new String[]{Integer.valueOf(rank).toString(), username});
+        return db.delete(TABLE_LEADERBOARD, "username = ?", new String[]{username});
     }
 
     /****************************************************
