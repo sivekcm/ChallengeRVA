@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +28,10 @@ public class ViewChallengeActivity extends AppCompatActivity{
             teamTypeTextView,
             minTeamTextView,
             maxTeamTextView,
-            availabilityTextView;
+            availabilityTextView,
+            rateChallengeTxtView;
+
+    RatingBar rateChallengeBar;
 
     String challengeName,
             coachName,
@@ -87,6 +91,10 @@ public class ViewChallengeActivity extends AppCompatActivity{
         leaderboardBtn = findViewById(R.id.challengeLeaderboardBtn);
         viewTeamBtn = findViewById(R.id.viewTeamBtn);
 
+        rateChallengeTxtView = findViewById(R.id.rateChallengeTxtView);
+        rateChallengeBar = findViewById(R.id.rateChallengeBar);
+        int challengeRating = Integer.parseInt(String.valueOf((int)rateChallengeBar.getRating()));
+
         challengeID = challenge.getChallengeID();
         challengeName = challenge.getChallengeName();
         coachName = challenge.getCoachAssigned();
@@ -99,6 +107,14 @@ public class ViewChallengeActivity extends AppCompatActivity{
         maxTeam = challenge.getMaxTeam();
 
         Cursor cursor = db.getParticipatesData("username",user.getUsername(),"challenge_id",String.valueOf(challenge.getChallengeID()));
+        Cursor userChallengeCursor = db.getChallengeData("username",user.getUsername());
+
+        //if the user has completed that challenge
+        rateChallengeTxtView.setVisibility(View.VISIBLE);
+        rateChallengeBar.setVisibility(View.VISIBLE);
+
+
+
         if (cursor.getCount() == 1) {
             registerChallengeButton.setVisibility(View.GONE);
             if (isTeam)

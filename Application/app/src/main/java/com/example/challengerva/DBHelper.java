@@ -46,6 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL13 = "max_team";
     public static final String CHAL_COL14 = "log_range";
     public static final String CHAL_COL15 = "log_unit";
+    //public static final String CHAL_COL16 = "Rating";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -289,7 +290,8 @@ public class DBHelper extends SQLiteOpenHelper {
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
                                    String hazards, String description, int minTeam,
-                                   int maxTeam, int logRange, String logUnit) {
+                                   int maxTeam, int logRange, String logUnit //int rating
+                                   ) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -306,6 +308,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
         cv.put(CHAL_COL15, logUnit);
+        //cv.put(CHAL_COL16,rating);
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
@@ -1010,6 +1013,18 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ? AND log_date = ?",new String[] {username,String.valueOf(challengeID),date});
+        return cursor;
+    }
+
+    /**********************************************************************
+     * ggetNotificationData (String Column, String value)
+     *@param column:the column you wish to compare value to
+     *@param value: the value at which column must equal
+     *@return A cursor object containing the Team where column equals value
+     */
+    public Cursor getNotificationData(String column, String value){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column + " = ?",new String[] {value});
         return cursor;
     }
 

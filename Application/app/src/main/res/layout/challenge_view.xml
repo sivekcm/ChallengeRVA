@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -22,7 +21,7 @@
         <TextView
             android:id="@+id/view_challengeName"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Challenge Name"
             android:textColor="@color/LightBlue"
@@ -150,12 +149,12 @@
                 android:background="@color/Orange"/>
 
             <Button
+                android:id="@+id/challengeLeaderboardBtn"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:id="@+id/challengeLeaderboardBtn"
-                android:text="Leaderboard"
-                android:background="@color/LightBlue"/>
+                android:background="@color/LightBlue"
+                android:text="Leaderboard" />
 
             <Button
                 android:layout_width="fill_parent"
@@ -166,6 +165,21 @@
                 android:background="@color/Orange"/>
 
         </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/rateChallengeTxtView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rate This Challenge: "
+            android:textSize="18sp"
+            android:visibility="invisible" />
+
+        <RatingBar
+            android:id="@+id/rateChallengeBar"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:visibility="invisible" />
 
     </LinearLayout>
 
