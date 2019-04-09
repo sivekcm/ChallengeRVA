@@ -29,6 +29,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_COL9 = "private";
     public static final String USER_COL10 = "type";
     public static final String USER_COL11 = "image_data";
+    public static final String USER_COL12 = "bio";
 
     //Challenge Table
     public static final String TABLE_CHALLENGE = "Challenge";
@@ -47,7 +48,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL13 = "max_team";
     public static final String CHAL_COL14 = "log_range";
     public static final String CHAL_COL15 = "log_unit";
+
     public static final String CHAL_COL16 = "competitionType";
+    public static final String CHAL_COL17 = "number_ratings";
+    public static final String CHAL_COL18 = "total_rating";
+
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -73,6 +78,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String PART_COL2 = "challenge_id";
     public static final String PART_COL3 = "join_date";
     public static final String PART_COL4 = "completed";
+    public static final String PART_COL5 = "has_rated";
 
     //Log Table
     public static final String TABLE_LOG = "Log";
@@ -124,6 +130,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "private TEXT NOT NULL, " +
                 "type TEXT NOT NULL, " +
                 "image_data BLOB" +
+                "bio TEXT NOT NULL" +
                 ") ");
 
         //Challenge table
@@ -146,6 +153,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "log_range INTEGER NOT NULL, " +
                 "log_unit TEXT NOT NULL, " +
                 "competition_type TEXT NOT NULL, " +
+                "number_ratings INTEGER," +
+                "total_rating INTEGER," +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
                 ") ");
 
@@ -192,6 +201,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "challenge_id INTEGER, " +
                 "join_date DATE NOT NULL, " +
                 "completed TEXT NOT NULL," +
+                "has_rated TEXT NOT NULL," +
                 "PRIMARY KEY(username, challenge_id), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
@@ -252,6 +262,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param complChall: the integer number of challenges completed by user
      * @param priv: is Profile Private, "Y" or "N"
      * @param type: "athlete" or "coach"
+     * @param bio: biography
      * @return false if insert failed, true if data was inserted successfully
      *
      * This method inserts data (a full row) into the User table. All dates
@@ -264,7 +275,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertUser(String username, String password, String fName,
                               String lName, String birthDate, String joinDate,
                               String email, int complChall, String priv,
-                              String type, byte[] image) {
+                              String type, byte[] image, String bio) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_COL1, username);
@@ -278,6 +289,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(USER_COL9, priv);
         cv.put(USER_COL10, type);
         cv.put(USER_COL11, image);
+        cv.put(USER_COL12, bio);
 
         long num = db.insert(TABLE_USER, null, cv);
         if (num == -1) {
@@ -299,6 +311,8 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param availability: if challenge is open or closed
      * @param hazards: possible health hazards
      * @param description: description of challenge
+     * @param numberRatings: The total number of ratings
+     * @param totalRating: The running total rating
      * @return false if insert fails, true if data is inserted successfully
      *
      * This method inserts a new data entry (a full row) into the challenge
@@ -311,7 +325,9 @@ public class DBHelper extends SQLiteOpenHelper {
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
                                    String hazards, String description, int minTeam,
-                                   int maxTeam, int logRange, String logUnit) {
+                                   int maxTeam, int logRange, String logUnit, String competitionType,
+                                   int numberRatings, int totalRating) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -328,6 +344,11 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
         cv.put(CHAL_COL15, logUnit);
+
+        cv.put(CHAL_COL16, competitionType);
+        cv.put(CHAL_COL17, numberRatings);
+        cv.put(CHAL_COL18, totalRating);
+
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
@@ -422,13 +443,14 @@ public class DBHelper extends SQLiteOpenHelper {
      * may have the same username and challengeID pairing. All dates must be formatted
      * "YYYY-MM-DD" otherwise insert will fail. No parameters are allowed to be null.
      */
-    public boolean insertParticipates(String username, int challengeID, String joinDate, String completed) {
+    public boolean insertParticipates(String username, int challengeID, String joinDate, String completed, String hasRated) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(PART_COL1, username);
         cv.put(PART_COL2, challengeID);
         cv.put(PART_COL3, joinDate);
         cv.put(PART_COL4, completed);
+        cv.put(PART_COL5, hasRated);
 
 
         long num = db.insert(TABLE_PARTICIPATES, null, cv);
@@ -485,6 +507,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param complChall: the integer number of challenges completed by user
      * @param priv: is Profile Private, "Y" or "N"
      * @param type: "athlete" or "coach"
+     * @param bio: biography
      * @return false if update failed, true if data was updated successfully
      *
      * This method updates a row in the User table at the specified username. All dates
@@ -494,7 +517,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean updateUser(String oldUsername, String newUsername, String password, String fName,
                               String lName, String birthDate, String joinDate,
                               String email, int complChall, String priv,
-                              String type, byte[] image) {
+                              String type, byte[] image, String bio) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_COL1, newUsername);
@@ -508,6 +531,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(USER_COL9, priv);
         cv.put(USER_COL10, type);
         cv.put(USER_COL11, image);
+        cv.put(USER_COL12, bio);
 
         long result = db.update(TABLE_USER, cv, "username = ?", new String[]{oldUsername});
         if (result > 0) {
@@ -533,7 +557,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return updateUser((String) parameterArray[0], (String) parameterArray[1], (String) parameterArray[2], (String) parameterArray[3],
                 (String) parameterArray[4], (String) parameterArray[5], (String) parameterArray[6], (String) parameterArray[7],
-                (int) parameterArray[8], (String) parameterArray[9], (String) parameterArray[10], (byte[]) parameterArray[11]);
+                (int) parameterArray[8], (String) parameterArray[9], (String) parameterArray[10], (byte[]) parameterArray[11], (String)parameterArray[12]);
     }
 
     /************************************************************************
@@ -550,6 +574,8 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param availability: if challenge is open or closed
      * @param hazards: possible health hazards
      * @param description: description of challenge
+     * @param numberRatings: the number of ratings
+     * @param totalRating: The running total of ratings
      * @return false if update fails, true if data is updated successfully
      *
      * This method updates a row in the challenge table at the specified
@@ -559,7 +585,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean updateChallenge(int oldChallengeID, int newChallengeID, String name, String coach,
                                    String startDate, String endDate, String type,
                                    String diff, String teamOrSingle, String availability,
-                                   String hazards, String description) {
+                                   String hazards, String description, int numberRatings, int totalRating) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL1, newChallengeID);
@@ -573,6 +599,8 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL9, availability);
         cv.put(CHAL_COL10, hazards);
         cv.put(CHAL_COL11, description);
+        cv.put(CHAL_COL17, numberRatings);
+        cv.put(CHAL_COL18, totalRating);
         long result = db.update(TABLE_CHALLENGE, cv, "challenge_id = ?", new String[]{Integer.valueOf(oldChallengeID).toString()});
         if (result > 0) {
             return true;
@@ -647,6 +675,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param newChallengeID: the challenge id you want to replace the old one with
      * @param joinDate: date that user joined challenge "YYYY-MM-DD"
      * @param completed: whether the user has completed the challenge or not
+     * @param hasRated: Whether the user has rated the challenge or not
      * @return false if update fails, true if data is updated successfully
      *
      * this method updates a row in the participates table at the specified username
@@ -656,13 +685,14 @@ public class DBHelper extends SQLiteOpenHelper {
      * challengeID must already exist or the update will fail. All dates must be formatted
      * "YYYY-MM-DD" otherwise insert will fail. No parameters are allowed to be null.
      */
-    public boolean updateParticipates(String oldUsername, int oldChallengeID, String newUsername, int newChallengeID, String joinDate, String completed) {
+    public boolean updateParticipates(String oldUsername, int oldChallengeID, String newUsername, int newChallengeID, String joinDate, String completed, String hasRated) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(PART_COL1, newUsername);
         cv.put(PART_COL2, newChallengeID);
         cv.put(PART_COL3, joinDate);
         cv.put(PART_COL4, completed);
+        cv.put(PART_COL5, hasRated);
 
         long result = db.update(TABLE_PARTICIPATES, cv, "username = ? AND challenge_id = ?", new String[]{oldUsername, Integer.valueOf(oldChallengeID).toString()});
         if (result > 0) {
@@ -1066,10 +1096,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+    /**********************************************************************
+     * ggetNotificationData (String Column, String value)
+     *@param column:the column you wish to compare value to
+     *@param value: the value at which column must equal
+     *@return A cursor object containing the Team where column equals value
+     */
+    public Cursor getNotificationData(String column, String value){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column + " = ?",new String[] {value});
+
     public Cursor getLogDataInnerJoin(String teamName, int challengeID, String username)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT log.log_date, log.log_value, challenge.log_unit FROM log, team INNER JOIN challenge ON log.challenge_id = challenge.challenge_id WHERE team.team_name = ? AND team.challenge_id = ? AND log.username = ? GROUP BY log_date ORDER BY log_date",new String[] {teamName, String.valueOf(challengeID), username});
+
         return cursor;
     }
 

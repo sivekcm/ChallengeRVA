@@ -18,6 +18,7 @@ public class User implements Parcelable {
     protected byte[] image;
 
     public boolean isLoggedUser;
+    protected String bio;
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
@@ -65,6 +66,8 @@ public class User implements Parcelable {
             this.accountType = UserType.ATHLETE;
 
         this.image = userCursor.getBlob(10);
+        this.bio = userCursor.getString(11);
+
     }
 
     protected User(Parcel in) {
@@ -81,6 +84,7 @@ public class User implements Parcelable {
         isLoggedUser = in.readByte() != 0;
         image = new byte[in.readInt()];
         in.readByteArray(image);
+        bio = in.readString();
     }
 
     @Override
@@ -103,6 +107,12 @@ public class User implements Parcelable {
         dest.writeByte((byte) (isLoggedUser ? 1 : 0));
         dest.writeInt(image.length);
         dest.writeByteArray(image);
+        dest.writeString(bio);
+    }
+
+    public String getBio()
+    {
+        return this.bio;
     }
 
 
@@ -119,7 +129,7 @@ public class User implements Parcelable {
      */
     public Object[] getParameters()
     {
-        Object[] parameters = new Object[12];
+        Object[] parameters = new Object[13];
         parameters[0] = oldUsername;
         parameters[1] = username;
         parameters[2] = null;
@@ -136,6 +146,7 @@ public class User implements Parcelable {
             parameters[10] = "coach";
         else parameters[10] = "athlete";
         parameters[11] = image;
+        parameters[12] = bio;
         return parameters;
     }
 
