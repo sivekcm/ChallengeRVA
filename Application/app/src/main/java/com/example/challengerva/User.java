@@ -15,6 +15,7 @@ public class User implements Parcelable {
     protected boolean isPrivate;
     protected UserType accountType;
     protected int challengesCompleted;
+    protected String bio;
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
@@ -61,6 +62,8 @@ public class User implements Parcelable {
         else
             this.accountType = UserType.ATHLETE;
 
+        this.bio = userCursor.getString(10);
+
     }
 
     protected User(Parcel in) {
@@ -74,6 +77,7 @@ public class User implements Parcelable {
         isPrivate = in.readByte() != 0;
         accountType = UserType.valueOf(in.readString());
         challengesCompleted = in.readInt();
+        bio = in.readString();
     }
 
     @Override
@@ -93,6 +97,12 @@ public class User implements Parcelable {
         dest.writeByte((byte) (isPrivate ? 1 : 0));
         dest.writeString(this.accountType.name());
         dest.writeInt(challengesCompleted);
+        dest.writeString(bio);
+    }
+
+    public String getBio()
+    {
+        return this.bio;
     }
 
 
@@ -109,7 +119,7 @@ public class User implements Parcelable {
      */
     public Object[] getParameters()
     {
-        Object[] parameters = new Object[11];
+        Object[] parameters = new Object[12];
         parameters[0] = oldUsername;
         parameters[1] = username;
         parameters[2] = null;
@@ -125,6 +135,7 @@ public class User implements Parcelable {
         if (accountType == UserType.COACH)
             parameters[10] = "coach";
         else parameters[10] = "athlete";
+        parameters[11] = bio;
         return parameters;
     }
 
