@@ -765,16 +765,15 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /*******************************************************
      * deleteLeaderoard method
-     * @param rank: rank at the row to be deleted
      * @param username: username at the row to be deleted
      * @return the number of rows that were deleted
      *
      * Deletes the row containing the specified team id and username
      * from the leaderboard table
      */
-    public int deleteLeaderBoard(int rank, String username) {
+    public int deleteLeaderBoard(String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_LEADERBOARD, "rank = ? AND username = ?", new String[]{Integer.valueOf(rank).toString(), username});
+        return db.delete(TABLE_LEADERBOARD, "username = ?", new String[]{username});
     }
 
     /****************************************************
