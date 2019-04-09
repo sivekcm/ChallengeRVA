@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.os.strictmode.SqliteObjectLeakedViolation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class DBHelper extends SQLiteOpenHelper {
     //Database
@@ -26,7 +28,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String USER_COL8 = "challenges_count";
     public static final String USER_COL9 = "private";
     public static final String USER_COL10 = "type";
-    public static final String USER_COL11 = "bio";
+    public static final String USER_COL11 = "image_data";
+    public static final String USER_COL12 = "bio";
 
     //Challenge Table
     public static final String TABLE_CHALLENGE = "Challenge";
@@ -44,20 +47,28 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL12 = "min_team";
     public static final String CHAL_COL13 = "max_team";
     public static final String CHAL_COL14 = "log_range";
-    public static final String CHAL_COL15 = "number_ratings";
-    public static final String CHAL_COL16 = "total_rating";
+    public static final String CHAL_COL15 = "log_unit";
+    public static final String CHAL_COL16 = "competitionType";
+    public static final String CHAL_COL17 = "number_ratings";
+    public static final String CHAL_COL18 = "total_rating";
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
     public static final String TEAM_COL1 = "team_name";
     public static final String TEAM_COL2 = "challenge_id";
-    public static final String TEAM_COL3 = "user";
+    public static final String TEAM_COL3 = "username";
 
-    //Leaderboard Table
-    public static final String TABLE_LEADERBOARD = "LeaderBoard";
+    //Universal LeaderBoard Table
+    public static final String TABLE_LEADERBOARD = "Universal LeaderBoard";
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
     public static final String LB_COL3 = "challenges_count";
+
+    //Challenge specific LeaderBoard Table
+    public static final String TABLE_LEADERBOARD_CHALLENGE = "Universal LeaderBoard";
+    public static final String LBCHALL_COL1 = "rank";
+    public static final String LBCHALL_COL2 = "username";
+    public static final String LBCHALL_COL3 = "challenges_weight";
 
     //Participates Table
     public static final String TABLE_PARTICIPATES = "Participates";
@@ -113,9 +124,10 @@ public class DBHelper extends SQLiteOpenHelper {
                 "birth_date DATE NOT NULL, " +
                 "join_date DATE NOT NULL, " +
                 "email TEXT NOT NULL, " +
-                "challenges_count INTEGER, " +
+                "challenges_count INTEGER NOT NULL, " +
                 "private TEXT NOT NULL, " +
-                "type TEXT NOT NULL," +
+                "type TEXT NOT NULL, " +
+                "image_data BLOB" +
                 "bio TEXT NOT NULL" +
                 ") ");
 
@@ -134,9 +146,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 "availability TEXT NOT NULL, " +
                 "health_hazards TEXT, " +
                 "description TEXT, " +
-                "min_team TEXT NOT NULL," +
-                "max_team TEXT NOT NULL," +
-                "log_range TEXT NOT NULL," +
+                "min_team INTEGER NOT NULL, " +
+                "max_team INTEGER NOT NULL, " +
+                "log_range INTEGER NOT NULL, " +
+                "log_unit TEXT NOT NULL, " +
+                "competition_type TEXT NOT NULL, " +
                 "number_ratings INTEGER," +
                 "total_rating INTEGER," +
                 "FOREIGN KEY(coach) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE" +
@@ -148,14 +162,14 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_TEAM + "(" +
                 "team_name TEXT NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
-                "user TEXT, " +
-                "PRIMARY KEY(team_name, challenge_id), " +
+                "username TEXT, " +
+                "PRIMARY KEY(team_name, challenge_id, username), " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE, " +
-                "FOREIGN KEY(user) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
+                "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE SET NULL" +
                 ") ");
 
-        //Leaderboard table
-        //Stores leaderboard data
+        //Universal LeaderBoard table
+        //Stores leaderBoard data
         //unique rank and username pairing
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD + "(" +
                 "rank INTEGER NOT NULL, " +
@@ -165,6 +179,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenges_count) REFERENCES " + TABLE_USER + "(challenges_count) ON DELETE CASCADE" +
                 ") ");
+
+        //Challenge-specific LeaderBoard table
+        //Stores leaderBoard data for specified challenge
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD_CHALLENGE + "(" +
+                    "rank INTEGER NOT NULL, " +
+                    "username TEXT NOT NULL " +
+                    "challenges_weight DOUBLE NOT NULL, " +
+                    "PRIMARY KEY(rank, username), " +
+                    "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
+                    "FOREIGN KEY(challenges_weight) REFERENCES " + TABLE_USER + "(challenges_weight) ON DELETE CASCADE" +
+                    ") ");
 
         //Participates table
         //Stores data of what challenges a user is participating in
@@ -187,7 +212,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "username TEXT NOT NULL, " +
                 "challenge_id INTEGER NOT NULL, " +
                 "log_date DATE NOT NULL, " +
-                "log_value INTEGER NOT NULL, " +
+                "log_value REAL NOT NULL, " +
                 "PRIMARY KEY(username, challenge_id, log_date), " +
                 "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                 "FOREIGN KEY(challenge_id) REFERENCES " + TABLE_CHALLENGE + "(challenge_id) ON DELETE CASCADE" +
@@ -248,7 +273,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertUser(String username, String password, String fName,
                               String lName, String birthDate, String joinDate,
                               String email, int complChall, String priv,
-                              String type, String bio) {
+                              String type, byte[] image, String bio) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_COL1, username);
@@ -261,7 +286,8 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(USER_COL8, complChall);
         cv.put(USER_COL9, priv);
         cv.put(USER_COL10, type);
-        cv.put(USER_COL11, bio);
+        cv.put(USER_COL11, image);
+        cv.put(USER_COL12, bio);
 
         long num = db.insert(TABLE_USER, null, cv);
         if (num == -1) {
@@ -296,8 +322,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean insertChallenge(String name, String coach,
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
-                                   String hazards, String description, int minTeam, int maxTeam,
-                                   int logRange, int numberRatings, int totalRating) {
+                                   String hazards, String description, int minTeam,
+                                   int maxTeam, int logRange, String logUnit, String competitionType,
+                                   int numberRatings, int totalRating) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -313,8 +340,10 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL12, minTeam);
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
-        cv.put(CHAL_COL15, numberRatings);
-        cv.put(CHAL_COL16, totalRating);
+        cv.put(CHAL_COL15, logUnit);
+        cv.put(CHAL_COL16, competitionType);
+        cv.put(CHAL_COL17, numberRatings);
+        cv.put(CHAL_COL18, totalRating);
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
@@ -362,7 +391,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * table. No two data entries may have the same rank and username pairing.
      * Only challengesComp can be null
      */
-    public boolean insertLeaderBoard(int rank, String username, int challengesCount) {
+    public boolean insertUniversalLeaderBoard(int rank, String username, int challengesCount) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LB_COL1, rank);
@@ -376,6 +405,23 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+
+    public boolean insertChallengeLeaderBoard(int rank, String username, int challengesCount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(LB_COL1, rank);
+        cv.put(LB_COL2, username);
+        cv.put(LB_COL3, challengesCount);
+
+        long num = db.insert(TABLE_LEADERBOARD, null, cv);
+        if (num == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
 
     /********************************************************************************
      * insertParticipates method
@@ -410,7 +456,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertLog(String username, int challengeID, String date, int value) {
+    public boolean insertLog(String username, int challengeID, String date, double value) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(LOG_COL1, username);
@@ -466,7 +512,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean updateUser(String oldUsername, String newUsername, String password, String fName,
                               String lName, String birthDate, String joinDate,
                               String email, int complChall, String priv,
-                              String type, String bio) {
+                              String type, byte[] image, String bio) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(USER_COL1, newUsername);
@@ -479,7 +525,8 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(USER_COL8, complChall);
         cv.put(USER_COL9, priv);
         cv.put(USER_COL10, type);
-        cv.put(USER_COL11, bio);
+        cv.put(USER_COL11, image);
+        cv.put(USER_COL12, bio);
 
         long result = db.update(TABLE_USER, cv, "username = ?", new String[]{oldUsername});
         if (result > 0) {
@@ -505,7 +552,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return updateUser((String) parameterArray[0], (String) parameterArray[1], (String) parameterArray[2], (String) parameterArray[3],
                 (String) parameterArray[4], (String) parameterArray[5], (String) parameterArray[6], (String) parameterArray[7],
-                (int) parameterArray[8], (String) parameterArray[9], (String) parameterArray[10], (String) parameterArray[11]);
+                (int) parameterArray[8], (String) parameterArray[9], (String) parameterArray[10], (byte[]) parameterArray[11], (String)parameterArray[12]);
     }
 
     /************************************************************************
@@ -547,8 +594,8 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL9, availability);
         cv.put(CHAL_COL10, hazards);
         cv.put(CHAL_COL11, description);
-        cv.put(CHAL_COL15, numberRatings);
-        cv.put(CHAL_COL16, totalRating);
+        cv.put(CHAL_COL17, numberRatings);
+        cv.put(CHAL_COL18, totalRating);
         long result = db.update(TABLE_CHALLENGE, cv, "challenge_id = ?", new String[]{Integer.valueOf(oldChallengeID).toString()});
         if (result > 0) {
             return true;
@@ -564,21 +611,20 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param oldChallengeID: challenge id of the row you want to change (paired with team id)
      * @param newTeamName: the Team id you want to replace the old one with
      * @param newChallengeID: the challenge id you want to replace the old one with
-     * @param user
      * @return false if update fails, true if data is updated successfully
      *
      * This method updates the data of a row at the specified Team_id and
      * challenge_id pairing. Team_id and challenge_id must already exist
      * or else update will fail.
      */
-    public boolean updateTeam(String oldTeamName, int oldChallengeID, String newTeamName, int newChallengeID, String user) {
+    public boolean updateTeam(String oldTeamName, int oldChallengeID, String newTeamName, int newChallengeID, String oldUser, String newUser) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(TEAM_COL1, newTeamName);
         cv.put(TEAM_COL2, newChallengeID);
-        cv.put(TEAM_COL3, user);
+        cv.put(TEAM_COL3, newUser);
 
-        long result = db.update(TABLE_TEAM, cv, "team_name = ? AND challenge_id = ?", new String[]{oldTeamName, Integer.valueOf(oldChallengeID).toString()});
+        long result = db.update(TABLE_TEAM, cv, "team_name = ? AND challenge_id = ? AND username = ?", new String[]{oldTeamName, Integer.valueOf(oldChallengeID).toString(), oldUser});
         if (result > 0) {
             return true;
         } else {
@@ -739,13 +785,13 @@ public class DBHelper extends SQLiteOpenHelper {
      * Deletes the row containing the specified team id
      * and challenge_id from the team table
      */
-    public int deleteTeam(String teamName, int challengeID) {
+    public int deleteTeam(String teamName, int challengeID, String username) {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete(TABLE_TEAM, "team_name = ? AND challenge_id = ?", new String[]{teamName, Integer.valueOf(challengeID).toString()});
+        return db.delete(TABLE_TEAM, "team_name = ? AND challenge_id = ? AND username = ?", new String[]{teamName, Integer.valueOf(challengeID).toString(), username});
     }
 
     /*******************************************************
-     * deleteLeaderBoard method
+     * deleteLeaderoard method
      * @param rank: rank at the row to be deleted
      * @param username: username at the row to be deleted
      * @return the number of rows that were deleted
@@ -953,6 +999,19 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getUserPassword(String username)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT password FROM User WHERE username = ?", new String[] {username});
+        return  cursor;
+    }
+
+    public Cursor getBitmapByUsername(String username){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT image_data FROM User WHERE username = ?", new String[] {username});
+        return cursor;
+    }
+
     /**********************************************************************
      * getTeamData(String column, String value)
      * @param column:the column you wish to compare value to
@@ -963,6 +1022,20 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column + " = ?",new String[] {value});
+        return cursor;
+    }
+
+    public Cursor getTeamData(String column1, String value1, String column2, String value2)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column1 + " = ? AND " + column2 + " = ?",new String[] {value1,value2});
+        return cursor;
+    }
+
+    public Cursor getTeamData(String column, String value, String groupBy)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Team WHERE " + column + " = ? GROUP BY " + groupBy,new String[] {value});
         return cursor;
     }
 
@@ -993,12 +1066,54 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[] {username,completed});
         return cursor;
     }
+    /**********************************************************************
+     * getUniversalLeaderBoardsData(String column)
+     * @param col:the column you wish to compare value to
+     * @return A cursor object containing the Team of the entire column specified
+     */
+    public Cursor getUniversalLeaderBoardData(String col){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Universal LeaderBoard WHERE col", new String[]{});
+        return cursor;
+    }
 
     public Cursor getLogData(String username, int challengeID)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ?",new String[] {username,String.valueOf(challengeID)});
         return cursor;
+    }
+
+    public Cursor getLogData(String username, int challengeID, String date)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Log WHERE username = ? AND challenge_id = ? AND log_date = ?",new String[] {username,String.valueOf(challengeID),date});
+        return cursor;
+    }
+
+    public Cursor getLogDataInnerJoin(String teamName, int challengeID, String username)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT log.log_date, log.log_value, challenge.log_unit FROM log, team INNER JOIN challenge ON log.challenge_id = challenge.challenge_id WHERE team.team_name = ? AND team.challenge_id = ? AND log.username = ? GROUP BY log_date ORDER BY log_date",new String[] {teamName, String.valueOf(challengeID), username});
+        return cursor;
+    }
+
+    public boolean hasLoggedToday(String username, int challengeID)
+    {
+        //Gets the current date, for determining the date the user signed up
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String currentDate = sdf.format(date);
+
+        Cursor cursor = getLogData(username,challengeID,currentDate);
+        if (cursor.getCount() == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 

@@ -68,12 +68,26 @@ public class LoginActivity extends AppCompatActivity {
                 else if (userData.getCount() == 1)
                 {
                     Toast.makeText(LoginActivity.this,"Login Successful",Toast.LENGTH_LONG).show();
-                    db.insertParticipates("jacobobeast",10,"2019-03-29","N");
-                    Log.d("LoginActivity","" + db.insertChallenge("fourth challenge","jonathan","2019-03-26","2019-04-26",
-                            "cardio",2,"team","Y","none","this is the desc",
-                            3,4,2));
-                    db.insertTeam("team 2", 1, "username");
+ //                   db.insertParticipates("jacobobeast",10,"2019-03-29","N");
+//                    Log.d("LoginActivity","" + db.insertChallenge("fourth challenge","jonathan","2019-03-26","2019-04-26",
+//                            "cardio",2,"team","Y","none","this is the desc",
+//                            3,4,2));
+ //                   db.insertTeam("team 2", 1, "username");
+//                    db.insertLog("coach",1,"2019-04-08",3);
+//                    db.insertLog("coach",1,"2019-04-09",20);
+//                    db.insertLog("coach",1,"2019-04-10",5);
+//                    db.insertLog("coach",1,"2019-04-11",6);
+//                    db.insertLog("coach",1,"2019-04-12",1);
+//                    db.insertLog("coach",1,"2019-04-13",6);
+//                    db.insertLog("coach",1,"2019-04-14",8);
+//                    db.insertLog("coach",1,"2019-04-15",12);
+//                    db.insertLog("coach",1,"2019-04-16",51);
+//                    db.insertLog("coach",1,"2019-04-17",7);
+//                    db.insertLog("coach",1,"2019-04-18",2);
+//                    db.insertLog("coach",1,"2019-04-19",3);
+
                     User user = new User(userData);
+                    user.setLoggedUser(true);
                     Log.d("LoginActivity",user.getUsername());
                     Intent intent = null;
                     if (user.getAccountType().equals(User.UserType.ATHLETE))
@@ -87,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("User Object", user);
 
                     startActivity(intent);
+                    finish();
                 }
 
 

@@ -46,6 +46,7 @@ public class AthleteHomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent challengeIntent = new Intent(AthleteHomeActivity.this,AthleteViewChallengeActivity.class);
                 challengeIntent.putExtra("User Object", user);
+                challengeIntent.putExtra("activity","AthleteHomeActivity");
                 startActivity(challengeIntent);
             }
         });
@@ -53,7 +54,9 @@ public class AthleteHomeActivity extends AppCompatActivity {
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent toAthleteProfileIntent = new Intent(AthleteHomeActivity.this,AthleteProfileActivity.class);
+                toAthleteProfileIntent.putExtra("User Object", user);
+                startActivity(toAthleteProfileIntent);
             }
         });
 
@@ -68,6 +71,7 @@ public class AthleteHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent logoutIntent = new Intent(AthleteHomeActivity.this, LoginActivity.class);
+                logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(logoutIntent);
             }
         });

@@ -37,11 +37,13 @@ public class CoachActivity extends AppCompatActivity {
     TextView coachNameTxtView;
     TextView statusTxtView;
     TextView coachUserNameTxtView;
+    TextView changePicBtn;
 
     //Declares Buttons
     Button createChallengeBtn;
     Button viewChallengesBtn;
 
+    User user;
     /*******************************
      * OnCreate
      * @param savedInstanceState
@@ -54,12 +56,13 @@ public class CoachActivity extends AppCompatActivity {
         setContentView(R.layout.coach_profile);
 
         Intent intent = getIntent();
-        final User user = intent.getParcelableExtra("User Object");
+        user = intent.getParcelableExtra("User Object");
 
         //Initializes textViews to their respective UI elements
         coachNameTxtView = (TextView)findViewById(R.id.coachNameTxtView);
         statusTxtView = (TextView)findViewById(R.id.statusTxtView);
         coachUserNameTxtView = (TextView)findViewById(R.id.coachUserNameTxtView);
+        changePicBtn = findViewById(R.id.coachChangePicTextView);
         
         //Initializes Buttons to their respective UI elements
         createChallengeBtn = (Button)findViewById(R.id.createChallengeBtn);
@@ -75,25 +78,11 @@ public class CoachActivity extends AppCompatActivity {
 
         //Calling openChallengeActivity method
         openChallengeActivity(user);
-        //Inserting test challenge information
-        challenge.insertChallenge("testChall",
-                "jacobobeast",
-                "2019-03-16",
-                "2019-04-19",
-                "cardio",
-                4,
-                "team",
-                "availible",
-                "none",
-                "basic test challenge",
-                2,
-                5,
-                10);
-
-      //challenge.insertChallenge("testChall", "jacobobeast", "2019-03-16", "2019-04-19", "cardio", 4, "team", "availible", "none", "basic test challenge");
 
         //calling view all method
         viewAll(user);
+
+        toChangePictureActivity();
 
     }
     /**
@@ -162,6 +151,18 @@ public class CoachActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 openChallengeActivityIntent(user);
+            }
+        });
+    }
+
+    public void toChangePictureActivity()
+    {
+        changePicBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CoachActivity.this,ChangePictureActivity.class);
+                intent.putExtra("User Object",user);
+                startActivity(intent);
             }
         });
     }

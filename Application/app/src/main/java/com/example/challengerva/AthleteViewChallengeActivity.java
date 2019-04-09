@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 public class AthleteViewChallengeActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
     Button currentBtn;
     Button previousBtn;
     User user;
+    User originUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,37 +33,51 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
         previousBtn = findViewById(R.id.athleteChallengesPreviousBtn);
 
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("User Object");
+        String fromActivity = intent.getStringExtra("activity");
+        if (fromActivity.equals("AthleteHomeActivity") || fromActivity.equals("LogChallengeActivity")) {
+            user = intent.getParcelableExtra("User Object");
+        }
+        else if (fromActivity.equals("OtherUserProfileActivity"))
+        {
+            user = intent.getParcelableExtra("other user");
+            originUser = intent.getParcelableExtra("User Object");
+        }
+
+        final boolean isLoggedTemp = user.isLoggedUser();
 
         currentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 challengeData = db.getParticipatesDataInnerJoin(user.getUsername(),"N");
-                showResults(challengeData);
+                adapter = new AthleteChallengeAdapter(AthleteViewChallengeActivity.this,challengeData,user);
+                showResults(adapter);
             }
         });
 
         previousBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                user.setLoggedUser(false);
                 challengeData = db.getParticipatesDataInnerJoin(user.getUsername(),"Y");
-                showResults(challengeData);
+                adapter = new AthleteChallengeAdapter(AthleteViewChallengeActivity.this,challengeData,user);
+                showResults(adapter);
+                user.setLoggedUser(isLoggedTemp);
             }
         });
+
+
 
 
     }
 
     /*************************************************
      * showResults method
-     * @param cursor the cursor containing the challenges to be displayed
      *
      * Displays the challenges contained in cursor on the recylcerview
      */
-    public void showResults(Cursor cursor)
+    public void showResults(AthleteChallengeAdapter adapter)
     {
         challengeRV.setLayoutManager(new LinearLayoutManager(AthleteViewChallengeActivity.this));
-        adapter = new AthleteChallengeAdapter(AthleteViewChallengeActivity.this, cursor);
         challengeRV.swapAdapter(adapter,false);
     }
 }

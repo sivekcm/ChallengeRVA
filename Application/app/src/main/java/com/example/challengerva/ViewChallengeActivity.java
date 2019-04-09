@@ -1,6 +1,7 @@
 package com.example.challengerva;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -42,10 +43,13 @@ public class ViewChallengeActivity extends AppCompatActivity{
 
     boolean isTeam;
 
-    Button registerChallengeButton;
+    Button registerChallengeButton,
+           previousLogsBtn,
+           leaderboardBtn,
+           viewTeamBtn;
 
     Challenge challenge;
-
+    Team team;
     DBHelper db = new DBHelper(this);
 
     User user;
@@ -62,12 +66,11 @@ public class ViewChallengeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.challenge_view);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         challenge = intent.getParcelableExtra("challenge");
         user = intent.getParcelableExtra("User Object");
 
         //instantiate DBHelper for database methods
-        //final DBHelper challenge = new DBHelper(ViewChallengeActivity.this);
 
         challengeNameTextView = findViewById(R.id.view_challengeName);
         coachNameTextView = findViewById(R.id.view_coachName);
@@ -80,8 +83,40 @@ public class ViewChallengeActivity extends AppCompatActivity{
         maxTeamTextView = findViewById(R.id.view_maxTeam);
         availabilityTextView = findViewById(R.id.view_Availability);
         registerChallengeButton = findViewById(R.id.registerChallengeBtn);
+        previousLogsBtn = findViewById(R.id.challengeLogBtn);
+        leaderboardBtn = findViewById(R.id.challengeLeaderboardBtn);
+        viewTeamBtn = findViewById(R.id.viewTeamBtn);
 
+        challengeID = challenge.getChallengeID();
+        challengeName = challenge.getChallengeName();
+        coachName = challenge.getCoachAssigned();
+        description = challenge.getChallengeDescription();
+        startDate = challenge.getStartDate();
+        endDate = challenge.getEndDate();
+        difficulty = challenge.getDifficulty();
+        isTeam = challenge.isTeam();
+        minTeam = challenge.getMinTeam();
+        maxTeam = challenge.getMaxTeam();
 
+        Cursor cursor = db.getParticipatesData("username",user.getUsername(),"challenge_id",String.valueOf(challenge.getChallengeID()));
+        if (cursor.getCount() == 1) {
+            registerChallengeButton.setVisibility(View.GONE);
+            if (isTeam)
+            {
+                Cursor getTeamCursor = db.getTeamData("username",user.getUsername(),"challenge_id",String.valueOf(challenge.getChallengeID()));
+                getTeamCursor.moveToNext();
+                team = new Team(getTeamCursor);
+            }
+            else
+            {
+                viewTeamBtn.setVisibility(View.GONE);
+            }
+        }
+        else {
+            previousLogsBtn.setVisibility(View.GONE);
+            leaderboardBtn.setVisibility(View.GONE);
+            viewTeamBtn.setVisibility(View.GONE);
+        }
 
         registerChallengeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,30 +139,47 @@ public class ViewChallengeActivity extends AppCompatActivity{
                     boolean success = db.insertParticipates(user.getUsername(),challengeID,currentDate,"N");
                     if (success)
                     {
-                        Toast.makeText(ViewChallengeActivity.this,"Registration Successful",Toast.LENGTH_LONG);
+                        Toast.makeText(ViewChallengeActivity.this,"Registration Successful",Toast.LENGTH_LONG).show();
                     }
                     else
                     {
-                        Toast.makeText(ViewChallengeActivity.this,"Something went wrong",Toast.LENGTH_LONG);
+                        Toast.makeText(ViewChallengeActivity.this,"Something went wrong",Toast.LENGTH_LONG).show();
                     }
 
                     intent = new Intent(ViewChallengeActivity.this, ChallengeSearchActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
             }
         });
 
-        challengeID = challenge.getChallengeID();
-        challengeName = challenge.getChallengeName();
-        coachName = challenge.getCoachAssigned();
-        description = challenge.getChallengeDescription();
-        startDate = challenge.getStartDate();
-        endDate = challenge.getEndDate();
-        difficulty = challenge.getDifficulty();
-        isTeam = challenge.isTeam();
-        minTeam = challenge.getMinTeam();
-        maxTeam = challenge.getMaxTeam();
+        viewTeamBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toTeamIntent = new Intent(ViewChallengeActivity.this,TeamActivity.class);
+                toTeamIntent.putExtra("team",team);
+                toTeamIntent.putExtra("User Object",user);
+                toTeamIntent.putExtra("challenge",challenge);
+
+                startActivity(toTeamIntent);
+            }
+        });
+
+        previousLogsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toLogViewIntent = new Intent(ViewChallengeActivity.this,LogViewActivity.class);
+                toLogViewIntent.putExtra("activity", "ViewChallengeActivity");
+                toLogViewIntent.putExtra("User Object", user);
+                toLogViewIntent.putExtra("challenge", challenge);
+                toLogViewIntent.putExtra("team", team);
+
+                startActivity(toLogViewIntent);
+            }
+        });
+
+
 
         //Check for availability
 
