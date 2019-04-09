@@ -56,13 +56,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TEAM_COL3 = "username";
 
     //Universal LeaderBoard Table
-    public static final String TABLE_LEADERBOARD = "Universal LeaderBoard";
+    public static final String TABLE_LEADERBOARD = "Universal_LeaderBoard";
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
     public static final String LB_COL3 = "challenges_count";
 
     //Challenge specific LeaderBoard Table
-    public static final String TABLE_LEADERBOARD_CHALLENGE = "Universal LeaderBoard";
+    public static final String TABLE_LEADERBOARD_CHALLENGE = "Universal_LeaderBoard";
     public static final String LBCHALL_COL1 = "rank";
     public static final String LBCHALL_COL2 = "username";
     public static final String LBCHALL_COL3 = "challenges_weight";
@@ -177,7 +177,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //Stores leaderBoard data for specified challenge
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD_CHALLENGE + "(" +
                     "rank INTEGER NOT NULL, " +
-                    "username TEXT NOT NULL " +
+                    "username TEXT NOT NULL, " +
                     "challenges_weight DOUBLE NOT NULL, " +
                     "PRIMARY KEY(rank, username), " +
                     "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +

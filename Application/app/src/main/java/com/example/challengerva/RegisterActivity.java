@@ -170,14 +170,26 @@ public class RegisterActivity extends AppCompatActivity {
 
                 }
 
-                //Checks that the username, password, and age match the minimum requirements to register as a user.
-                else if (!userIsValid(username) || !passIsValid(password) || !ageIsValid(currentDate,birthDate))
+                //checks if birth date is valid
+                else if (!ageIsValid(currentDate,birthDate))
+                {
+                    AlertMessage.alertMessage("Not old enough", "You must be at least 16 years of age to register an account",RegisterActivity.this);
+                }
+
+                //Checks that the username matches the minimum requirements to register as a user.
+                else if (!userIsValid(username))
                 {
                     //Popup warning user that one or more fields do not meet minimum requirements
 
-                    AlertMessage.alertMessage("Invalid fields", "One or more fields do not meet the minimum requirements." +
-                            "Please read the minimum requirements for a field by clicking on the *",RegisterActivity.this);
+                    AlertMessage.alertMessage("Invalid username", "username must be between 3 and 15 characters long, inclusive",RegisterActivity.this);
 
+                }
+
+                //checks if password is valid
+                else if (!passIsValid(password))
+                {
+                    AlertMessage.alertMessage("Invalid password", "password must be between 8 and 16 characters long, inclusive. Must contain" +
+                            "at least one number, lowercase letter, and uppercase letter.",RegisterActivity.this);
                 }
 
                 //Checks that the username is not taken
@@ -320,7 +332,7 @@ public class RegisterActivity extends AppCompatActivity {
      */
     public static boolean userIsValid(String username)
     {
-        if (username.length() > 2 && username.length() <= 14)
+        if (username.length() > 2 && username.length() <= 15)
         {
             return true;
         }
