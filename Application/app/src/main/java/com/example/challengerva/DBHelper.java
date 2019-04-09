@@ -48,9 +48,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL13 = "max_team";
     public static final String CHAL_COL14 = "log_range";
     public static final String CHAL_COL15 = "log_unit";
+
     public static final String CHAL_COL16 = "competitionType";
     public static final String CHAL_COL17 = "number_ratings";
     public static final String CHAL_COL18 = "total_rating";
+
 
     //Team Table
     public static final String TABLE_TEAM = "Team";
@@ -325,6 +327,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                    String hazards, String description, int minTeam,
                                    int maxTeam, int logRange, String logUnit, String competitionType,
                                    int numberRatings, int totalRating) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CHAL_COL2, name);
@@ -341,9 +344,11 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(CHAL_COL13, maxTeam);
         cv.put(CHAL_COL14, logRange);
         cv.put(CHAL_COL15, logUnit);
+
         cv.put(CHAL_COL16, competitionType);
         cv.put(CHAL_COL17, numberRatings);
         cv.put(CHAL_COL18, totalRating);
+
 
         long num = db.insert(TABLE_CHALLENGE, null, cv);
         if (num == -1) {
@@ -1091,10 +1096,22 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+    /**********************************************************************
+     * ggetNotificationData (String Column, String value)
+     *@param column:the column you wish to compare value to
+     *@param value: the value at which column must equal
+     *@return A cursor object containing the Team where column equals value
+     */
+    public Cursor getNotificationData(String column, String value){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column + " = ?",new String[] {value});
+
     public Cursor getLogDataInnerJoin(String teamName, int challengeID, String username)
     {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT log.log_date, log.log_value, challenge.log_unit FROM log, team INNER JOIN challenge ON log.challenge_id = challenge.challenge_id WHERE team.team_name = ? AND team.challenge_id = ? AND log.username = ? GROUP BY log_date ORDER BY log_date",new String[] {teamName, String.valueOf(challengeID), username});
+
         return cursor;
     }
 
