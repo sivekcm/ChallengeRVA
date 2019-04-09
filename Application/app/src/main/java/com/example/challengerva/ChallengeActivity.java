@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -49,6 +51,10 @@ public class ChallengeActivity extends AppCompatActivity{
     RatingBar difficultyRatingBar;
 
     Button submitChallengeBtn;
+
+    RadioGroup competionTypeGroup;
+
+    RadioButton competitionTypeButton;
 
     DatePickerDialog.OnDateSetListener startDateListener;
     DatePickerDialog.OnDateSetListener endDateListener;
@@ -87,6 +93,7 @@ public class ChallengeActivity extends AppCompatActivity{
 
         difficultyRatingBar = findViewById(R.id.difficultyRatingBar);
 
+        competionTypeGroup = findViewById(R.id.competitionType);
 
         submitChallengeBtn = findViewById(R.id.submitChallengeBtn);
         /*******************************************************************
@@ -110,7 +117,13 @@ public class ChallengeActivity extends AppCompatActivity{
                 int minTeam = Integer.parseInt(minTeamEditText.getText().toString());
                 int maxTeam = Integer.parseInt(maxTeamEditText.getText().toString());
                 int logRange = Integer.parseInt(logRangeEditText.getText().toString());
+
                 String logUnit = logUnitSpinner.getSelectedItem().toString();
+
+                //check to see what is selected from radio group
+                //return selected item
+                int selectedID = competionTypeGroup.getCheckedRadioButtonId();
+                competitionTypeButton = findViewById(selectedID);
 
                 //Execute onRatingBar
                 addListenerOnRatingBar();
@@ -162,6 +175,11 @@ public class ChallengeActivity extends AppCompatActivity{
                             Toast.makeText(ChallengeActivity.this,
                                     "Challenge Successfully Created!",
                                     Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(ChallengeActivity.this,CoachActivity.class);
+                            intent.putExtra("User Object",user);
+                            startActivity(intent);
+                            finish();
                     }
                     else {
                             Toast.makeText(ChallengeActivity.this,
@@ -309,8 +327,6 @@ public class ChallengeActivity extends AppCompatActivity{
             }
         });
     }
-
-
 
     public static boolean hasAllFields(String name, String desc,String diff, String startDate, String endDate)
     {

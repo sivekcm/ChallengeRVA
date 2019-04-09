@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
         android:text="Submit"
-        android:background="@color/LightBlue"
+        android:background="@drawable/btn_design_yellow"
         app:layout_constraintEnd_toEndOf="@+id/logDescTextView"
         app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="@+id/logDescTextView"

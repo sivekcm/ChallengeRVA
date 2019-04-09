@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -29,6 +31,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
     TextView athleteNameTxtView;
     TextView athleteProfileTxtView;
     TextView athleteUsernameTxtView;
+    TextView changeProfilePicTextView;
 
     //Declares Buttons
     Button athleteViewChallengesBtn;
@@ -39,27 +42,34 @@ public class AthleteProfileActivity extends AppCompatActivity {
     //Declaring Recycler View
     RecyclerView athleteChallengesRView;
 
+    ImageView imageView;
+
     final DBHelper db = new DBHelper(AthleteProfileActivity.this);
     final User athlete = null;
     final Challenge chal = null;
 
-    Intent intent = getIntent();
-    final User user = intent.getParcelableExtra("User Object");
+
+    User user;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.athlete_profile);
 
+        Intent intent = getIntent();
+        user = intent.getParcelableExtra("User Object");
         //Initializes textViews to their respective UI elements
-        athleteNameTxtView = (TextView) findViewById(R.id.coachNameTxtView);
+        athleteNameTxtView = findViewById(R.id.athleteNameTxtView);
         athleteProfileTxtView = (TextView) findViewById(R.id.statusTxtView);
-        athleteUsernameTxtView = (TextView) findViewById(R.id.coachUserNameTxtView);
+        athleteUsernameTxtView = (TextView) findViewById(R.id.athleteUsernameTxtView);
+        changeProfilePicTextView = findViewById(R.id.athleteChangePhotoTextView);
 
         //Initializes Buttons to their respective UI elements
         athleteViewChallengesBtn = (Button) findViewById(R.id.createChallengeBtn);
         athleteViewFriendsBtn = (Button) findViewById(R.id.athleteViewFriendsBtn);
         deleteAcctBtn = (Button) findViewById(R.id.deleteAcctBtn);
         resetProfileBtn = (Button) findViewById(R.id.resetProfileBtn);
+
+        imageView = findViewById(R.id.athleteProfilePictureImageView);
 
         //Initializing Recycler View
         athleteChallengesRView = (RecyclerView) findViewById(R.id.athleteChallengeRV);
@@ -68,6 +78,10 @@ public class AthleteProfileActivity extends AppCompatActivity {
         athleteNameTxtView.setText(user.getFirstName());
         athleteUsernameTxtView.setText(user.getUsername());
 
+        Bitmap bitmap = Utils.getImage(user.getImage());
+        imageView.setImageBitmap(bitmap);
+
+        toChangePhotoActivity();
     }
 
     public void fillChallengesList() {
@@ -138,8 +152,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
 
                                              }
                                          }
-        );
-    }
+
 
     public void resetAcct(final User user) {
         resetProfileBtn.setOnClickListener(new View.OnClickListener() {
@@ -161,7 +174,6 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 int deletedParticipates = 0;
                 int deletedLeaderBoard = 0;
                 int deletedNotifications = 0;
-
 
 
                 while (challangeUserData.moveToNext()) {
@@ -191,6 +203,18 @@ public class AthleteProfileActivity extends AppCompatActivity {
             }
         }
         );
+    }
+
+    public void toChangePhotoActivity()
+    {
+        changeProfilePicTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AthleteProfileActivity.this,ChangePictureActivity.class);
+                intent.putExtra("User Object",user);
+                startActivity(intent);
+            }
+        });
     }
 }
 

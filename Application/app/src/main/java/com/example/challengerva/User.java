@@ -15,7 +15,10 @@ public class User implements Parcelable {
     protected boolean isPrivate;
     protected UserType accountType;
     protected int challengesCompleted;
+    protected byte[] image;
+
     public boolean isLoggedUser;
+    protected String bio;
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
@@ -62,6 +65,9 @@ public class User implements Parcelable {
         else
             this.accountType = UserType.ATHLETE;
 
+        this.image = userCursor.getBlob(10);
+        this.bio = userCursor.getString(11);
+
     }
 
     protected User(Parcel in) {
@@ -76,6 +82,9 @@ public class User implements Parcelable {
         accountType = UserType.valueOf(in.readString());
         challengesCompleted = in.readInt();
         isLoggedUser = in.readByte() != 0;
+        image = new byte[in.readInt()];
+        in.readByteArray(image);
+        bio = in.readString();
     }
 
     @Override
@@ -96,6 +105,14 @@ public class User implements Parcelable {
         dest.writeString(this.accountType.name());
         dest.writeInt(challengesCompleted);
         dest.writeByte((byte) (isLoggedUser ? 1 : 0));
+        dest.writeInt(image.length);
+        dest.writeByteArray(image);
+        dest.writeString(bio);
+    }
+
+    public String getBio()
+    {
+        return this.bio;
     }
 
 
@@ -112,7 +129,7 @@ public class User implements Parcelable {
      */
     public Object[] getParameters()
     {
-        Object[] parameters = new Object[11];
+        Object[] parameters = new Object[13];
         parameters[0] = oldUsername;
         parameters[1] = username;
         parameters[2] = null;
@@ -128,6 +145,8 @@ public class User implements Parcelable {
         if (accountType == UserType.COACH)
             parameters[10] = "coach";
         else parameters[10] = "athlete";
+        parameters[11] = image;
+        parameters[12] = bio;
         return parameters;
     }
 
@@ -326,6 +345,12 @@ public class User implements Parcelable {
         return isLoggedUser;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
 
-
+    public void setImage(byte[] newImage)
+    {
+        this.image = newImage;
+    }
 }

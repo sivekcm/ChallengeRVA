@@ -51,14 +51,14 @@
 
         <Button
             android:id="@+id/athleteChallengeLogBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:text="Log"
-            android:background="@color/LightBlue"
+            android:background="@drawable/btn_design_yellow"
             app:layout_constraintBottom_toBottomOf="@+id/athleteChallengeNameTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/athleteChallengeNameTextView"

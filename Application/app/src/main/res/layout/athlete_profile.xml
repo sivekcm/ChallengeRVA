@@ -68,7 +68,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="View Your Challenges"
-        android:background="@color/LightBlue"
+        android:background="@drawable/btn_design_yellow"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="View Your Friends"
-        android:background="@color/Orange"
+        android:background="@drawable/btn_design_blue"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +95,7 @@
         app:layout_constraintVertical_bias="0.094" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/athleteProfilePictureImageView"
         android:layout_width="154dp"
         android:layout_height="160dp"
         android:layout_marginStart="8dp"
@@ -109,13 +109,13 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
-        app:layout_constraintVertical_bias="0.733"
+        app:layout_constraintVertical_bias="0.266"
         app:srcCompat="@mipmap/ic_launcher"
         tools:srcCompat="@tools:sample/avatars[9]" />
 
     <Button
         android:id="@+id/resetProfileBtn"
-        android:layout_width="101dp"
+        android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -123,19 +123,19 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_design_orange"
         android:text="Reset Profile"
-        android:background="@color/LightBlue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.346"
+        app:layout_constraintHorizontal_bias="0.183"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/athleteViewFriendsBtn"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.375" />
 
     <Button
         android:id="@+id/deleteAcctBtn"
-        android:layout_width="93dp"
-        android:layout_height="61dp"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -143,12 +143,26 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:text="Delete Account"
-        android:background="@color/LightBlue"
+        android:background="@drawable/btn_design_orange"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/resetProfileBtn"
         app:layout_constraintTop_toBottomOf="@+id/athleteViewFriendsBtn"
         app:layout_constraintVertical_bias="0.379" />
+
+    <TextView
+        android:id="@+id/athleteChangePhotoTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/change_profile_pic"
+        android:textColor="@color/design_default_color_primary"
+        app:layout_constraintBottom_toTopOf="@+id/athleteNameTxtView"
+        app:layout_constraintEnd_toEndOf="@+id/athleteProfilePictureImageView"
+        app:layout_constraintHorizontal_bias="0.47"
+        app:layout_constraintStart_toStartOf="@+id/athleteProfilePictureImageView"
+        app:layout_constraintTop_toBottomOf="@+id/athleteProfilePictureImageView"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

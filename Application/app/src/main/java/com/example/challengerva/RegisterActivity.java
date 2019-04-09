@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -205,17 +208,19 @@ public class RegisterActivity extends AppCompatActivity {
                 else
                 {
                     boolean success = false;
+                    byte[] arr = new byte[] {0,1};
                     //If athlete radio button is checked, User information will be inserted as an Athlete
                     if (athleteRB.isChecked())
                     {
+
                         success = db.insertUser(username, password, firstName, lastName, birthDate,
-                                currentDate, email, 0, "Y", "Athlete");
+                                currentDate, email, 0, "Y", "Athlete",arr);
                     }
                     //If coach radio button is checked, User information wil lbe inserted as a Coach
                     else if (coachRB.isChecked())
                     {
                         success = db.insertUser(username, password, firstName, lastName, birthDate,
-                                currentDate, email, 0, "Y", "Coach");
+                                currentDate, email, 0, "Y", "Coach",arr);
                     }
 
                     //the insert method returns true or false.
@@ -228,6 +233,7 @@ public class RegisterActivity extends AppCompatActivity {
                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                         intent.putExtra("User Object", user);
                         startActivity(intent);
+                        finish();
                     }
                     else
                     {

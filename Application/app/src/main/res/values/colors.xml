@@ -6,8 +6,11 @@
     <color name="Yellow">#f2e82c</color>
     <color name="Grey">#B6B6B2</color>
     <color name="Orange">#D3813D</color>
+    <color name="LightOrange">#FFC35A</color>
     <color name="White">#FFFFFF</color>
     <color name="Black">#000000</color>
-    <color name="LightBlue">#3FA3D5</color>
+    <color name="Blue">#3FA3D5</color>
+    <color name="LightBlue">#9ADEFF</color>
     <color name="Red">#A81414</color>
+    <color name="colorPrimaryDark">#00855F</color>
 </resources>
