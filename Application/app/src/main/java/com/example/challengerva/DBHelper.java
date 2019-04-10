@@ -67,7 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String LB_COL3 = "challenges_count";
 
     //Challenge specific LeaderBoard Table
-    public static final String TABLE_LEADERBOARD_CHALLENGE = "Universal_LeaderBoard";
+    public static final String TABLE_LEADERBOARD_CHALLENGE = "Challenge_LeaderBoard";
     public static final String LBCHALL_COL1 = "rank";
     public static final String LBCHALL_COL2 = "username";
     public static final String LBCHALL_COL3 = "challenges_weight";
@@ -129,8 +129,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "challenges_count INTEGER NOT NULL, " +
                 "private TEXT NOT NULL, " +
                 "type TEXT NOT NULL, " +
-                "image_data BLOB" +
-                "bio TEXT NOT NULL" +
+                "image_data BLOB, " +
+                "bio TEXT" +
                 ") ");
 
         //Challenge table
@@ -977,6 +977,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    /***************************************************
+     * getUserData() method
+     * @return A cursor object containing username and profile picture columns
+     * from every user in the user table
+     */
+    public Cursor getUserDataUsernameAndImage() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT username,image_data FROM User", new String[]{});
+        return cursor;
+    }
+
     /******************************************************
      * getUserData(String column)
      * @param column: the column you wish to compare value to
@@ -1103,9 +1114,11 @@ public class DBHelper extends SQLiteOpenHelper {
      *@param value: the value at which column must equal
      *@return A cursor object containing the Team where column equals value
      */
-    public Cursor getNotificationData(String column, String value){
+    public Cursor getNotificationData(String column, String value) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column + " = ?",new String[] {value});
+        Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column + " = ?", new String[]{value});
+        return cursor;
+    }
 
     public Cursor getLogDataInnerJoin(String teamName, int challengeID, String username)
     {

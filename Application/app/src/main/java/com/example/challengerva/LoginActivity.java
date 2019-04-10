@@ -86,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 //                    db.insertLog("coach",1,"2019-04-18",2);
 //                    db.insertLog("coach",1,"2019-04-19",3);
 
+
                     User user = new User(userData);
                     user.setLoggedUser(true);
                     Log.d("LoginActivity",user.getUsername());

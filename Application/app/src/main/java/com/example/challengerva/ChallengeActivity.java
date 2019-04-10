@@ -169,7 +169,7 @@ public class ChallengeActivity extends AppCompatActivity{
                                     minTeam,
                                     maxTeam,
                                     logRange,
-                                    logUnit);
+                                    logUnit,"",2,0);
 
                     if(success){
                             Toast.makeText(ChallengeActivity.this,

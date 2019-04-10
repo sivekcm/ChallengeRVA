@@ -152,7 +152,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date date = new Date();
                     String currentDate = sdf.format(date);
-                    boolean success = db.insertParticipates(user.getUsername(),challengeID,currentDate,"N");
+                    boolean success = db.insertParticipates(user.getUsername(),challengeID,currentDate,"N","N");
                     if (success)
                     {
                         Toast.makeText(ViewChallengeActivity.this,"Registration Successful",Toast.LENGTH_LONG).show();

@@ -17,7 +17,7 @@ public class PublicProfileActivity extends AppCompatActivity {
     Button profileButton;
 
     Intent intent = getIntent();
-    final User user = intent.getParcelableExtra("User Object");
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +25,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_public_profile);
 
         Intent intent = getIntent();
-        final User user = intent.getParcelableExtra("User Object");
+        user = intent.getParcelableExtra("User Object");
 
         profileUsername = (TextView) findViewById(R.id.publicProfileUsernameTextView);
         profileName = (TextView) findViewById(R.id.publicProfileNameTextView);

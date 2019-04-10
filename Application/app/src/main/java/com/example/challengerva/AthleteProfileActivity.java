@@ -78,8 +78,15 @@ public class AthleteProfileActivity extends AppCompatActivity {
         athleteNameTxtView.setText(user.getFirstName());
         athleteUsernameTxtView.setText(user.getUsername());
 
-        Bitmap bitmap = Utils.getImage(user.getImage());
-        imageView.setImageBitmap(bitmap);
+        if (user.getImage() == null)
+        {
+            imageView.setImageResource(R.drawable.ic_default_profile_picture);
+        }
+        else
+        {
+            Bitmap bitmap = Utils.getImage(user.getImage());
+            imageView.setImageBitmap(bitmap);
+        }
 
         toChangePhotoActivity();
     }
@@ -101,57 +108,57 @@ public class AthleteProfileActivity extends AppCompatActivity {
     public void deleteAcct(final User user) {
         deleteAcctBtn.setOnClickListener(new View.OnClickListener() {
 
-                                             @Override
-                                             public void onClick(View view) {
-                                                 String username = user.getUsername();
-                                                 Cursor userData = db.getUserData("username", username);
-                                                 Cursor challangeUserData = db.getChallengeData("username", username);
-                                                 int challegeID = (challangeUserData.getInt(0));
-                                                 String challengeIDSt = String.valueOf(challangeUserData.getInt(0));
-                                                 Cursor teamUserData = db.getTeamData("username", username);
-                                                 Cursor logUserData = db.getLogData(username, challegeID);
-                                                 Cursor participateUserData = db.getParticipatesData("username", username);
-                                                 Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
-                                                 String teamName = teamUserData.getString(0);
+            @Override
+            public void onClick(View view) {
+                String username = user.getUsername();
+                Cursor userData = db.getUserData("username", username);
+                Cursor challangeUserData = db.getChallengeData("username", username);
+                int challegeID = (challangeUserData.getInt(0));
+                String challengeIDSt = String.valueOf(challangeUserData.getInt(0));
+                Cursor teamUserData = db.getTeamData("username", username);
+                Cursor logUserData = db.getLogData(username, challegeID);
+                Cursor participateUserData = db.getParticipatesData("username", username);
+                Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
+                String teamName = teamUserData.getString(0);
 
-                                                 int deletedChal = 0;
-                                                 int deletedTeam = 0;
-                                                 int deletedLogUser = 0;
-                                                 int deletedParticipates = 0;
-                                                 int deletedLeaderBoard = 0;
-                                                 int deletedNotifications = 0;
-                                                 int deletedUser = 0;
+                int deletedChal = 0;
+                int deletedTeam = 0;
+                int deletedLogUser = 0;
+                int deletedParticipates = 0;
+                int deletedLeaderBoard = 0;
+                int deletedNotifications = 0;
+                int deletedUser = 0;
 
-                                                 while (userData.moveToNext()){
+                while (userData.moveToNext()) {
 
-                                                 }
-                                                 while (challangeUserData.moveToNext()) {
-                                                     deletedChal = db.deleteChallenge(challengeIDSt);
-                                                 }
-                                                 while (teamUserData.moveToNext()) {
-                                                     deletedTeam = db.deleteTeam(teamName, challegeID, username);
-                                                 }
-                                                 while (logUserData.moveToNext()) {
-                                                     deletedLogUser = db.deleteLog(username, challegeID);
-                                                 }
-                                                 while (participateUserData.moveToNext()) {
-                                                     deletedParticipates = db.deleteParticipates(username, challegeID);
-                                                 }
-                                                 while (leaderBoard.moveToNext()) {
-                                                     //PLACE HOLDER
-                                                     deletedLeaderBoard = db.deleteLeaderBoard(12, username);
-                                                 }
+                }
+                while (challangeUserData.moveToNext()) {
+                    deletedChal = db.deleteChallenge(challengeIDSt);
+                }
+                while (teamUserData.moveToNext()) {
+                    deletedTeam = db.deleteTeam(teamName, challegeID, username);
+                }
+                while (logUserData.moveToNext()) {
+                    deletedLogUser = db.deleteLog(username, challegeID);
+                }
+                while (participateUserData.moveToNext()) {
+                    deletedParticipates = db.deleteParticipates(username, challegeID);
+                }
+                while (leaderBoard.moveToNext()) {
+                    //PLACE HOLDER
+                    deletedLeaderBoard = db.deleteLeaderBoard(12, username);
+                }
 
 
-                                                 if (deletedChal > 0 && deletedTeam >0 && deletedLogUser >0 && deletedParticipates >0 && deletedLeaderBoard >0) {
-                                                     Toast toast=Toast.makeText(getApplicationContext(),"User was reset",Toast.LENGTH_LONG);
-                                                 }
-                                                 else {
-                                                     Toast toast=Toast.makeText(getApplicationContext(),"User not reset",Toast.LENGTH_LONG);
-                                                 }
+                if (deletedChal > 0 && deletedTeam > 0 && deletedLogUser > 0 && deletedParticipates > 0 && deletedLeaderBoard > 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "User was reset", Toast.LENGTH_LONG);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "User not reset", Toast.LENGTH_LONG);
+                }
 
-                                             }
-                                         }
+            }
+        });
+    }
 
 
     public void resetAcct(final User user) {

@@ -37,7 +37,16 @@ public class ChangePictureActivity extends AppCompatActivity {
         saveChangesBtn = findViewById(R.id.savePictureChangesBtn);
         imageView = findViewById(R.id.changePictureImageView);
 
-        imageView.setImageBitmap(Utils.getImage(user.getImage()));
+        byte[] image = user.getImage();
+        if (image == null)
+        {
+            imageView.setImageResource(R.drawable.ic_default_profile_picture);
+        }
+        else
+        {
+            Bitmap bitmap = Utils.getImage(image);
+            imageView.setImageBitmap(bitmap);
+        }
 
         selectPhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +76,7 @@ public class ChangePictureActivity extends AppCompatActivity {
                 db.updateUser(user.getUsername(),user.getUsername(),password,
                         user.getFirstName(),user.getLastName(),user.getBirthDate(),
                         user.getJoinDate(),user.getEmail(),user.getChallengesCompleted(),
-                        isPrivate,user.getAccountType().name(),Utils.getBytes(bitmap));
+                        isPrivate,user.getAccountType().name(),Utils.getBytes(bitmap),user.getBio());
 
                 Intent toHomeIntent = null;
                 if (user.getAccountType().equals(User.UserType.ATHLETE))

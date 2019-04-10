@@ -220,19 +220,18 @@ public class RegisterActivity extends AppCompatActivity {
                 else
                 {
                     boolean success = false;
-                    byte[] arr = new byte[] {0,1};
                     //If athlete radio button is checked, User information will be inserted as an Athlete
                     if (athleteRB.isChecked())
                     {
 
                         success = db.insertUser(username, password, firstName, lastName, birthDate,
-                                currentDate, email, 0, "Y", "Athlete",arr);
+                                currentDate, email, 0, "Y", "Athlete",null,null);
                     }
                     //If coach radio button is checked, User information wil lbe inserted as a Coach
                     else if (coachRB.isChecked())
                     {
                         success = db.insertUser(username, password, firstName, lastName, birthDate,
-                                currentDate, email, 0, "Y", "Coach",arr);
+                                currentDate, email, 0, "Y", "Coach",null,null);
                     }
 
                     //the insert method returns true or false.
