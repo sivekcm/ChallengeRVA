@@ -18,8 +18,9 @@ class NotificationReceiver extends BroadcastReceiver {
         repeatingIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 2, repeatingIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
+        String username = intent.getStringExtra("username");
 
-        Boolean needsNotification = intent.getBooleanExtra("Needs Notification", true);
+        Boolean needsNotification = DailyReminder.checkNeedsNotification(context, username);
 
         if(needsNotification) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);

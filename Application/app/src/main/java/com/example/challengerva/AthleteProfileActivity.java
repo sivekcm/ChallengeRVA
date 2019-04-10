@@ -1,26 +1,15 @@
 package com.example.challengerva;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.annotation.IntDef;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextThemeWrapper;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +27,8 @@ public class AthleteProfileActivity extends AppCompatActivity {
     Button athleteViewFriendsBtn;
     Button resetProfileBtn;
     Button deleteAcctBtn;
+    Button privateButton;
+    Button changeBioButton;
 
     //Declaring Recycler View
     RecyclerView athleteChallengesRView;
@@ -65,9 +56,11 @@ public class AthleteProfileActivity extends AppCompatActivity {
 
         //Initializes Buttons to their respective UI elements
         athleteViewChallengesBtn = (Button) findViewById(R.id.createChallengeBtn);
-        athleteViewFriendsBtn = (Button) findViewById(R.id.athleteViewFriendsBtn);
-        deleteAcctBtn = (Button) findViewById(R.id.deleteAcctBtn);
-        resetProfileBtn = (Button) findViewById(R.id.resetProfileBtn);
+        athleteViewFriendsBtn = (Button) findViewById(R.id.athleteEditBioBtn);
+        deleteAcctBtn = (Button) findViewById(R.id.athleteDeleteAcctBtn);
+        resetProfileBtn = (Button) findViewById(R.id.athleteResetProfileBtn);
+        privateButton = (Button) findViewById(R.id.athleteProfilePrivateButton);
+        changeBioButton = (Button) findViewById(R.id.athleteEditBioBtn);
 
         imageView = findViewById(R.id.athleteProfilePictureImageView);
 
@@ -82,6 +75,35 @@ public class AthleteProfileActivity extends AppCompatActivity {
         imageView.setImageBitmap(bitmap);
 
         toChangePhotoActivity();
+
+        //The following code handles the Private button
+        if(user.isPrivate())
+            privateButton.setText("Make Profile Public");
+        else
+            privateButton.setText("Make Profile Private");
+
+        privateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user.isPrivate())
+                    privateButton.setText("Make Profile Private");
+                else privateButton.setText("Make Profile Public");
+                user.togglePrivate();
+                db.updateUser(user.getParameters());
+
+            }
+        });
+
+        //The following code handles the Bio button
+        changeBioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent changeBioIntent = new Intent(AthleteProfileActivity.this, EditBioActivity.class);
+                changeBioIntent.putExtra("user object", user);
+                startActivity(changeBioIntent);
+            }
+        });
+
     }
 
     public void fillChallengesList() {
@@ -106,18 +128,18 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 String username = user.getUsername();
 
                 Cursor userData = db.getUserData("username", username);
-                Cursor challangeUserData = db.getChallengeData("username", username);
+                Cursor challengeUserData = db.getChallengeData("username", username);
                 Cursor teamUserData = db.getTeamData("username", username);
                 String teamName = teamUserData.getString(0);
 
                 while (userData.moveToNext()) {
-                    int challegeID = (challangeUserData.getInt(0));
-                    String challengeIDSt = String.valueOf(challangeUserData.getInt(0));
+                    int challengeID = (challengeUserData.getInt(0));
+                    String challengeIDSt = String.valueOf(challengeUserData.getInt(0));
                     int deletedUser = db.deleteUser(username);
 
                     int deletedChal = db.deleteChallenge(challengeIDSt);
-                    int deletedLog = db.deleteLog(username, challegeID);
-                    int deletedTeam = db.deleteTeam(teamName, challegeID, user.getUsername());
+                    int deletedLog = db.deleteLog(username, challengeID);
+                    int deletedTeam = db.deleteTeam(teamName, challengeID, user.getUsername());
                     // need cursors participates, notification, and leaderboard
 
                     //int deleted participate
