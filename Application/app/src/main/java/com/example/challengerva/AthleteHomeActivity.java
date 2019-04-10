@@ -32,6 +32,10 @@ public class AthleteHomeActivity extends AppCompatActivity {
         leaderboardBtn = findViewById(R.id.athleteHomeLeaderboardBtn);
         logoutBtn = findViewById(R.id.athleteHomeLogoutBtn);
 
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        DailyReminder.dailyReminder(this, alarmManager, user.getUsername());
+
         searchChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

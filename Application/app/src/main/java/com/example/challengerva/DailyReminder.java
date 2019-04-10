@@ -12,14 +12,14 @@ import static android.content.Context.ALARM_SERVICE;
 
 public class DailyReminder {
 
-    public static void dailyReminder(Context lastContext, AlarmManager alarmManager, Boolean isActive, String username)
+    public static void dailyReminder(Context lastContext, AlarmManager alarmManager, String username)
     {
         Calendar notificationCalendar = Calendar.getInstance();
         notificationCalendar.set(Calendar.HOUR_OF_DAY,20);
         Intent notificationIntent = new Intent(lastContext, NotificationReceiver.class);
 
 
-        notificationIntent.putExtra("Needs Notification", isActive);
+        notificationIntent.putExtra("username", username);
         PendingIntent pendingNotificationIntent = PendingIntent.getBroadcast(lastContext, 1, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, notificationCalendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingNotificationIntent);
@@ -31,11 +31,11 @@ public class DailyReminder {
      *
      * This method determines if a user meets requirements for receiving a reminder notification.
      */
-    private static boolean checkNeedsNotification(Context lastContext, String username)
+    public static boolean checkNeedsNotification(Context lastContext, String username)
     {
         DBHelper dbHelper = new DBHelper(lastContext);
         Cursor userChallenges = dbHelper.getParticipatesData("username", username);
-        if(hasActiveChallenge(userChallenges) && !hasLoggedToday())
+        if(hasActiveChallenge(userChallenges) && !loggedSomethingToday(username, userChallenges, lastContext))
             return true;
         else return false;
 
@@ -51,16 +51,25 @@ public class DailyReminder {
             Challenge challenge = new Challenge(userChallenges);
             if(challenge.isActiveToday())
                 return true;
+
+            userChallenges.moveToNext();
         }
         return false;
     }
 
-    private static boolean hasLoggedToday()
+    private static boolean loggedSomethingToday(String username, Cursor userChallenges, Context thisContext)
     {
+        userChallenges.moveToFirst();
+        int challengeID;
+        DBHelper dbHelper = new DBHelper(thisContext);
+        while(!userChallenges.isAfterLast())
+        {
+            challengeID = userChallenges.getInt(0);
+            if(dbHelper.hasLoggedToday(username, challengeID))
+                return true;
+
+            userChallenges.moveToNext();
+        }
         return false;
     }
 }
-
-//AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        DailyReminder.dailyReminder(this, alarmManager);
-

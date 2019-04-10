@@ -116,6 +116,30 @@ public class User implements Parcelable {
     }
 
 
+
+    /**
+     * togglePrivate Method
+     *
+     * This method switches the private status of a user.
+     */
+    public void togglePrivate() {
+        isPrivate = !isPrivate;
+        return;
+    }
+
+    /**
+     * setBio method
+     * @param newBio
+     *
+     * This method sets the bio field to something new.
+     */
+    public void setBio(String newBio) {
+        this.bio = newBio;
+        return;
+
+    }
+
+
     //Enumeration used to determine type of account
     enum UserType
     {
