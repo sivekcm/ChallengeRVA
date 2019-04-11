@@ -17,6 +17,7 @@ public class AthleteHomeActivity extends AppCompatActivity {
     Button profileBtn;
     Button leaderboardBtn;
     Button logoutBtn;
+    Button searchUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class AthleteHomeActivity extends AppCompatActivity {
         profileBtn = findViewById(R.id.athleteHomeProfileBtn);
         leaderboardBtn = findViewById(R.id.athleteHomeLeaderboardBtn);
         logoutBtn = findViewById(R.id.athleteHomeLogoutBtn);
+        searchUser = findViewById(R.id.athleteHomeSearchUserBtn);
 
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -68,6 +70,16 @@ public class AthleteHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+            }
+        });
+
+        searchUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toSearchUserIntent = new Intent(AthleteHomeActivity.this,UserSearchActivity.class);
+                toSearchUserIntent.putExtra("User Object", user);
+
+                startActivity(toSearchUserIntent);
             }
         });
 

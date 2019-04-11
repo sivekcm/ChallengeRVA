@@ -1,9 +1,11 @@
 package com.example.challengerva;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -93,9 +95,12 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
                         intent.putExtra("challenge", challenge);
 
 
-                        context.startActivity(intent);
+                        ((Activity)context).startActivityForResult(intent,0);
+
+
                     }
                 });
+
             }
             else
             {
@@ -109,6 +114,7 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
             viewHolder.logBtn.setVisibility(View.GONE);
         }
     }
+
 
     @Override
     public int getItemCount() {

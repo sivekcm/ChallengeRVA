@@ -19,14 +19,21 @@ public class PublicProfileActivity extends AppCompatActivity {
     Button profileButton;
 
     Intent intent = getIntent();
-    final User user = intent.getParcelableExtra("User Object");
-    final User otherUser = intent.getParcelableExtra("Other User Object");
+
+    User user;
+    User otherUser;
     final DBHelper db = new DBHelper(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public_profile);
+
+
+        Intent intent = getIntent();
+        user = intent.getParcelableExtra("User Object");
+        otherUser = intent.getParcelableExtra("other user");
 
 
         profileUsername = (TextView) findViewById(R.id.publicProfileUsernameTextView);
