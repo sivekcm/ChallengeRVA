@@ -15,7 +15,7 @@ Question    |          Person                                             | 4/2/
 |            | Chris Sivek | No | Work | Work | No | Work in morning | two test this week, work through wednesday | Tests and work | Work |
 |            | Shradda Adhikari | No | Work | Out of town | No | Work all day | Class and work | Class and work | Illness? |
 |            | Farhana Khan | No | No| Out of town | Busy all day Saturday | No | Group project deadline tomorrow night | Busy with other deadlines | None |
-| What insights have you made? | Adrienne Serra | Logic necessary to implement with logging | None | None | None | Integrating somewhat overlapped work | None | None | None |
+| What insights have you made? | Adrienne Serra | Logic necessary to implement with logging | None | None | None | Integrating somewhat overlapped work | None | None | Extra unused buttons as well as missing buttons in Athlete and Coach profiles |
 |            | Chris Sivek |  Modifications in DBHelper needed | None | Nothing | None | None | need to resolve conflicts within user table | None | New view styles |
 |            | Shradda Adhikari | More balanced assignments necessary | None | None | None | None | functionality of the .moveNext() method in cursors | None | None |
 |            | Farhana Khan | Balance assignments | None | None | None | Need more efficient/accomodating meeting times | Standardization is important | None | None |
