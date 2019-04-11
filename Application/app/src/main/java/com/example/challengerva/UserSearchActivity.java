@@ -6,6 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 public class UserSearchActivity extends AppCompatActivity {
 
@@ -31,6 +35,32 @@ public class UserSearchActivity extends AppCompatActivity {
         showResults(cursor);
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.user_search_menu,menu);
+
+        MenuItem item = menu.findItem(R.id.userSearchBar);
+        SearchView search = (SearchView)item.getActionView();
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                s = "%" + s + "%";
+                cursor = db.getUserWildCard("username",s);
+                showResults(cursor);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        return true;
+    }
+
 
     public void showResults(Cursor cursor)
     {

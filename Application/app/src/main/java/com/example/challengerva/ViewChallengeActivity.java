@@ -107,7 +107,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
         maxTeam = challenge.getMaxTeam();
 
         Cursor cursor = db.getParticipatesData("username",user.getUsername(),"challenge_id",String.valueOf(challenge.getChallengeID()));
-        Cursor userChallengeCursor = db.getChallengeData("username",user.getUsername());
+//        Cursor userChallengeCursor = db.getChallengeData("username",user.getUsername());
 
         //if the user has completed that challenge
         rateChallengeTxtView.setVisibility(View.VISIBLE);

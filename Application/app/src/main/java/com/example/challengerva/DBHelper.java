@@ -49,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL14 = "log_range";
     public static final String CHAL_COL15 = "log_unit";
 
-    public static final String CHAL_COL16 = "competitionType";
+    public static final String CHAL_COL16 = "competition_type";
     public static final String CHAL_COL17 = "number_ratings";
     public static final String CHAL_COL18 = "total_rating";
 
@@ -325,8 +325,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
                                    String hazards, String description, int minTeam,
-                                   int maxTeam, int logRange, String logUnit, String competitionType,
-                                   int numberRatings, int totalRating) {
+                                   int maxTeam, int logRange, String logUnit, String competitionType, int numberRatings, int totalRating) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -1025,6 +1024,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getBitmapByUsername(String username){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT image_data FROM User WHERE username = ?", new String[] {username});
+        return cursor;
+    }
+
+    public Cursor getUserWildCard(String column, String wildcard) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE " + column + " LIKE '" + wildcard + "'", new String[]{});
         return cursor;
     }
 
