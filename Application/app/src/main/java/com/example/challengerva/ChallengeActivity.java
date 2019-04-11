@@ -124,6 +124,7 @@ public class ChallengeActivity extends AppCompatActivity{
                 //return selected item
                 int selectedID = competionTypeGroup.getCheckedRadioButtonId();
                 competitionTypeButton = findViewById(selectedID);
+                String competitionType = competitionTypeButton.toString();
 
                 //Execute onRatingBar
                 addListenerOnRatingBar();
@@ -169,7 +170,9 @@ public class ChallengeActivity extends AppCompatActivity{
                                     minTeam,
                                     maxTeam,
                                     logRange,
-                                    logUnit,"",2,0);
+                                    logUnit,
+                                    competitionType);
+
 
                     if(success){
                             Toast.makeText(ChallengeActivity.this,

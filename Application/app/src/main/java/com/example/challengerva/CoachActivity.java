@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,6 +44,14 @@ public class CoachActivity extends AppCompatActivity {
     //Declares Buttons
     Button createChallengeBtn;
     Button viewChallengesBtn;
+    Button privateButton;
+    Button changeBioButton;
+    Button resetProfileBtn;
+    Button deleteProfileBtn;
+
+    ImageView profileImage;
+
+    DBHelper db = new DBHelper(this);
 
     User user;
     /*******************************
@@ -67,6 +77,10 @@ public class CoachActivity extends AppCompatActivity {
         //Initializes Buttons to their respective UI elements
         createChallengeBtn = (Button)findViewById(R.id.createChallengeBtn);
         viewChallengesBtn = (Button)findViewById(R.id.viewAll);
+        privateButton = findViewById(R.id.coachProfilePrivateButton);
+        changeBioButton = findViewById(R.id.coachEditBioBtn);
+        resetProfileBtn = findViewById(R.id.coachResetProfileBtn);
+        deleteProfileBtn = findViewById(R.id.coachProfileDeleteButton);
 
 
         //Setting the name and user name text views to the coach name and user name
@@ -75,6 +89,7 @@ public class CoachActivity extends AppCompatActivity {
         //Creating new instance of DBHelper to use database methods
         final DBHelper challenge = new DBHelper(CoachActivity.this);
 
+        profileImage = findViewById(R.id.coachProfileImg);
 
         //Calling openChallengeActivity method
         openChallengeActivity(user);
@@ -83,6 +98,38 @@ public class CoachActivity extends AppCompatActivity {
         viewAll(user);
 
         toChangePictureActivity();
+
+        //Setting profile picture
+        Bitmap bitmap = Utils.getImage(user.getImage());
+        profileImage.setImageBitmap(bitmap);
+
+        //The following code handles the Private button
+        if(user.isPrivate())
+            privateButton.setText("Make Profile Public");
+        else
+            privateButton.setText("Make Profile Private");
+
+        privateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(user.isPrivate())
+                    privateButton.setText("Make Profile Private");
+                else privateButton.setText("Make Profile Public");
+                user.togglePrivate();
+                db.updateUser(user.getParameters());
+
+            }
+        });
+
+        //The following code handles the Bio button
+        changeBioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent changeBioIntent = new Intent(CoachActivity.this, EditBioActivity.class);
+                changeBioIntent.putExtra("user object", user);
+                startActivity(changeBioIntent);
+            }
+        });
 
     }
     /**
@@ -105,7 +152,7 @@ public class CoachActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Cursor res = db.getChallengeCoach(user.getUsername());
                          if (res.getCount() == 0) {
-                          showMessage("Nothing Found", "You have no challenges");
+                          showMessage("Nothing Found", "You have no challenges", CoachActivity.this);
                                return;
                           }
                           StringBuffer buffer = new StringBuffer();
@@ -130,7 +177,7 @@ public class CoachActivity extends AppCompatActivity {
                             }
 
                     }
-                        showMessage("Challenges", buffer.toString());
+                        showMessage("Challenges", buffer.toString(), CoachActivity.this);
                 }
             });
             }
@@ -171,10 +218,10 @@ public class CoachActivity extends AppCompatActivity {
      * Show message method
      * @param : String title and String metssage
      * @return : none
-     * Holds the alert dialog builder to show the coach thier challenges
+     * Holds the alert dialog builder to show the coach their challenges
      */
-    public void showMessage(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    public static void showMessage(String title, String message, Context thisContext) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(thisContext);
         builder.setCancelable(true);
         builder.setTitle(title);
         builder.setMessage(message);

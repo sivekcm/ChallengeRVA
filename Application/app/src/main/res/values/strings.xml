@@ -103,5 +103,8 @@
     <string name="prev_challenges">Previous</string>
     <string name="change_profile_pic">Change your profile picture</string>
 
+    <string name="change_bio_header">Change Your Profile Bio</string>
+    <string name="change_bio_button">Save Bio</string>
+
 
 </resources>
