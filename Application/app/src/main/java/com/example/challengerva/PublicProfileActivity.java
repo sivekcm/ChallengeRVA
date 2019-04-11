@@ -32,7 +32,9 @@ public class PublicProfileActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("User Object");
+        Cursor userCursor = db.getUserData("username",intent.getStringExtra("User Object"));
+        userCursor.moveToNext();
+        user = new User(userCursor);
         otherUser = intent.getParcelableExtra("other user");
 
 
@@ -42,8 +44,15 @@ public class PublicProfileActivity extends AppCompatActivity {
         profileIcon = (ImageView) findViewById(R.id.publicProfileImageView);
         profileButton = (Button) findViewById(R.id.publicProfileButton);
 
-        Bitmap bitmap = Utils.getImage(otherUser.getImage());
-        profileIcon.setImageBitmap(bitmap);
+        byte[] image = otherUser.getImage();
+        if (image == null)
+        {
+            profileIcon.setImageResource(R.drawable.ic_default_profile_picture);
+        }
+        else {
+            Bitmap bitmap = Utils.getImage(image);
+            profileIcon.setImageBitmap(bitmap);
+        }
 
         //The following section handles public and private settings.
 

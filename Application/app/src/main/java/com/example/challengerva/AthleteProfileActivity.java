@@ -111,6 +111,9 @@ public class AthleteProfileActivity extends AppCompatActivity {
             }
         });
 
+        deleteAcct();
+        resetAcct();
+
     }
 
     public void fillChallengesList() {
@@ -127,14 +130,14 @@ public class AthleteProfileActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void deleteAcct(final User user) {
+    public void deleteAcct() {
         deleteAcctBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 String username = user.getUsername();
                 Cursor userData = db.getUserData("username", username);
-                Cursor challangeUserData = db.getChallengeData("username", username);
+                Cursor challangeUserData = db.getChallengeData("coach", username);
                 int challegeID = (challangeUserData.getInt(0));
                 String challengeIDSt = String.valueOf(challangeUserData.getInt(0));
                 Cursor teamUserData = db.getTeamData("username", username);
@@ -154,22 +157,14 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 while (userData.moveToNext()) {
 
                 }
-                while (challangeUserData.moveToNext()) {
-                    deletedChal = db.deleteChallenge(challengeIDSt);
-                }
-                while (teamUserData.moveToNext()) {
-                    deletedTeam = db.deleteTeam(teamName, challegeID, username);
-                }
-                while (logUserData.moveToNext()) {
-                    deletedLogUser = db.deleteLog(username, challegeID);
-                }
-                while (participateUserData.moveToNext()) {
-                    deletedParticipates = db.deleteParticipates(username, challegeID);
-                }
-                while (leaderBoard.moveToNext()) {
-                    //PLACE HOLDER
-                    deletedLeaderBoard = db.deleteLeaderBoard(12, username);
-                }
+                deletedChal = db.deleteChallenge(challengeIDSt);
+                deletedTeam = db.deleteTeam(teamName, challegeID, username);
+                deletedLogUser = db.deleteLog(username, challegeID);
+                deletedParticipates = db.deleteParticipates(username, challegeID);
+
+                //PLACE HOLDER
+                deletedLeaderBoard = db.deleteLeaderBoard(username);
+
 
 
                 if (deletedChal > 0 && deletedTeam > 0 && deletedLogUser > 0 && deletedParticipates > 0 && deletedLeaderBoard > 0) {
@@ -183,7 +178,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
     }
 
 
-    public void resetAcct(final User user) {
+    public void resetAcct() {
         resetProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -205,22 +200,22 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 int deletedNotifications = 0;
 
 
-                while (challangeUserData.moveToNext()) {
-                    deletedChal = db.deleteChallenge(challengeIDSt);
-                }
-                while (teamUserData.moveToNext()) {
-                    deletedTeam = db.deleteTeam(teamName, challegeID, username);
-                }
-                while (logUserData.moveToNext()) {
-                    deletedLogUser = db.deleteLog(username, challegeID);
-                }
-                while (participateUserData.moveToNext()) {
-                    deletedParticipates = db.deleteParticipates(username, challegeID);
-                }
-                while (leaderBoard.moveToNext()) {
-                    //PLACE HOLDER
-                    deletedLeaderBoard = db.deleteLeaderBoard(12, username);
-                }
+
+                 deletedChal = db.deleteChallenge(challengeIDSt);
+
+
+                 deletedTeam = db.deleteTeam(teamName, challegeID, username);
+
+
+                 deletedLogUser = db.deleteLog(username, challegeID);
+
+
+                 deletedParticipates = db.deleteParticipates(username, challegeID);
+
+
+                 //PLACE HOLDER
+                 deletedLeaderBoard = db.deleteLeaderBoard(username);
+
 
 
                 if (deletedChal > 0 && deletedTeam >0 && deletedLogUser >0 && deletedParticipates >0 && deletedLeaderBoard >0) {

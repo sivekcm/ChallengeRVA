@@ -171,7 +171,7 @@ public class ChallengeActivity extends AppCompatActivity{
                                     maxTeam,
                                     logRange,
                                     logUnit,
-                                    competitionType);
+                                    competitionType, 0,0);
 
 
                     if(success){

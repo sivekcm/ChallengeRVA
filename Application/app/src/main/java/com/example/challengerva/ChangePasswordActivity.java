@@ -42,6 +42,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 //Successfully changes password
                 else{
                     Cursor userCursor = db.getUserData("email",userEmail);
+                    userCursor.moveToNext();
                     User updatedUser = new User(userCursor);
                     Object[] userParameters = updatedUser.getParameters();
                     userParameters[2] = newPassword;

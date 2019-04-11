@@ -97,6 +97,7 @@ public class TeamActivity extends AppCompatActivity {
                 Intent intent = new Intent(TeamActivity.this,OtherUserProfileActivity.class);
                 String otherUsername = cursor.getString(2);
                 Cursor otherUserCursor = db.getUserData("username",otherUsername);
+                otherUserCursor.moveToNext();
                 User otherUser = new User(otherUserCursor);
                 otherUser.setLoggedUser(false);
                 intent.putExtra("other user",otherUser);

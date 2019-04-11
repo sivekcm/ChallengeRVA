@@ -240,7 +240,8 @@ public class RegisterActivity extends AppCompatActivity {
                     if (success)
                     {
                         Toast.makeText(RegisterActivity.this,"Registered Successfully!",Toast.LENGTH_LONG).show();
-                        User user = new User(db.getUserData("username",username));
+                        Cursor userCursor = db.getUserData("username",username);
+                        User user = new User(userCursor);
                         Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                         intent.putExtra("User Object", user);
                         startActivity(intent);

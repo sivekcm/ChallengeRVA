@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                             "Please fill in every required field",LoginActivity.this);
                 }
                 Cursor userData = db.getUserData("username",username,"password",password);
+                userData.moveToNext();
 
                 if (hasAllFields(username, password) && userData.getCount() == 0)
                 {

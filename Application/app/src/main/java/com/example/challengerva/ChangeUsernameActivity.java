@@ -38,6 +38,7 @@ public class ChangeUsernameActivity extends AppCompatActivity {
                             "is already taken. Please choose another.", ChangeUsernameActivity.this);
                 else{
                     Cursor userCursor = db.getUserData("email",userEmail);
+                    userCursor.moveToNext();
                     User updatedUser = new User(userCursor);
                     updatedUser.setUsername(newUsername);
                     db.updateUser(updatedUser.getParameters());
