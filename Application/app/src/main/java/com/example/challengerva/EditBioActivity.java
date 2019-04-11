@@ -27,17 +27,26 @@ public class EditBioActivity extends AppCompatActivity {
         bioButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                user.setBio(bioTextBox.getText().toString());
+                String bio = bioTextBox.getText().toString();
+                if (bio.isEmpty())
+                {
+                    AlertMessage.alertMessage("Invalid input","Please fill out the field before clicking submit",EditBioActivity.this);
+                }
+                else {
+                    user.setBio(bio);
+                }
                 dbHelper.updateUser(user.getParameters());
                 Intent profileIntent;
+                setResult(RESULT_OK);
 
-                if(user.getAccountType() == User.UserType.COACH)
+                if(user.getAccountType() == User.UserType.COACH) {
                     profileIntent = new Intent(EditBioActivity.this, CoachActivity.class);
+                }
                 else profileIntent = new Intent(EditBioActivity.this, AthleteProfileActivity.class);
 
                 profileIntent.putExtra("User Object", user);
                 startActivity(profileIntent);
-
+                finish();
             }
         });
 

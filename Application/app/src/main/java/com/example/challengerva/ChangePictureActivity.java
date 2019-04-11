@@ -90,7 +90,9 @@ public class ChangePictureActivity extends AppCompatActivity {
                 user.setImage(Utils.getBytes(bitmap));
                 toHomeIntent.putExtra("User Object", user);
                 toHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                setResult(RESULT_OK);
                 startActivity(toHomeIntent);
+                finish();
             }
         });
     }

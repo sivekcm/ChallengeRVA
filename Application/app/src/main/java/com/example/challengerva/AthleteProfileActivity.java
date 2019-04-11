@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -107,7 +108,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent changeBioIntent = new Intent(AthleteProfileActivity.this, EditBioActivity.class);
                 changeBioIntent.putExtra("user object", user);
-                startActivity(changeBioIntent);
+                startActivityForResult(changeBioIntent,0);
             }
         });
 
@@ -236,9 +237,21 @@ public class AthleteProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(AthleteProfileActivity.this,ChangePictureActivity.class);
                 intent.putExtra("User Object",user);
-                startActivity(intent);
+                startActivityForResult(intent,0);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                finish();
+            }
+        }
     }
 }
 
