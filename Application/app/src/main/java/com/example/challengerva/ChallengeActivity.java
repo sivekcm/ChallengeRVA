@@ -177,6 +177,11 @@ public class ChallengeActivity extends AppCompatActivity{
                             Toast.makeText(ChallengeActivity.this,
                                     "Challenge Successfully Created!",
                                     Toast.LENGTH_LONG).show();
+
+                            Intent intent = new Intent(ChallengeActivity.this,CoachActivity.class);
+                            intent.putExtra("User Object",user);
+                            startActivity(intent);
+                            finish();
                     }
                     else {
                             Toast.makeText(ChallengeActivity.this,

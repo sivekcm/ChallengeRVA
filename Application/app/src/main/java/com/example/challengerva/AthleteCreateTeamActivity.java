@@ -73,6 +73,7 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
                 intent.putExtra("User Object", user);
                 intent.putExtra("challenge", challenge);
                 startActivity(intent);
+                finish();
             }
         });
     }
