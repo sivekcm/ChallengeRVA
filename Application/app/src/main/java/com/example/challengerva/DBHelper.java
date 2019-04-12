@@ -73,6 +73,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String LBCHALL_COL2 = "rank";
     public static final String LBCHALL_COL3 = "username";
     public static final String LBCHALL_COL4 = "challenge_weight";
+    public static final String LBCHALL_COL5 = "challenge_total";
 
     //Participates Table
     public static final String TABLE_PARTICIPATES = "Participates";
@@ -415,23 +416,35 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-
-    public boolean insertChallengeLeaderBoard(int rank, String username, int challengesCount) {
+    /*************************************************************************
+     * insertChallengeLeaderBoard method
+     * @param  challenge: challenge name
+     * @param rank: the rank of the user
+     * @param username: the user (unique pairing with rank
+     * @param weight: the amount of a challenge completed by user
+     * @param total: total goal for given challenge
+     * @return false if insert fails, true if data is inserted successfully
+     *
+     * This methods inserts a new data entry (a full row) into the leaderboard
+     * table. No two data entries may have the same rank and username pairing.
+     * Only challengesComp can be null
+     */
+    public boolean insertChallengeLeaderBoard(String challenge, int rank, String username, int weight, int total) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(LB_COL1, rank);
-        cv.put(LB_COL2, username);
-        cv.put(LB_COL3, challengesCount);
+        cv.put(LBCHALL_COL1, challenge);
+        cv.put(LBCHALL_COL2, rank);
+        cv.put(LBCHALL_COL3, username);
+        cv.put(LBCHALL_COL4, weight);
+        cv.put(LBCHALL_COL5, total);
 
-        long num = db.insert(TABLE_LEADERBOARD, null, cv);
+        long num = db.insert(TABLE_LEADERBOARD_CHALLENGE, null, cv);
         if (num == -1) {
             return false;
         } else {
             return true;
         }
     }
-
-
 
     /********************************************************************************
      * insertParticipates method
@@ -1092,7 +1105,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public Cursor getChallengeLeaderBoardData(String challenge){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge LeaderBoard ORDER BY challenge_count",new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge LeaderBoard ORDER BY weight",new String[]{});
         return cursor;
     }
 

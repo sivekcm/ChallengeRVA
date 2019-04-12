@@ -47,7 +47,15 @@
             </ListView>
 
             <ListView
-                android:id="@+id/leaderboard_chall_ratio"
+                android:id="@+id/leaderboard_chall_weight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33">
+
+            </ListView>
+
+            <ListView
+                android:id="@+id/leaderboard_chall_total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.33">
