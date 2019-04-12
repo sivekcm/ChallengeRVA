@@ -66,11 +66,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String LB_COL2 = "username";
     public static final String LB_COL3 = "challenges_count";
 
-    //Challenge specific LeaderBoard Table
-    public static final String TABLE_LEADERBOARD_CHALLENGE = "Challenge_LeaderBoard";
-    public static final String LBCHALL_COL1 = "rank";
-    public static final String LBCHALL_COL2 = "username";
-    public static final String LBCHALL_COL3 = "challenges_weight";
+    //Challenge Specific LeaderBoard Table
+    public static final String TABLE_LEADERBOARD_CHALLENGE = "Challenge LeaderBoard";
+    public static final String LBCHALL_COL1 = "challenge_name";
+    public static final String LBCHALL_COL2 = "rank";
+    public static final String LBCHALL_COL3 = "username";
+    public static final String LBCHALL_COL4 = "challenge_weight";
 
     //Participates Table
     public static final String TABLE_PARTICIPATES = "Participates";
@@ -186,6 +187,9 @@ public class DBHelper extends SQLiteOpenHelper {
         //Stores leaderBoard data for specified challenge
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD_CHALLENGE + "(" +
                     "rank INTEGER NOT NULL, " +
+                    "username TEXT NOT NULL " +
+                    "challenges_log DOUBLE NOT NULL, " +
+                    "challenges_total INT NOT NULL" +
                     "username TEXT NOT NULL, " +
                     "challenges_weight DOUBLE NOT NULL, " +
                     "PRIMARY KEY(rank, username), " +
@@ -1090,12 +1094,22 @@ public class DBHelper extends SQLiteOpenHelper {
     }
     /**********************************************************************
      * getUniversalLeaderBoardsData(String column)
-     * @param col:the column you wish to compare value to
      * @return A cursor object containing the Team of the entire column specified
      */
-    public Cursor getUniversalLeaderBoardData(String col){
+    public Cursor getUniversalLeaderBoardData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Universal LeaderBoard WHERE col", new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM Universal LeaderBoard ORDER BY challenge_count",new String[]{});
+        return cursor;
+    }
+
+    /**********************************************************************
+     * getUniversalLeaderBoardsData(String column)
+     * @param challenge: name of the challenge for the leaderboard
+     * @return A cursor object containing the Team of the entire column specified
+     */
+    public Cursor getChallengeLeaderBoardData(String challenge){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge LeaderBoard ORDER BY challenge_count",new String[]{});
         return cursor;
     }
 
