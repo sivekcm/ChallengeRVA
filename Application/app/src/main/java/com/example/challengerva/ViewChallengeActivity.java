@@ -107,13 +107,26 @@ public class ViewChallengeActivity extends AppCompatActivity{
         maxTeam = challenge.getMaxTeam();
 
         Cursor cursor = db.getParticipatesData("username",user.getUsername(),"challenge_id",String.valueOf(challenge.getChallengeID()));
-//        Cursor userChallengeCursor = db.getChallengeData("username",user.getUsername());
 
-        //if the user has completed that challenge
-        rateChallengeTxtView.setVisibility(View.VISIBLE);
-        rateChallengeBar.setVisibility(View.VISIBLE);
+        String username = user.getUsername();
+        Cursor completedCursor = db.getParticipatesData("username", username, "completed", "yes");
 
 
+        if (completedCursor.getCount() >0){
+            rateChallengeTxtView.setVisibility(View.VISIBLE);
+            rateChallengeBar.setVisibility(View.VISIBLE);
+            final Cursor challengeCursor = db.getChallengeData("username", username);
+            int rating =0;
+            rateChallengeBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                @Override
+                public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                    int newTotalRatings = challengeCursor.getInt(17) + 1;
+                    int rate = (int)rating;
+                    db.updateRating(rate, newTotalRatings);
+                }
+        }
+        );
+        }
 
         if (cursor.getCount() == 1) {
             registerChallengeButton.setVisibility(View.GONE);
