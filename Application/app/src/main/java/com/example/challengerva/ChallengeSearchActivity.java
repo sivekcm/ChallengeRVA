@@ -51,7 +51,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
      * Creates the option menu
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         //Sets the format and contents of menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
@@ -59,13 +59,19 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
         //Instantiates spinner and searchview for the menu
         MenuItem item = menu.findItem(R.id.search);
         MenuItem spinnerItem = menu.findItem(R.id.filter);
-        SearchView searchView = (SearchView) item.getActionView();
+        final SearchView searchView = (SearchView) item.getActionView();
         spinner = (Spinner) spinnerItem.getActionView();
 
         //sets up the spinner
         ArrayAdapter<CharSequence> arrAdapter = ArrayAdapter.createFromResource(this, R.array.filters, android.R.layout.simple_spinner_item);
         arrAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrAdapter);
+
+        if (spinnerItem.isActionViewExpanded() && item.isActionViewExpanded())
+        {
+            spinnerItem.collapseActionView();
+            item.collapseActionView();
+        }
 
         filterArr = getResources().getStringArray(R.array.filters);
 
@@ -92,6 +98,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
         });
         return true;
     }
+
 
     /*************************************************************
      * filterResults method

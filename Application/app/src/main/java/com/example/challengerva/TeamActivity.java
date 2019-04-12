@@ -78,7 +78,7 @@ public class TeamActivity extends AppCompatActivity {
 
         cursor = db.getTeamData("team_name",team.getName(),"challenge_id",String.valueOf(team.getChallengeID()));
         showResults(cursor);
-        toOtherUserProfileActivity(cursor,adapter);
+        toPublicProfileActivity(cursor,adapter);
     }
 
     public void showResults(Cursor cursor)
@@ -88,13 +88,13 @@ public class TeamActivity extends AppCompatActivity {
         teamRV.swapAdapter(adapter,false);
     }
 
-    public void toOtherUserProfileActivity(final Cursor cursor, TeamMemberAdapter adapter)
+    public void toPublicProfileActivity(final Cursor cursor, TeamMemberAdapter adapter)
     {
         adapter.setOnItemClickListener(new TeamMemberAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 cursor.moveToPosition(position);
-                Intent intent = new Intent(TeamActivity.this,OtherUserProfileActivity.class);
+                Intent intent = new Intent(TeamActivity.this,PublicProfileActivity.class);
                 String otherUsername = cursor.getString(2);
                 Cursor otherUserCursor = db.getUserData("username",otherUsername);
                 otherUserCursor.moveToNext();

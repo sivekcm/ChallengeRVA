@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder>
@@ -38,6 +39,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         TextView challengeCatTextView;
         TextView challengeDurTextView;
         TextView challengeDescTextView;
+        ImageView challengeImageView;
 
         public ChallengeViewHolder(@NonNull View itemView, final OnItemClickListener listen) {
             super(itemView);
@@ -48,6 +50,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
             challengeCatTextView = itemView.findViewById(R.id.searchChallengeCatTextView);
             challengeDurTextView = itemView.findViewById(R.id.searchChallengeDurTextView);
             challengeDescTextView = itemView.findViewById(R.id.searchChallengeDescTextView);
+            challengeImageView = itemView.findViewById(R.id.searchChallengeImageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,8 +87,7 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
 
     @Override
     public void onBindViewHolder(@NonNull ChallengeViewHolder challengeViewHolder, int i) {
-        if (!cursor.moveToPosition(i))
-        {
+        if (!cursor.moveToPosition(i)) {
             return;
         }
 
@@ -103,6 +105,16 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         challengeViewHolder.challengeDiffTextView.setText(String.valueOf(difficulty));
         challengeViewHolder.challengeCatTextView.setText(category);
         challengeViewHolder.challengeDescTextView.setText(description);
+        
+        byte[] image = cursor.getBlob(18);
+        if (image != null)
+        {
+            challengeViewHolder.challengeImageView.setImageBitmap(Utils.getImage(image));
+        }
+        else
+        {
+            challengeViewHolder.challengeImageView.setImageResource(R.drawable.ic_default_profile_picture);
+        }
 
     }
 

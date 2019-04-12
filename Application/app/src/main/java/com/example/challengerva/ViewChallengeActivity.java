@@ -8,6 +8,7 @@ import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,11 +53,14 @@ public class ViewChallengeActivity extends AppCompatActivity{
            leaderboardBtn,
            viewTeamBtn;
 
+    ImageView profilePicImageView;
+
     Challenge challenge;
     Team team;
     DBHelper db = new DBHelper(this);
 
     User user;
+    User coachUser;
 
     /**********************
      * onCreate method
@@ -73,6 +77,8 @@ public class ViewChallengeActivity extends AppCompatActivity{
         final Intent intent = getIntent();
         challenge = intent.getParcelableExtra("challenge");
         user = intent.getParcelableExtra("User Object");
+        Cursor coachUserCursor = db.getUserData("username",challenge.getCoachAssigned());
+        coachUser = new User(coachUserCursor);
 
         //instantiate DBHelper for database methods
 
@@ -90,6 +96,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
         previousLogsBtn = findViewById(R.id.challengeLogBtn);
         leaderboardBtn = findViewById(R.id.challengeLeaderboardBtn);
         viewTeamBtn = findViewById(R.id.viewTeamBtn);
+        profilePicImageView = findViewById(R.id.challengeViewProfilePicImageView);
 
         rateChallengeTxtView = findViewById(R.id.rateChallengeTxtView);
         rateChallengeBar = findViewById(R.id.rateChallengeBar);
@@ -97,14 +104,19 @@ public class ViewChallengeActivity extends AppCompatActivity{
 
         challengeID = challenge.getChallengeID();
         challengeName = challenge.getChallengeName();
-        coachName = challenge.getCoachAssigned();
-        description = challenge.getChallengeDescription();
-        startDate = challenge.getStartDate();
-        endDate = challenge.getEndDate();
+        coachName = "Coach: " + challenge.getCoachAssigned();
+        description = "Description: " + challenge.getChallengeDescription();
+        startDate = "Begins: " + challenge.getStartDate();
+        endDate = "Ends: " + challenge.getEndDate();
         difficulty = challenge.getDifficulty();
         isTeam = challenge.isTeam();
         minTeam = challenge.getMinTeam();
         maxTeam = challenge.getMaxTeam();
+
+        String difficultyView = "Difficulty: " + difficulty;
+        String minTeamView = "Minimum team members: " + minTeam;
+        String maxTeamView = "Maximum team members: " + maxTeam;
+
 
         Cursor cursor = db.getParticipatesData("username",user.getUsername(),"challenge_id",String.valueOf(challenge.getChallengeID()));
 //        Cursor userChallengeCursor = db.getChallengeData("username",user.getUsername());
@@ -195,6 +207,16 @@ public class ViewChallengeActivity extends AppCompatActivity{
             }
         });
 
+        coachNameTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toPublicProfileActivityIntent = new Intent(ViewChallengeActivity.this,PublicProfileActivity.class);
+                toPublicProfileActivityIntent.putExtra("other user", coachUser);
+                toPublicProfileActivityIntent.putExtra("User Object", user);
+                startActivity(toPublicProfileActivityIntent);
+            }
+        });
+
 
 
         //Check for availability
@@ -207,16 +229,16 @@ public class ViewChallengeActivity extends AppCompatActivity{
         String currentDate = year + "-"  + month + "-" + day;
 
         if(startDate.compareTo(currentDate)> 0){
-            availability = "Not Available";
+            availability = "Availability: Not Available";
         }
         else if(startDate.compareTo(currentDate) < 0){
-            availability = "Available";
+            availability = "Availability: Available";
         }
         else if(startDate.compareTo(currentDate) == 0){
-            availability = "Starts today, register quickly!";
+            availability = "Availability: Starts today, register quickly!";
         }
         else{
-            availability = "Conditional for availability didn't work booohoo";
+            availability = "Availability: Conditional for availability didn't work.";
         }
 
         challengeNameTextView.setText(challengeName);
@@ -224,17 +246,23 @@ public class ViewChallengeActivity extends AppCompatActivity{
         descriptionTextView.setText(description);
         startDateTextView.setText(startDate);
         endDateTextView.setText(endDate);
-        difficultyTextView.setText(String.valueOf(difficulty));
+        difficultyTextView.setText(difficultyView);
         if (isTeam) {
-            teamTypeTextView.setText("Team");
+            teamTypeTextView.setText("Type: Team");
         }
         else
         {
-            teamTypeTextView.setText("Single");
+            teamTypeTextView.setText("Type: Single");
         }
-        minTeamTextView.setText(String.valueOf(minTeam));
-        maxTeamTextView.setText(String.valueOf(maxTeam));
+        minTeamTextView.setText(String.valueOf(minTeamView));
+        maxTeamTextView.setText(String.valueOf(maxTeamView));
         availabilityTextView.setText(availability);
+
+        byte[] image = coachUser.getImage();
+        if (image != null)
+        {
+            profilePicImageView.setImageBitmap(Utils.getImage(image));
+        }
 
 
     }

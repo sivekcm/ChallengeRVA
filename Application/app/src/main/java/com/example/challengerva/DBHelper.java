@@ -829,6 +829,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_LOG, "username = ? AND challenge_id = ?", new String[] {username,String.valueOf(challengeID)});
     }
 
+    public int deleteLog(String username)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LOG, "username = ?", new String[] {username});
+    }
+
     public int deleteNotification(String username, NotificationType type)
     {
         SQLiteDatabase db = this.getWritableDatabase();

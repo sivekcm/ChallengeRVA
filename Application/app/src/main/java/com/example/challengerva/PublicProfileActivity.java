@@ -32,9 +32,8 @@ public class PublicProfileActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        Cursor userCursor = db.getUserData("username",intent.getStringExtra("User Object"));
-        userCursor.moveToNext();
-        user = new User(userCursor);
+
+        user = intent.getParcelableExtra("User Object");
         otherUser = intent.getParcelableExtra("other user");
 
 
@@ -109,7 +108,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                     Intent athleteIntent = new Intent(PublicProfileActivity.this, AthleteViewChallengeActivity.class);
                     athleteIntent.putExtra("User Object", user);
                     athleteIntent.putExtra("other user", otherUser);
-                    athleteIntent.putExtra("activity", "OtherUserProfileActivity");
+                    athleteIntent.putExtra("activity", "PublicProfileActivity");
 
                     startActivity(athleteIntent);
                 }

@@ -20,7 +20,17 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
 
     private Context context;
     private Cursor cursor;
+    private OnItemClickListener listener;
     private User user;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(AthleteChallengeAdapter.OnItemClickListener listen)
+    {
+        this.listener = listen;
+    }
 
     public AthleteChallengeAdapter(Context cont, Cursor curs)
     {
@@ -42,13 +52,27 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
         TextView endDateTextView;
         Button logBtn;
 
-        public AthleteChallengeViewHolder(@NonNull View itemView) {
+        public AthleteChallengeViewHolder(@NonNull View itemView, final OnItemClickListener listen) {
             super(itemView);
 
             challengeNameTextView = itemView.findViewById(R.id.athleteChallengeNameTextView);
             startDateTextView = itemView.findViewById(R.id.athleteChallengeStartDateTextView);
             endDateTextView = itemView.findViewById(R.id.athleteChallengeEndDateTextView);
             logBtn = itemView.findViewById(R.id.athleteChallengeLogBtn);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listen != null)
+                    {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION)
+                        {
+                            listen.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -57,7 +81,7 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
     public AthleteChallengeViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(this.context);
         View view = inflater.inflate(R.layout.athlete_challenge_item,viewGroup,false);
-        return new AthleteChallengeViewHolder(view);
+        return new AthleteChallengeViewHolder(view,listener);
     }
 
     @Override
