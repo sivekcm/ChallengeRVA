@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -46,8 +47,8 @@ public class CoachActivity extends AppCompatActivity {
     Button viewChallengesBtn;
     Button privateButton;
     Button changeBioButton;
-    Button resetProfileBtn;
-    Button deleteProfileBtn;
+    Button coachResetProfileBtn;
+    Button coachDeleteProfileBtn;
 
     ImageView profileImage;
 
@@ -79,8 +80,8 @@ public class CoachActivity extends AppCompatActivity {
         viewChallengesBtn = (Button)findViewById(R.id.viewAll);
         privateButton = findViewById(R.id.coachProfilePrivateButton);
         changeBioButton = findViewById(R.id.coachEditBioBtn);
-        resetProfileBtn = findViewById(R.id.coachResetProfileBtn);
-        deleteProfileBtn = findViewById(R.id.coachProfileDeleteButton);
+        coachResetProfileBtn = findViewById(R.id.coachResetProfileBtn);
+        coachDeleteProfileBtn = findViewById(R.id.coachProfileDeleteButton);
 
 
         //Setting the name and user name text views to the coach name and user name
@@ -130,6 +131,8 @@ public class CoachActivity extends AppCompatActivity {
                 startActivity(changeBioIntent);
             }
         });
+        deleteAcct(user);
+        resetAcct(user);
 
     }
     /**
@@ -226,5 +229,58 @@ public class CoachActivity extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
+    }
+
+    public void resetAcct(final User user) {
+        coachResetProfileBtn.setOnClickListener(new View.OnClickListener() {
+                                               @Override
+                                               public void onClick(View view) {
+                                                   String username = user.getUsername();
+                                                   String coachName = user.getFirstName();
+                                                   Cursor challangeUserData = db.getChallengeData("coach", coachName);
+                                                   int challegeID = (challangeUserData.getInt(0));
+                                                   String challengeIDSt = String.valueOf(challangeUserData.getString(0));
+
+                                                   int deletedChal = 0;
+
+                                                   while (challangeUserData.moveToNext()) {
+                                                       deletedChal = db.deleteChallenge(challengeIDSt);
+                                                   }
+
+
+                                                   if (deletedChal > 0 ) {
+                                                       Toast toast=Toast.makeText(getApplicationContext(),"User was reset",Toast.LENGTH_LONG);
+                                                   }
+                                                   else {
+                                                       Toast toast=Toast.makeText(getApplicationContext(),"User not reset",Toast.LENGTH_LONG);
+                                                   }
+                                               }
+                                           }
+        );
+    }
+
+    public void deleteAcct(final User user) {
+        coachDeleteProfileBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String username = user.getUsername();
+                Cursor userData = db.getUserData("username", username);
+
+                int deletedUser = 0;
+
+                while (userData.moveToNext()){
+                    deletedUser = db.deleteUser(username);
+                }
+
+
+                if (deletedUser > 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "User was deleted", Toast.LENGTH_LONG);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "User not deleted", Toast.LENGTH_LONG);
+                }
+
+            }
+        });
     }
 }

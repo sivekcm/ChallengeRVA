@@ -5,11 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
-import android.os.strictmode.SqliteObjectLeakedViolation;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 public class DBHelper extends SQLiteOpenHelper {
@@ -627,6 +624,22 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
     }
+
+    /**********************************************************************
+     * updateRating method
+     * @param rating: individual ratings
+     * @param total: total number of ratings for the challenge
+     * @return none
+     *
+     * This method updates the data of a row at the numberRatings and totalRatings
+     */
+    public void updateRating(int rating, int total){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CHAL_COL17, rating);
+        cv.put(CHAL_COL18, total);
+    }
+
 
     /**********************************************************************
      * updateTeam method

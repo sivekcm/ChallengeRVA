@@ -111,6 +111,10 @@ public class AthleteProfileActivity extends AppCompatActivity {
             }
         });
 
+        deleteAcct(user);
+        resetAcct(user);
+
+
     }
 
     public void fillChallengesList() {
@@ -148,12 +152,9 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 int deletedLogUser = 0;
                 int deletedParticipates = 0;
                 int deletedLeaderBoard = 0;
-                int deletedNotifications = 0;
                 int deletedUser = 0;
 
-                while (userData.moveToNext()) {
 
-                }
                 while (challangeUserData.moveToNext()) {
                     deletedChal = db.deleteChallenge(challengeIDSt);
                 }
@@ -168,14 +169,17 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 }
                 while (leaderBoard.moveToNext()) {
                     //PLACE HOLDER
-                    deletedLeaderBoard = db.deleteLeaderBoard(12, username);
+                    deletedLeaderBoard = db.deleteLeaderBoard(username);
+                }
+                while (userData.moveToNext()){
+                    deletedUser = db.deleteUser(username);
                 }
 
 
-                if (deletedChal > 0 && deletedTeam > 0 && deletedLogUser > 0 && deletedParticipates > 0 && deletedLeaderBoard > 0) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "User was reset", Toast.LENGTH_LONG);
+                if (deletedUser > 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "User was deleted", Toast.LENGTH_LONG);
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "User not reset", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), "User not deleted", Toast.LENGTH_LONG);
                 }
 
             }
@@ -202,7 +206,6 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 int deletedLogUser = 0;
                 int deletedParticipates = 0;
                 int deletedLeaderBoard = 0;
-                int deletedNotifications = 0;
 
 
                 while (challangeUserData.moveToNext()) {
@@ -219,11 +222,11 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 }
                 while (leaderBoard.moveToNext()) {
                     //PLACE HOLDER
-                    deletedLeaderBoard = db.deleteLeaderBoard(12, username);
+                    deletedLeaderBoard = db.deleteLeaderBoard(username);
                 }
 
 
-                if (deletedChal > 0 && deletedTeam >0 && deletedLogUser >0 && deletedParticipates >0 && deletedLeaderBoard >0) {
+                if (deletedChal > 0 ) {
                     Toast toast=Toast.makeText(getApplicationContext(),"User was reset",Toast.LENGTH_LONG);
                 }
                 else {
