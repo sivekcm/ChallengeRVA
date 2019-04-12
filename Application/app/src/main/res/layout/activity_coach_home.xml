@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/OffWhite"
     tools:context=".CoachHomeActivity">
 
     <Button
@@ -56,6 +57,20 @@
         android:layout_marginRight="8dp"
         android:text="@string/logout"
         android:background="@drawable/btn_design_orange"
+        app:layout_constraintEnd_toEndOf="@+id/coachHomeProfileBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/coachHomeProfileBtn"
+        app:layout_constraintTop_toBottomOf="@+id/coachHomeProfileBtn" />
+
+    <Button
+        android:id="@+id/searchUsers"
+        android:layout_width="181dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="180dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/btn_design_blue"
+        android:text="Search Users"
         app:layout_constraintEnd_toEndOf="@+id/coachHomeProfileBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/coachHomeProfileBtn"
