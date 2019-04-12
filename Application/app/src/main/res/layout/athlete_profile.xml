@@ -64,18 +64,18 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="View Your Challenges"
         android:background="@drawable/btn_design_yellow"
+        android:text="View Your Challenges"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/athleteUsernameTxtView" />
 
     <Button
-        android:id="@+id/athleteViewFriendsBtn"
+        android:id="@+id/athleteEditBioBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -84,14 +84,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="View Your Friends"
         android:background="@drawable/btn_design_blue"
+        android:text="Edit Your Bio"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/athleteViewChallengesBtn"
+        app:layout_constraintTop_toBottomOf="@+id/athleteProfilePrivateButton"
         app:layout_constraintVertical_bias="0.094" />
 
     <ImageView
@@ -114,7 +114,7 @@
         tools:srcCompat="@tools:sample/avatars[9]" />
 
     <Button
-        android:id="@+id/resetProfileBtn"
+        android:id="@+id/athleteResetProfileBtn"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -129,11 +129,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.183"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/athleteViewFriendsBtn"
+        app:layout_constraintTop_toBottomOf="@+id/athleteEditBioBtn"
         app:layout_constraintVertical_bias="0.375" />
 
     <Button
-        android:id="@+id/deleteAcctBtn"
+        android:id="@+id/athleteDeleteAcctBtn"
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginStart="8dp"
@@ -142,13 +142,13 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Delete Account"
         android:background="@drawable/btn_design_orange"
+        android:text="Delete Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/resetProfileBtn"
-        app:layout_constraintTop_toBottomOf="@+id/athleteViewFriendsBtn"
+        app:layout_constraintStart_toEndOf="@+id/athleteResetProfileBtn"
+        app:layout_constraintTop_toBottomOf="@+id/athleteEditBioBtn"
         app:layout_constraintVertical_bias="0.379" />
 
     <TextView
@@ -164,5 +164,21 @@
         app:layout_constraintStart_toStartOf="@+id/athleteProfilePictureImageView"
         app:layout_constraintTop_toBottomOf="@+id/athleteProfilePictureImageView"
         app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/athleteProfilePrivateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/btn_design_blue"
+        android:text="Private"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/athleteViewChallengesBtn" />
 
 </android.support.constraint.ConstraintLayout>

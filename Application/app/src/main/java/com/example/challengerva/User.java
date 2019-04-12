@@ -16,9 +16,10 @@ public class User implements Parcelable {
     protected UserType accountType;
     protected int challengesCompleted;
     protected byte[] image;
+    protected String bio;
 
     public boolean isLoggedUser;
-    protected String bio;
+
 
     public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
@@ -82,8 +83,10 @@ public class User implements Parcelable {
         accountType = UserType.valueOf(in.readString());
         challengesCompleted = in.readInt();
         isLoggedUser = in.readByte() != 0;
-        image = new byte[in.readInt()];
-        in.readByteArray(image);
+        if (in.readInt() == 0) {
+            image = new byte[in.readInt()];
+            in.readByteArray(image);
+        }
         bio = in.readString();
     }
 
@@ -105,14 +108,45 @@ public class User implements Parcelable {
         dest.writeString(this.accountType.name());
         dest.writeInt(challengesCompleted);
         dest.writeByte((byte) (isLoggedUser ? 1 : 0));
-        dest.writeInt(image.length);
-        dest.writeByteArray(image);
+        if (image != null) {
+            dest.writeInt(0);
+            dest.writeInt(image.length);
+            dest.writeByteArray(image);
+        }
+        else
+        {
+            dest.writeInt(-1);
+        }
         dest.writeString(bio);
     }
 
     public String getBio()
     {
         return this.bio;
+    }
+
+
+
+    /**
+     * togglePrivate Method
+     *
+     * This method switches the private status of a user.
+     */
+    public void togglePrivate() {
+        isPrivate = !isPrivate;
+        return;
+    }
+
+    /**
+     * setBio method
+     * @param newBio
+     *
+     * This method sets the bio field to something new.
+     */
+    public void setBio(String newBio) {
+        this.bio = newBio;
+        return;
+
     }
 
 

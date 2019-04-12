@@ -2,6 +2,7 @@ package com.example.challengerva;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -79,5 +80,17 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
     {
         challengeRV.setLayoutManager(new LinearLayoutManager(AthleteViewChallengeActivity.this));
         challengeRV.swapAdapter(adapter,false);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0)
+        {
+            if (resultCode == RESULT_OK)
+            {
+                finish();
+            }
+        }
     }
 }

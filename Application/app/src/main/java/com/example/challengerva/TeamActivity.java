@@ -58,7 +58,7 @@ public class TeamActivity extends AppCompatActivity {
 
                 String teamName = team.getName();
                 boolean teamSuccess = db.insertTeam(teamName, challenge.getChallengeID(),user.getUsername());
-                boolean partSuccess = db.insertParticipates(user.getUsername(),challenge.getChallengeID(),currentDate,"N");
+                boolean partSuccess = db.insertParticipates(user.getUsername(),challenge.getChallengeID(),currentDate,"N","N");
                 if (teamSuccess && partSuccess)
                 {
                     Toast.makeText(TeamActivity.this,"Team Registration Successful",Toast.LENGTH_LONG).show();

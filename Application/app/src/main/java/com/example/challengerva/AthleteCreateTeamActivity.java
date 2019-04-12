@@ -60,7 +60,7 @@ public class AthleteCreateTeamActivity extends AppCompatActivity {
                 String currentDate = sdf.format(date);
                 String teamName = teamNameEditTxt.getText().toString();
                 boolean teamSuccess = db.insertTeam(teamName, challenge.getChallengeID(),user.getUsername());
-                boolean partSuccess = db.insertParticipates(user.getUsername(),challenge.getChallengeID(),currentDate,"N");
+                boolean partSuccess = db.insertParticipates(user.getUsername(),challenge.getChallengeID(),currentDate,"N","N");
                 if (teamSuccess && partSuccess)
                 {
                     Toast.makeText(AthleteCreateTeamActivity.this,"Team Registration Successful",Toast.LENGTH_LONG).show();
