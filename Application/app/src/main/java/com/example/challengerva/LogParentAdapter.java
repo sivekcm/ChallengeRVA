@@ -2,6 +2,7 @@ package com.example.challengerva;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +60,16 @@ public class LogParentAdapter extends RecyclerView.Adapter<LogParentAdapter.LogP
         String username = cursorParent.getString(2);
         Cursor imageCursor = db.getBitmapByUsername(username);
         imageCursor.moveToNext();
-        logParentViewHolder.logImageView.setImageBitmap(Utils.getImage(imageCursor.getBlob(0)));
+        byte[] image = imageCursor.getBlob(0);
+        if (image == null)
+        {
+            logParentViewHolder.logImageView.setImageResource(R.drawable.ic_default_profile_picture);
+        }
+        else
+        {
+            Bitmap bitmap = Utils.getImage(image);
+            logParentViewHolder.logImageView.setImageBitmap(bitmap);
+        }
         logParentViewHolder.usernameTextView.setText(username);
 
 

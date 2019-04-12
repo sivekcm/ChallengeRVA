@@ -173,6 +173,7 @@ public class ChallengeActivity extends AppCompatActivity{
                                     logUnit,
                                     competitionType);
 
+
                     if(success){
                             Toast.makeText(ChallengeActivity.this,
                                     "Challenge Successfully Created!",

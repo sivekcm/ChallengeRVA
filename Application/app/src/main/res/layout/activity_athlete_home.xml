@@ -33,6 +33,17 @@
         app:layout_constraintTop_toBottomOf="@+id/athleteHomeSearchChallengeBtn" />
 
     <Button
+        android:id="@+id/athleteHomeSearchUserBtn"
+        android:layout_width="181dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/btn_design_blue"
+        android:text="Search Users"
+        app:layout_constraintEnd_toEndOf="@+id/athleteHomeLogoutBtn"
+        app:layout_constraintStart_toStartOf="@+id/athleteHomeLogoutBtn"
+        app:layout_constraintTop_toBottomOf="@+id/athleteHomeLogoutBtn" />
+
+    <Button
         android:id="@+id/athleteHomeLeaderboardBtn"
         android:layout_width="181dp"
         android:layout_height="163dp"

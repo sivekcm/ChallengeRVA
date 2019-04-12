@@ -49,7 +49,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CHAL_COL14 = "log_range";
     public static final String CHAL_COL15 = "log_unit";
 
-    public static final String CHAL_COL16 = "competitionType";
+    public static final String CHAL_COL16 = "competition_type";
     public static final String CHAL_COL17 = "number_ratings";
     public static final String CHAL_COL18 = "total_rating";
 
@@ -61,11 +61,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TEAM_COL3 = "username";
 
     //Universal LeaderBoard Table
-    public static final String TABLE_LEADERBOARD = "Universal LeaderBoard";
+    public static final String TABLE_LEADERBOARD = "Universal_LeaderBoard";
     public static final String LB_COL1 = "rank";
     public static final String LB_COL2 = "username";
     public static final String LB_COL3 = "challenges_count";
-
 
     //Challenge Specific LeaderBoard Table
     public static final String TABLE_LEADERBOARD_CHALLENGE = "Challenge LeaderBoard";
@@ -131,8 +130,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "challenges_count INTEGER NOT NULL, " +
                 "private TEXT NOT NULL, " +
                 "type TEXT NOT NULL, " +
-                "image_data BLOB" +
-                "bio TEXT NOT NULL" +
+                "image_data BLOB, " +
+                "bio TEXT" +
                 ") ");
 
         //Challenge table
@@ -191,6 +190,8 @@ public class DBHelper extends SQLiteOpenHelper {
                     "username TEXT NOT NULL " +
                     "challenges_log DOUBLE NOT NULL, " +
                     "challenges_total INT NOT NULL" +
+                    "username TEXT NOT NULL, " +
+                    "challenges_weight DOUBLE NOT NULL, " +
                     "PRIMARY KEY(rank, username), " +
                     "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +
                     "FOREIGN KEY(challenges_weight) REFERENCES " + TABLE_USER + "(challenges_weight) ON DELETE CASCADE" +
@@ -329,8 +330,7 @@ public class DBHelper extends SQLiteOpenHelper {
                                    String startDate, String endDate, String type,
                                    int diff, String teamOrSingle, String availability,
                                    String hazards, String description, int minTeam,
-                                   int maxTeam, int logRange, String logUnit, String competitionType,
-                                   int numberRatings, int totalRating) {
+                                   int maxTeam, int logRange, String logUnit, String competitionType, int numberRatings, int totalRating) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -981,6 +981,17 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    /***************************************************
+     * getUserData() method
+     * @return A cursor object containing username and profile picture columns
+     * from every user in the user table
+     */
+    public Cursor getUserDataUsernameAndImage() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT username,image_data FROM User", new String[]{});
+        return cursor;
+    }
+
     /******************************************************
      * getUserData(String column)
      * @param column: the column you wish to compare value to
@@ -1018,6 +1029,12 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getBitmapByUsername(String username){
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT image_data FROM User WHERE username = ?", new String[] {username});
+        return cursor;
+    }
+
+    public Cursor getUserWildCard(String column, String wildcard) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE " + column + " LIKE '" + wildcard + "'", new String[]{});
         return cursor;
     }
 
@@ -1120,10 +1137,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public Cursor getNotificationData(String column, String value) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM Participates WHERE " + column + " = ?", new String[]{value});
-
         return cursor;
     }
-
 
     public Cursor getLogDataInnerJoin(String teamName, int challengeID, String username)
     {
