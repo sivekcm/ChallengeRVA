@@ -141,7 +141,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 Cursor teamUserData = db.getTeamData("username", username);
                 Cursor logUserData = db.getLogData(username, challegeID);
                 Cursor participateUserData = db.getParticipatesData("username", username);
-                Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
+                //Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
                 String teamName = teamUserData.getString(0);
 
                 int deletedChal = 0;
@@ -152,7 +152,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 int deletedUser = 0;
 
 
-                }
+
                 deletedChal = db.deleteChallenge(challengeIDSt);
                 deletedTeam = db.deleteTeam(teamName, challegeID, username);
                 deletedLogUser = db.deleteLog(username, challegeID);
@@ -185,7 +185,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 Cursor teamUserData = db.getTeamData("username", username);
                 Cursor logUserData = db.getLogData(username, challegeID);
                 Cursor participateUserData = db.getParticipatesData("username", username);
-                Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
+                //Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
                 String teamName = teamUserData.getString(0);
 
                 int deletedChal = 0;

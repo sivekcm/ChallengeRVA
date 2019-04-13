@@ -45,6 +45,7 @@
         <activity android:name=".AthleteCreateTeamActivity" />
         <activity android:name=".AthleteTeamSelectionActivity" />
         <activity android:name=".ForgotUserActivity" />
+        <activity android:name=".LeaderboardUniversal"/>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -64,7 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String LB_COL3 = "challenges_count";
 
     //Challenge Specific LeaderBoard Table
-    public static final String TABLE_LEADERBOARD_CHALLENGE = "Challenge LeaderBoard";
+    public static final String TABLE_LEADERBOARD_CHALLENGE = "Challenge_LeaderBoard";
     public static final String LBCHALL_COL1 = "challenge_name";
     public static final String LBCHALL_COL2 = "rank";
     public static final String LBCHALL_COL3 = "username";
@@ -185,9 +185,9 @@ public class DBHelper extends SQLiteOpenHelper {
         //Stores leaderBoard data for specified challenge
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_LEADERBOARD_CHALLENGE + "(" +
                     "rank INTEGER NOT NULL, " +
-                    "username TEXT NOT NULL " +
+                    "username TEXT NOT NULL, " +
                     "challenges_log DOUBLE NOT NULL, " +
-                    "challenges_total INT NOT NULL" +
+                    "challenges_total INT NOT NULL," +
                     "username TEXT NOT NULL, " +
                     "challenges_weight DOUBLE NOT NULL, " +
                     "PRIMARY KEY(rank, username), " +
@@ -1136,7 +1136,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public Cursor getUniversalLeaderBoardData(){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Universal LeaderBoard ORDER BY challenge_count",new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM Universal_LeaderBoard ORDER BY challenges_count DESC",new String[]{});
         return cursor;
     }
 
@@ -1147,7 +1147,7 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     public Cursor getChallengeLeaderBoardData(String challenge){
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM Challenge LeaderBoard ORDER BY weight",new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM Challenge_LeaderBoard ORDER BY weight",new String[]{});
         return cursor;
     }
 
