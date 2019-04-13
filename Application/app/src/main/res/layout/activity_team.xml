@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".TeamActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imageView1"
         android:layout_width="129dp"
         android:layout_height="119dp"

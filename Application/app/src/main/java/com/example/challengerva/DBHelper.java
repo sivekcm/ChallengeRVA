@@ -859,6 +859,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_LOG, "username = ? AND challenge_id = ?", new String[] {username,String.valueOf(challengeID)});
     }
 
+    public int deleteLog(String username)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete(TABLE_LOG, "username = ?", new String[] {username});
+    }
+
     public int deleteNotification(String username, NotificationType type)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1007,6 +1013,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public Cursor getUserData(String username) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE username != ?", new String[]{username});
+        return cursor;
+    }
+
     /***************************************************
      * getUserData() method
      * @return A cursor object containing username and profile picture columns
@@ -1058,9 +1070,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getUserWildCard(String column, String wildcard) {
+    public Cursor getUserWildCard(String column, String wildcard, String notUsername) {
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE " + column + " LIKE '" + wildcard + "'", new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM User WHERE " + column + "!= ? AND " + column + " LIKE '" + wildcard + "'", new String[]{notUsername});
         return cursor;
     }
 

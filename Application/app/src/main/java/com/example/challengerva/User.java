@@ -41,7 +41,6 @@ public class User implements Parcelable {
     //Constructor
     public User(Cursor userCursor)
     {
-        userCursor.moveToNext();
 
         this.username = userCursor.getString(0);
         this.oldUsername = this.username;

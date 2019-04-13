@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class LogParentAdapter extends RecyclerView.Adapter<LogParentAdapter.LogParentViewHolder>{
 
     private Context context;
@@ -30,7 +32,7 @@ public class LogParentAdapter extends RecyclerView.Adapter<LogParentAdapter.LogP
     public class LogParentViewHolder extends RecyclerView.ViewHolder
     {
         TextView usernameTextView;
-        ImageView logImageView;
+        CircleImageView logImageView;
         RecyclerView recyclerView;
 
         public LogParentViewHolder(@NonNull View itemView) {
@@ -61,15 +63,7 @@ public class LogParentAdapter extends RecyclerView.Adapter<LogParentAdapter.LogP
         Cursor imageCursor = db.getBitmapByUsername(username);
         imageCursor.moveToNext();
         byte[] image = imageCursor.getBlob(0);
-        if (image == null)
-        {
-            logParentViewHolder.logImageView.setImageResource(R.drawable.ic_default_profile_picture);
-        }
-        else
-        {
-            Bitmap bitmap = Utils.getImage(image);
-            logParentViewHolder.logImageView.setImageBitmap(bitmap);
-        }
+        DisplayImage.display(this.context,logParentViewHolder.logImageView,image);
         logParentViewHolder.usernameTextView.setText(username);
 
 

@@ -13,10 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ChangePictureActivity extends AppCompatActivity {
 
     private static final int SELECT_PHOTO = 7777;
-    ImageView imageView;
+    CircleImageView imageView;
 
     Button selectPhotoBtn;
     Button saveChangesBtn;
@@ -38,15 +40,7 @@ public class ChangePictureActivity extends AppCompatActivity {
         imageView = findViewById(R.id.changePictureImageView);
 
         byte[] image = user.getImage();
-        if (image == null)
-        {
-            imageView.setImageResource(R.drawable.ic_default_profile_picture);
-        }
-        else
-        {
-            Bitmap bitmap = Utils.getImage(image);
-            imageView.setImageBitmap(bitmap);
-        }
+        DisplayImage.display(this,imageView,image);
 
         selectPhotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,7 +84,9 @@ public class ChangePictureActivity extends AppCompatActivity {
                 user.setImage(Utils.getBytes(bitmap));
                 toHomeIntent.putExtra("User Object", user);
                 toHomeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                setResult(RESULT_OK);
                 startActivity(toHomeIntent);
+                finish();
             }
         });
     }
@@ -102,6 +98,7 @@ public class ChangePictureActivity extends AppCompatActivity {
         {
             Uri image = intent.getData();
             imageView.setImageURI(image);
+            DisplayImage.styleImage(this,imageView);
         }
     }
 }

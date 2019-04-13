@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PublicProfileActivity extends AppCompatActivity {
 
     TextView profileUsername;
     TextView profileName;
     TextView profileBio;
-    ImageView profileIcon;
+    CircleImageView profileIcon;
     Button profileButton;
 
     Intent intent = getIntent();
@@ -32,18 +34,22 @@ public class PublicProfileActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("User Object");
+
+        String username = intent.getStringExtra("User Object");
+        Cursor userData = db.getUserData("username",username);
+        userData.moveToNext();
+        user = new User(userData);
         otherUser = intent.getParcelableExtra("other user");
 
 
         profileUsername = (TextView) findViewById(R.id.publicProfileUsernameTextView);
         profileName = (TextView) findViewById(R.id.publicProfileNameTextView);
         profileBio = (TextView) findViewById(R.id.publicProfileBioTextView);
-        profileIcon = (ImageView) findViewById(R.id.publicProfileImageView);
+        profileIcon = findViewById(R.id.publicProfileImageView);
         profileButton = (Button) findViewById(R.id.publicProfileButton);
 
-        Bitmap bitmap = Utils.getImage(otherUser.getImage());
-        profileIcon.setImageBitmap(bitmap);
+        byte[] image = otherUser.getImage();
+        DisplayImage.display(this,profileIcon,image);
 
         //The following section handles public and private settings.
 
@@ -100,7 +106,7 @@ public class PublicProfileActivity extends AppCompatActivity {
                     Intent athleteIntent = new Intent(PublicProfileActivity.this, AthleteViewChallengeActivity.class);
                     athleteIntent.putExtra("User Object", user);
                     athleteIntent.putExtra("other user", otherUser);
-                    athleteIntent.putExtra("activity", "OtherUserProfileActivity");
+                    athleteIntent.putExtra("activity", "PublicProfileActivity");
 
                     startActivity(athleteIntent);
                 }

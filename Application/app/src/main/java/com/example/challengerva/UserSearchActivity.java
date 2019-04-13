@@ -29,7 +29,7 @@ public class UserSearchActivity extends AppCompatActivity {
 
         userRV = findViewById(R.id.userSearchRecyclerView);
 
-        cursor = db.getUserData();
+        cursor = db.getUserData(user.getUsername());
 
         userRV.setLayoutManager(new LinearLayoutManager(UserSearchActivity.this));
         showResults(cursor);
@@ -48,7 +48,7 @@ public class UserSearchActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 s = "%" + s + "%";
-                cursor = db.getUserWildCard("username",s);
+                cursor = db.getUserWildCard("username",s,user.getUsername());
                 showResults(cursor);
                 return false;
             }
@@ -78,7 +78,7 @@ public class UserSearchActivity extends AppCompatActivity {
                 User otherUser = new User(cursor);
                 Intent intent = new Intent(UserSearchActivity.this,PublicProfileActivity.class);
                 intent.putExtra("other user",otherUser);
-                intent.putExtra("User Object", user);
+                intent.putExtra("User Object", user.getUsername());
 
                 startActivity(intent);
             }

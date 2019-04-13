@@ -38,7 +38,7 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
         if (fromActivity.equals("AthleteHomeActivity") || fromActivity.equals("LogChallengeActivity")) {
             user = intent.getParcelableExtra("User Object");
         }
-        else if (fromActivity.equals("OtherUserProfileActivity"))
+        else if (fromActivity.equals("PublicProfileActivity"))
         {
             user = intent.getParcelableExtra("other user");
             originUser = intent.getParcelableExtra("User Object");
@@ -80,6 +80,19 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
     {
         challengeRV.setLayoutManager(new LinearLayoutManager(AthleteViewChallengeActivity.this));
         challengeRV.swapAdapter(adapter,false);
+        adapter.setOnItemClickListener(new AthleteChallengeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                challengeData.moveToPosition(position);
+                Cursor challengeCursor = db.getChallengeData("name",challengeData.getString(1));
+                challengeCursor.moveToNext();
+                Challenge challenge = new Challenge(challengeCursor);
+                Intent toChallengeViewIntent = new Intent(AthleteViewChallengeActivity.this,ViewChallengeActivity.class);
+                toChallengeViewIntent.putExtra("User Object",user);
+                toChallengeViewIntent.putExtra("challenge",challenge);
+                startActivity(toChallengeViewIntent);
+            }
+        });
     }
 
     @Override

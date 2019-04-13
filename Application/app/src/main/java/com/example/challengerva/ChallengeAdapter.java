@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.ChallengeViewHolder>
@@ -84,23 +85,22 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
 
     @Override
     public void onBindViewHolder(@NonNull ChallengeViewHolder challengeViewHolder, int i) {
-        if (!cursor.moveToPosition(i))
-        {
+        if (!cursor.moveToPosition(i)) {
             return;
         }
 
         String name = cursor.getString(1);
-        String coach = cursor.getString(2);
-        String startDate = cursor.getString(3);
+        String coach = "Coach: " + cursor.getString(2);
+        String startDate = "Starts: " + cursor.getString(3);
 
-        int difficulty = cursor.getInt(6);
-        String category = cursor.getString(5);
+        String difficulty = "Diff: " + String.valueOf(cursor.getInt(6));
+        String category = "Category: " + cursor.getString(5);
         String description = cursor.getString(10);
 
         challengeViewHolder.challengeNameTextView.setText(name);
         challengeViewHolder.challengeCoachTextView.setText(coach);
         challengeViewHolder.challengeDurTextView.setText(startDate);
-        challengeViewHolder.challengeDiffTextView.setText(String.valueOf(difficulty));
+        challengeViewHolder.challengeDiffTextView.setText(difficulty);
         challengeViewHolder.challengeCatTextView.setText(category);
         challengeViewHolder.challengeDescTextView.setText(description);
 

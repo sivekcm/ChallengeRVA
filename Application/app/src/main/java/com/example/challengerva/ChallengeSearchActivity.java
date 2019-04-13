@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -39,6 +40,8 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
 
         //Sets recycle view upon opening activity
         challengeRV = findViewById(R.id.challengeRV);
+        challengeRV.setLayoutManager(new LinearLayoutManager(ChallengeSearchActivity.this));
+        challengeRV.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         challengeData = db.getChallengeData();
         showResults(challengeData);
     }
@@ -51,7 +54,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
      * Creates the option menu
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         //Sets the format and contents of menu
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.search_menu, menu);
@@ -59,13 +62,19 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
         //Instantiates spinner and searchview for the menu
         MenuItem item = menu.findItem(R.id.search);
         MenuItem spinnerItem = menu.findItem(R.id.filter);
-        SearchView searchView = (SearchView) item.getActionView();
+        final SearchView searchView = (SearchView) item.getActionView();
         spinner = (Spinner) spinnerItem.getActionView();
 
         //sets up the spinner
         ArrayAdapter<CharSequence> arrAdapter = ArrayAdapter.createFromResource(this, R.array.filters, android.R.layout.simple_spinner_item);
         arrAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrAdapter);
+
+        if (spinnerItem.isActionViewExpanded() && item.isActionViewExpanded())
+        {
+            spinnerItem.collapseActionView();
+            item.collapseActionView();
+        }
 
         filterArr = getResources().getStringArray(R.array.filters);
 
@@ -92,6 +101,7 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
         });
         return true;
     }
+
 
     /*************************************************************
      * filterResults method
@@ -158,7 +168,6 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
      */
     public void showResults(final Cursor cursor)
     {
-        challengeRV.setLayoutManager(new LinearLayoutManager(ChallengeSearchActivity.this));
         adapter = new ChallengeAdapter(ChallengeSearchActivity.this, cursor);
         challengeRV.swapAdapter(adapter,false);
         toChallengeActivity(cursor,adapter);

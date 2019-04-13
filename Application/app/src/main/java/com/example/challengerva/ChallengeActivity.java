@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.Rating;
 import android.os.Bundle;
 import android.support.annotation.IntDef;
@@ -59,6 +60,7 @@ public class ChallengeActivity extends AppCompatActivity{
     DatePickerDialog.OnDateSetListener startDateListener;
     DatePickerDialog.OnDateSetListener endDateListener;
 
+    DBHelper db = new DBHelper(this);
     int startYear, startMonth, startDay;
     int endYear, endMonth, endDay;
 
@@ -104,7 +106,6 @@ public class ChallengeActivity extends AppCompatActivity{
         submitChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DBHelper db = new DBHelper(ChallengeActivity.this);
 
                 String name = challengeNameEditText.getText().toString();
                 String coach = user.getUsername();
@@ -146,8 +147,8 @@ public class ChallengeActivity extends AppCompatActivity{
 
                 //Validate the challenge name for a challenge
                 else if(!nameIsValid(name)){
-                    AlertMessage.alertMessage("Challenge Name Not Found",
-                            "Please enter a name for the created challenge.", ChallengeActivity.this);
+                    AlertMessage.alertMessage("Invalid challenge name",
+                            "Challenge name is either too short or is already taken", ChallengeActivity.this);
 
                 }
 
@@ -171,7 +172,7 @@ public class ChallengeActivity extends AppCompatActivity{
                                     maxTeam,
                                     logRange,
                                     logUnit,
-                                    competitionType);
+                                    competitionType, 0,0);
 
 
                     if(success){
@@ -307,11 +308,18 @@ public class ChallengeActivity extends AppCompatActivity{
      * @param name of the challenge
      * @return boolean value; true if name is valid false if not
      */
-    public static boolean nameIsValid(String name){
+    public boolean nameIsValid(String name){
         //default for name
-        if(name.length()>1){
+        if(name.length()>2){
             return true;
         }
+        Cursor challengeCursor = db.getChallengeData("name",name);
+        if (challengeCursor.getCount() == 0)
+        {
+            return true;
+        }
+
+
         return false;
     }
 
