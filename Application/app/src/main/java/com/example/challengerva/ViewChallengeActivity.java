@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ViewChallengeActivity extends AppCompatActivity{
 
     //Declaration of variables implemented in UI
@@ -53,7 +55,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
            leaderboardBtn,
            viewTeamBtn;
 
-    ImageView profilePicImageView;
+    CircleImageView profilePicImageView;
 
     Challenge challenge;
     Team team;
@@ -78,6 +80,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
         challenge = intent.getParcelableExtra("challenge");
         user = intent.getParcelableExtra("User Object");
         Cursor coachUserCursor = db.getUserData("username",challenge.getCoachAssigned());
+        coachUserCursor.moveToNext();
         coachUser = new User(coachUserCursor);
 
         //instantiate DBHelper for database methods
@@ -259,12 +262,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
         availabilityTextView.setText(availability);
 
         byte[] image = coachUser.getImage();
-        if (image != null)
-        {
-            profilePicImageView.setImageBitmap(Utils.getImage(image));
-        }
-
-
+        DisplayImage.display(this,profilePicImageView,image);
     }
 
 }

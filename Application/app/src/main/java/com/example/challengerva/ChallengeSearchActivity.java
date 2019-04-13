@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -39,6 +40,8 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
 
         //Sets recycle view upon opening activity
         challengeRV = findViewById(R.id.challengeRV);
+        challengeRV.setLayoutManager(new LinearLayoutManager(ChallengeSearchActivity.this));
+        challengeRV.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         challengeData = db.getChallengeData();
         showResults(challengeData);
     }
@@ -165,7 +168,6 @@ public class ChallengeSearchActivity extends AppCompatActivity implements Adapte
      */
     public void showResults(final Cursor cursor)
     {
-        challengeRV.setLayoutManager(new LinearLayoutManager(ChallengeSearchActivity.this));
         adapter = new ChallengeAdapter(ChallengeSearchActivity.this, cursor);
         challengeRV.swapAdapter(adapter,false);
         toChallengeActivity(cursor,adapter);

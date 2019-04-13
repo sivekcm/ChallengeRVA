@@ -57,7 +57,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"></TextView>
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/challengeViewProfilePicImageView"
                     android:layout_width="86dp"
                     android:layout_height="79dp"

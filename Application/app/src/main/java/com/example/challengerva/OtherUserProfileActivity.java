@@ -8,9 +8,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class OtherUserProfileActivity extends AppCompatActivity {
 
-    ImageView profilePicture;
+    CircleImageView profilePicture;
     TextView otherUsername;
     TextView otherChallComp;
     TextView otherJoinDate;

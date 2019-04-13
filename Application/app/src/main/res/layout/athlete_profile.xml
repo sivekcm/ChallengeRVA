@@ -94,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/athleteProfilePrivateButton"
         app:layout_constraintVertical_bias="0.094" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/athleteProfilePictureImageView"
         android:layout_width="154dp"
         android:layout_height="160dp"

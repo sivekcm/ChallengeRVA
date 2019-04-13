@@ -26,6 +26,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /*****************************************************************************
  * Class Coach Activity
  *
@@ -49,7 +51,7 @@ public class CoachActivity extends AppCompatActivity {
     Button resetProfileBtn;
     Button deleteProfileBtn;
 
-    ImageView profileImage;
+    CircleImageView profileImage;
 
     DBHelper db = new DBHelper(this);
 
@@ -100,8 +102,8 @@ public class CoachActivity extends AppCompatActivity {
         toChangePictureActivity();
 
         //Setting profile picture
-        Bitmap bitmap = Utils.getImage(user.getImage());
-        profileImage.setImageBitmap(bitmap);
+        byte[] image = user.getImage();
+        DisplayImage.display(this,profileImage,image);
 
         //The following code handles the Private button
         if(user.isPrivate())

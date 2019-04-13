@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class AthleteProfileActivity extends AppCompatActivity {
     //Declares Text View
     TextView athleteNameTxtView;
@@ -34,7 +36,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
     //Declaring Recycler View
     RecyclerView athleteChallengesRView;
 
-    ImageView imageView;
+    CircleImageView imageView;
 
     final DBHelper db = new DBHelper(AthleteProfileActivity.this);
     final User athlete = null;
@@ -72,15 +74,8 @@ public class AthleteProfileActivity extends AppCompatActivity {
         athleteNameTxtView.setText(user.getFirstName());
         athleteUsernameTxtView.setText(user.getUsername());
 
-        if (user.getImage() == null)
-        {
-            imageView.setImageResource(R.drawable.ic_default_profile_picture);
-        }
-        else
-        {
-            Bitmap bitmap = Utils.getImage(user.getImage());
-            imageView.setImageBitmap(bitmap);
-        }
+        byte[] image = user.getImage();
+        DisplayImage.display(this,imageView,image);
 
         toChangePhotoActivity();
 

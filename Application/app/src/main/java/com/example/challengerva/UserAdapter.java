@@ -16,6 +16,8 @@ import org.w3c.dom.Text;
 
 import java.util.zip.Inflater;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>
 {
     Context context;
@@ -39,7 +41,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
 
     public class UserViewHolder extends RecyclerView.ViewHolder
     {
-        ImageView imageView;
+        CircleImageView imageView;
         TextView usernameTextView;
         public UserViewHolder(@NonNull View itemView, final OnItemClickListener listen) {
             super(itemView);
@@ -79,15 +81,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
 
         byte[] image = cursor.getBlob(10);
-        if (image == null)
-        {
-            userViewHolder.imageView.setImageResource(R.drawable.ic_default_profile_picture);
-        }
-        else
-        {
-            Bitmap bitmap = Utils.getImage(image);
-            userViewHolder.imageView.setImageBitmap(bitmap);
-        }
+        DisplayImage.display(this.context,userViewHolder.imageView,image);
 
         userViewHolder.usernameTextView.setText(cursor.getString(0));
 

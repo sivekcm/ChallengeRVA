@@ -39,7 +39,6 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         TextView challengeCatTextView;
         TextView challengeDurTextView;
         TextView challengeDescTextView;
-        ImageView challengeImageView;
 
         public ChallengeViewHolder(@NonNull View itemView, final OnItemClickListener listen) {
             super(itemView);
@@ -50,7 +49,6 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
             challengeCatTextView = itemView.findViewById(R.id.searchChallengeCatTextView);
             challengeDurTextView = itemView.findViewById(R.id.searchChallengeDurTextView);
             challengeDescTextView = itemView.findViewById(R.id.searchChallengeDescTextView);
-            challengeImageView = itemView.findViewById(R.id.searchChallengeImageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,29 +90,19 @@ public class ChallengeAdapter extends RecyclerView.Adapter<ChallengeAdapter.Chal
         }
 
         String name = cursor.getString(1);
-        String coach = cursor.getString(2);
-        String startDate = cursor.getString(3);
+        String coach = "Coach: " + cursor.getString(2);
+        String startDate = "Starts: " + cursor.getString(3);
 
-        int difficulty = cursor.getInt(6);
-        String category = cursor.getString(5);
+        String difficulty = "Diff: " + String.valueOf(cursor.getInt(6));
+        String category = "Category: " + cursor.getString(5);
         String description = cursor.getString(10);
 
         challengeViewHolder.challengeNameTextView.setText(name);
         challengeViewHolder.challengeCoachTextView.setText(coach);
         challengeViewHolder.challengeDurTextView.setText(startDate);
-        challengeViewHolder.challengeDiffTextView.setText(String.valueOf(difficulty));
+        challengeViewHolder.challengeDiffTextView.setText(difficulty);
         challengeViewHolder.challengeCatTextView.setText(category);
         challengeViewHolder.challengeDescTextView.setText(description);
-        
-        byte[] image = cursor.getBlob(18);
-        if (image != null)
-        {
-            challengeViewHolder.challengeImageView.setImageBitmap(Utils.getImage(image));
-        }
-        else
-        {
-            challengeViewHolder.challengeImageView.setImageResource(R.drawable.ic_default_profile_picture);
-        }
 
     }
 
