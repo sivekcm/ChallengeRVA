@@ -107,8 +107,10 @@ public class AthleteProfileActivity extends AppCompatActivity {
             }
         });
 
+
         deleteAcct();
         resetAcct();
+
 
     }
 
@@ -147,10 +149,8 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 int deletedLogUser = 0;
                 int deletedParticipates = 0;
                 int deletedLeaderBoard = 0;
-                int deletedNotifications = 0;
                 int deletedUser = 0;
 
-                while (userData.moveToNext()) {
 
                 }
                 deletedChal = db.deleteChallenge(challengeIDSt);
@@ -163,10 +163,10 @@ public class AthleteProfileActivity extends AppCompatActivity {
 
 
 
-                if (deletedChal > 0 && deletedTeam > 0 && deletedLogUser > 0 && deletedParticipates > 0 && deletedLeaderBoard > 0) {
-                    Toast toast = Toast.makeText(getApplicationContext(), "User was reset", Toast.LENGTH_LONG);
+                if (deletedUser > 0) {
+                    Toast toast = Toast.makeText(getApplicationContext(), "User was deleted", Toast.LENGTH_LONG);
                 } else {
-                    Toast toast = Toast.makeText(getApplicationContext(), "User not reset", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getApplicationContext(), "User not deleted", Toast.LENGTH_LONG);
                 }
 
             }
@@ -193,7 +193,6 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 int deletedLogUser = 0;
                 int deletedParticipates = 0;
                 int deletedLeaderBoard = 0;
-                int deletedNotifications = 0;
 
 
 
@@ -213,8 +212,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
                  deletedLeaderBoard = db.deleteLeaderBoard(username);
 
 
-
-                if (deletedChal > 0 && deletedTeam >0 && deletedLogUser >0 && deletedParticipates >0 && deletedLeaderBoard >0) {
+                if (deletedChal > 0 ) {
                     Toast toast=Toast.makeText(getApplicationContext(),"User was reset",Toast.LENGTH_LONG);
                 }
                 else {

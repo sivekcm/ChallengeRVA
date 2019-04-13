@@ -203,7 +203,9 @@ public class ChallengeActivity extends AppCompatActivity{
         difficultyRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                difficultyTextView.setText(String.valueOf(rating));
+                int rate = (int)rating;
+                //update database rating
+                //update database number of ratings
             }
         });
 

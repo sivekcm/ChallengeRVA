@@ -13,4 +13,6 @@
     <color name="LightBlue">#9ADEFF</color>
     <color name="Red">#A81414</color>
     <color name="colorPrimaryDark">#00855F</color>
+    <color name="SkyBlue">#e6e6ff</color>
+    <color name="OffWhite">#ffffe6</color>
 </resources>
