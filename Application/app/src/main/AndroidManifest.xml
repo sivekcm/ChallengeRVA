@@ -14,8 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UserSearchActivity"></activity>
-        <activity android:name=".EditBioActivity"></activity>
+        <activity android:name=".CoachViewChallenge"></activity>
+        <activity android:name=".UserSearchActivity" />
+        <activity android:name=".EditBioActivity" />
         <activity android:name=".ChangePictureActivity" />
         <activity android:name=".LogViewActivity" />
         <activity android:name=".LogChallengeActivity" />
@@ -45,7 +46,7 @@
         <activity android:name=".AthleteCreateTeamActivity" />
         <activity android:name=".AthleteTeamSelectionActivity" />
         <activity android:name=".ForgotUserActivity" />
-        <activity android:name=".LeaderboardUniversal"/>
+        <activity android:name=".LeaderboardUniversal" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

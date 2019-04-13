@@ -101,7 +101,7 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
         viewHolder.challengeNameTextView.setText(name);
         viewHolder.startDateTextView.setText(startDate);
         viewHolder.endDateTextView.setText(endDate);
-        if (this.user.isLoggedUser())
+        if (this.user.isLoggedUser() && this.user.getAccountType().equals(User.UserType.ATHLETE))
         {
             final DBHelper db = new DBHelper(context);
             final Cursor cursor = db.getChallengeData("name",viewHolder.challengeNameTextView.getText().toString());

@@ -20,11 +20,9 @@ public class PublicProfileActivity extends AppCompatActivity {
     CircleImageView profileIcon;
     Button profileButton;
 
-    Intent intent = getIntent();
-
     User user;
     User otherUser;
-    final DBHelper db = new DBHelper(this);
+    DBHelper db = new DBHelper(this);
 
 
     @Override
@@ -39,6 +37,7 @@ public class PublicProfileActivity extends AppCompatActivity {
         Cursor userData = db.getUserData("username",username);
         userData.moveToNext();
         user = new User(userData);
+        userData.close();
         otherUser = intent.getParcelableExtra("other user");
 
 
@@ -70,29 +69,13 @@ public class PublicProfileActivity extends AppCompatActivity {
             profileButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Cursor res = db.getChallengeCoach(user.getUsername());
-                    if (res.getCount() == 0) {
-                        CoachActivity.showMessage("Nothing Found", "You have no challenges", PublicProfileActivity.this);
-                        return;
-                    }
-                    StringBuffer buffer = new StringBuffer();
 
-                    while (res.moveToNext()) {
-                        if (res.getString(2).equals(user.getUsername())) {
-                            buffer.append("Challenge Name: " + res.getString(1) + "\n");
-                            buffer.append("Challenge Description: " + res.getString(10) + "\n");
-                            buffer.append("Start Date: " + res.getString(3) + "\n");
-                            buffer.append("End Date" + res.getString(4) + "\n");
-                            buffer.append("type: " + res.getString(5)+"\n");
-                            buffer.append("difficulty: " + res.getString(6)+"\n");
+                    Intent toCoachChallengeIntent = new Intent(PublicProfileActivity.this,CoachViewChallenge.class);
+                    toCoachChallengeIntent.putExtra("activity","PublicProfileActivity");
+                    toCoachChallengeIntent.putExtra("User Object", user.getUsername());
+                    toCoachChallengeIntent.putExtra("coach user", otherUser);
 
-                            buffer.append("Team or single: "+ res.getString(7)+"\n");
-                            buffer.append("Availability: " + res.getString(8)+"\n");
-                            buffer.append("Hazards: " + res.getString(9)+ "\n\n\n");
-
-                        }
-
-                    }
+                    startActivity(toCoachChallengeIntent);
 
                 }
             });

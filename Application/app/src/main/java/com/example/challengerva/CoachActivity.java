@@ -98,7 +98,7 @@ public class CoachActivity extends AppCompatActivity {
         openChallengeActivity(user);
 
         //calling view all method
-        viewAll(user);
+        viewAll();
 
         toChangePictureActivity();
 
@@ -143,49 +143,20 @@ public class CoachActivity extends AppCompatActivity {
      * @return : none
      * Displays all challenges lead by the coach using alert message
      */
-        public void viewAll(final User user){
+        public void viewAll(){
         viewChallengesBtn = findViewById(R.id.viewAll);
-          viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
-                    DBHelper db = new DBHelper(CoachActivity.this);
-                /**
-                 * OnClick method - based on Chris's RegisterActivity
-                 * @param : View v
-                 * @return the input date in the format "YYYY-MM-DD"
-                 * If the coach has challenges with his/her user name, then display all of their challenges
-                 */
-                    @Override
-                    public void onClick(View v) {
-                        Cursor res = db.getChallengeCoach(user.getUsername());
-                         if (res.getCount() == 0) {
-                          showMessage("Nothing Found", "You have no challenges", CoachActivity.this);
-                               return;
-                          }
-                          StringBuffer buffer = new StringBuffer();
+        viewChallengesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                         User test = new User();
-                         test.username = "test123";
-                         test.firstName = "test";
+                Intent intent = new Intent(CoachActivity.this,CoachViewChallenge.class);
+                intent.putExtra("User Object",user);
+                startActivity(intent);
 
-                        while (res.moveToNext()) {
-                         if (res.getString(2).equals(user.getUsername())) {
-                                buffer.append("Challenge Name: " + res.getString(1) + "\n");
-                                buffer.append("Challenge Description: " + res.getString(10) + "\n");
-                                buffer.append("Start Date: " + res.getString(3) + "\n");
-                                buffer.append("End Date" + res.getString(4) + "\n");
-                                buffer.append("type: " + res.getString(5)+"\n");
-                                buffer.append("difficulty: " + res.getString(6)+"\n");
-
-                                buffer.append("Team or single: "+ res.getString(7)+"\n");
-                                buffer.append("Availability: " + res.getString(8)+"\n");
-                                buffer.append("Hazards: " + res.getString(9)+ "\n\n\n");
-
-                            }
-
-                    }
-                        showMessage("Challenges", buffer.toString(), CoachActivity.this);
-                }
-            });
             }
+        });
+
+        }
 
     /**
      * Open challenge activity Intent method

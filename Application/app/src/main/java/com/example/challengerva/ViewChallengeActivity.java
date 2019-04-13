@@ -228,7 +228,7 @@ public class ViewChallengeActivity extends AppCompatActivity{
             public void onClick(View v) {
                 Intent toPublicProfileActivityIntent = new Intent(ViewChallengeActivity.this,PublicProfileActivity.class);
                 toPublicProfileActivityIntent.putExtra("other user", coachUser);
-                toPublicProfileActivityIntent.putExtra("User Object", user);
+                toPublicProfileActivityIntent.putExtra("User Object", user.getUsername());
                 startActivity(toPublicProfileActivityIntent);
             }
         });
