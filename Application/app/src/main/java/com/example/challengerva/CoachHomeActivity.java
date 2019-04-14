@@ -11,7 +11,9 @@ public class CoachHomeActivity extends AppCompatActivity {
     Button coachChallengeBtn;
     Button profileBtn;
     Button leaderboardBtn;
+    Button viewChallBtn;
     Button logoutBtn;
+    Button userSearchBtn;
     User user;
 
 
@@ -27,10 +29,36 @@ public class CoachHomeActivity extends AppCompatActivity {
         profileBtn = findViewById(R.id.coachHomeProfileBtn);
         leaderboardBtn = findViewById(R.id.coachHomeLeaderboardBtn);
         logoutBtn = findViewById(R.id.coachHomeLogoutBtn);
+        viewChallBtn = findViewById(R.id.coachHomeYourChallengesBtn);
+        userSearchBtn = findViewById(R.id.coachHomeSearchUsers);
+
+        viewChallBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toCoachChallengesIntent = new Intent(CoachHomeActivity.this,CoachViewChallenge.class);
+                toCoachChallengesIntent.putExtra("activity","CoachHomeActivity");
+                toCoachChallengesIntent.putExtra("User Object",user);
+
+                startActivity(toCoachChallengesIntent);
+            }
+        });
+
+        userSearchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CoachHomeActivity.this,UserSearchActivity.class);
+                intent.putExtra("User Object",user);
+                startActivity(intent);
+            }
+        });
 
         coachChallengeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent toCoachViewChallengeIntent = new Intent(CoachHomeActivity.this,CoachViewChallenge.class);
+                toCoachViewChallengeIntent.putExtra("User Object",user);
+                toCoachViewChallengeIntent.putExtra("activity","CoachHomeActivity");
+                startActivity(toCoachViewChallengeIntent);
 
             }
         });

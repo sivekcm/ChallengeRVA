@@ -58,7 +58,7 @@ public class User implements Parcelable {
         else
             this.isPrivate = false;
 
-        if (userCursor.getString(9).equals("Coach"))
+        if (userCursor.getString(9).equals("coach"))
         {
             this.accountType = UserType.COACH;
         }

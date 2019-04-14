@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".OtherUserProfileActivity">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/otherProfileImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="112dp"
+        android:layout_marginTop="68dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -24,11 +24,10 @@
     <TextView
         android:id="@+id/otherProfileUsernameTextView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="60dp"
         android:text="@string/register_username"
         app:layout_constraintEnd_toEndOf="@+id/otherProfileImageView"
-        app:layout_constraintHorizontal_bias="0.537"
         app:layout_constraintStart_toStartOf="@+id/otherProfileImageView"
         app:layout_constraintTop_toBottomOf="@+id/otherProfileImageView" />
 
@@ -36,33 +35,36 @@
         android:id="@+id/otherProfileJoinDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="72dp"
         android:text="member since"
-        app:layout_constraintEnd_toEndOf="@+id/otherProfileImageView"
-        app:layout_constraintHorizontal_bias="0.567"
-        app:layout_constraintStart_toStartOf="@+id/otherProfileImageView"
+        app:layout_constraintEnd_toEndOf="@+id/otherProfileChallCompTextView"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="@+id/otherProfileChallCompTextView"
         app:layout_constraintTop_toBottomOf="@+id/otherProfileChallCompTextView" />
 
     <Button
         android:id="@+id/otherProfileViewChallBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="272dp"
         android:layout_height="48dp"
         android:layout_marginTop="108dp"
-        android:text="view their challenges"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/btn_design_yellow"
-        app:layout_constraintEnd_toEndOf="@+id/otherProfileImageView"
-        app:layout_constraintHorizontal_bias="0.468"
-        app:layout_constraintStart_toStartOf="@+id/otherProfileImageView"
-        app:layout_constraintTop_toBottomOf="@+id/otherProfileJoinDateTextView" />
+        android:text="view their challenges"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/otherProfileJoinDateTextView"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="@+id/otherProfileJoinDateTextView"
+        app:layout_constraintTop_toBottomOf="@+id/otherProfileJoinDateTextView"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/otherProfileChallCompTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="72dp"
         android:text="challenges completed"
-        app:layout_constraintEnd_toEndOf="@+id/otherProfileImageView"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="@+id/otherProfileImageView"
+        app:layout_constraintEnd_toEndOf="@+id/otherProfileUsernameTextView"
+        app:layout_constraintHorizontal_bias="0.53"
+        app:layout_constraintStart_toStartOf="@+id/otherProfileUsernameTextView"
         app:layout_constraintTop_toBottomOf="@+id/otherProfileUsernameTextView" />
 </android.support.constraint.ConstraintLayout>

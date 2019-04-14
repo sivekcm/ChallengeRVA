@@ -63,7 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/coachHomeProfileBtn" />
 
     <Button
-        android:id="@+id/searchUsers"
+        android:id="@+id/coachHomeSearchUsers"
         android:layout_width="181dp"
         android:layout_height="163dp"
         android:layout_marginTop="180dp"

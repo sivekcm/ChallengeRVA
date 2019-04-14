@@ -1,81 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/OffWhite"
-    tools:context=".AthleteHomeActivity">
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:id="@+id/athleteHomeSearchChallengeBtn"
-        android:layout_width="181dp"
-        android:layout_height="163dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Search Challenges"
-        android:background="@drawable/btn_design_orange"
-        app:layout_constraintEnd_toStartOf="@+id/athleteHomeYourChallengeBtn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/athleteHomeProfileBtn"
-        android:layout_width="181dp"
-        android:layout_height="163dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/btn_design_blue"
         android:text="Profile"
-        android:background="@drawable/btn_design_blue"
-        app:layout_constraintEnd_toEndOf="@+id/athleteHomeSearchChallengeBtn"
-        app:layout_constraintStart_toStartOf="@+id/athleteHomeSearchChallengeBtn"
-        app:layout_constraintTop_toBottomOf="@+id/athleteHomeSearchChallengeBtn" />
-
-    <Button
-        android:id="@+id/athleteHomeSearchUserBtn"
-        android:layout_width="181dp"
-        android:layout_height="163dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/btn_design_blue"
-        android:text="Search Users"
-        app:layout_constraintEnd_toEndOf="@+id/athleteHomeLogoutBtn"
-        app:layout_constraintStart_toStartOf="@+id/athleteHomeLogoutBtn"
-        app:layout_constraintTop_toBottomOf="@+id/athleteHomeLogoutBtn" />
+        tools:layout_editor_absoluteX="103dp"
+        tools:layout_editor_absoluteY="506dp" />
 
     <Button
         android:id="@+id/athleteHomeLeaderboardBtn"
-        android:layout_width="181dp"
-        android:layout_height="163dp"
-        android:layout_marginTop="8dp"
-        android:text="Leaderboards"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@drawable/btn_design_orange"
-        app:layout_constraintEnd_toEndOf="@+id/athleteHomeProfileBtn"
-        app:layout_constraintStart_toStartOf="@+id/athleteHomeProfileBtn"
-        app:layout_constraintTop_toBottomOf="@+id/athleteHomeProfileBtn" />
+        android:text="Leaderboards"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="366dp" />
+
 
     <Button
-        android:id="@+id/athleteHomeLogoutBtn"
-        android:layout_width="181dp"
-        android:layout_height="163dp"
-        android:layout_marginTop="8dp"
-        android:text="Log Out"
+        android:id="@+id/athleteHomeSearchUserBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/btn_design_blue"
+        android:text="Search Users"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="246dp" />
+    <Button
+        android:id="@+id/athleteHomeSearchChallengeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@drawable/btn_design_orange"
-        app:layout_constraintEnd_toEndOf="@+id/athleteHomeYourChallengeBtn"
-        app:layout_constraintStart_toStartOf="@+id/athleteHomeYourChallengeBtn"
-        app:layout_constraintTop_toBottomOf="@+id/athleteHomeYourChallengeBtn" />
+        android:text="Search Challenges"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="610dp" />
 
     <Button
         android:id="@+id/athleteHomeYourChallengeBtn"
-        android:layout_width="181dp"
-        android:layout_height="163dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:text="Your CHallenges"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:background="@drawable/btn_design_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Your CHallenges"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="153dp" />
 
-</android.support.constraint.ConstraintLayout>
+
+
+
+    <Button
+        android:id="@+id/athleteHomeLogoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@drawable/btn_design_orange"
+        android:text="Logout"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="610dp" />
+
+
+</LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -69,6 +70,7 @@ public class LogParentAdapter extends RecyclerView.Adapter<LogParentAdapter.LogP
 
         cursorChild = db.getLogDataInnerJoin(cursorParent.getString(0), cursorParent.getInt(1), cursorParent.getString(2));
         logParentViewHolder.recyclerView.setLayoutManager(new LinearLayoutManager(this.context,LinearLayoutManager.HORIZONTAL,false));
+        logParentViewHolder.recyclerView.addItemDecoration(new DividerItemDecoration(this.context, DividerItemDecoration.HORIZONTAL));
         LogChildAdapter adapter = new LogChildAdapter(this.context,cursorChild,cursorParent);
         logParentViewHolder.recyclerView.swapAdapter(adapter,false);
 

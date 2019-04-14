@@ -101,7 +101,7 @@ public class TeamActivity extends AppCompatActivity {
                 User otherUser = new User(otherUserCursor);
                 otherUser.setLoggedUser(false);
                 intent.putExtra("other user",otherUser);
-                intent.putExtra("User Object", user);
+                intent.putExtra("User Object", user.getUsername());
                 startActivity(intent);
             }
         });

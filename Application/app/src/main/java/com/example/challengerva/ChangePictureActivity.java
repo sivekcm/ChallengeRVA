@@ -70,7 +70,7 @@ public class ChangePictureActivity extends AppCompatActivity {
                 db.updateUser(user.getUsername(),user.getUsername(),password,
                         user.getFirstName(),user.getLastName(),user.getBirthDate(),
                         user.getJoinDate(),user.getEmail(),user.getChallengesCompleted(),
-                        isPrivate,user.getAccountType().name(),Utils.getBytes(bitmap),user.getBio());
+                        isPrivate,user.getAccountType().name().toLowerCase(),Utils.getBytes(bitmap),user.getBio());
 
                 Intent toHomeIntent = null;
                 if (user.getAccountType().equals(User.UserType.ATHLETE))

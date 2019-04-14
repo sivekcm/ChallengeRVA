@@ -69,7 +69,9 @@ public class AthleteHomeActivity extends AppCompatActivity {
         leaderboardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent toLeaderboardInent = new Intent(AthleteHomeActivity.this,LeaderboardUniversal.class);
+                toLeaderboardInent.putExtra("User Object", user);
+                startActivity(toLeaderboardInent);
             }
         });
 

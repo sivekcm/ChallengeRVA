@@ -133,38 +133,14 @@ public class AthleteProfileActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                String username = user.getUsername();
-                Cursor userData = db.getUserData("username", username);
-                Cursor challangeUserData = db.getChallengeData("coach", username);
-                int challegeID = (challangeUserData.getInt(0));
-                String challengeIDSt = String.valueOf(challangeUserData.getInt(0));
-                Cursor teamUserData = db.getTeamData("username", username);
-                Cursor logUserData = db.getLogData(username, challegeID);
-                Cursor participateUserData = db.getParticipatesData("username", username);
-                Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
-                String teamName = teamUserData.getString(0);
-
-                int deletedChal = 0;
-                int deletedTeam = 0;
-                int deletedLogUser = 0;
-                int deletedParticipates = 0;
-                int deletedLeaderBoard = 0;
-                int deletedUser = 0;
-
-
-                }
-                deletedChal = db.deleteChallenge(challengeIDSt);
-                deletedTeam = db.deleteTeam(teamName, challegeID, username);
-                deletedLogUser = db.deleteLog(username, challegeID);
-                deletedParticipates = db.deleteParticipates(username, challegeID);
-
-                //PLACE HOLDER
-                deletedLeaderBoard = db.deleteLeaderBoard(username);
-
+                int deletedUser = db.deleteUser(user.getUsername());
 
 
                 if (deletedUser > 0) {
+                    Intent intent = new Intent(AthleteProfileActivity.this,LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     Toast toast = Toast.makeText(getApplicationContext(), "User was deleted", Toast.LENGTH_LONG);
+                    startActivity(intent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "User not deleted", Toast.LENGTH_LONG);
                 }
@@ -185,7 +161,7 @@ public class AthleteProfileActivity extends AppCompatActivity {
                 Cursor teamUserData = db.getTeamData("username", username);
                 Cursor logUserData = db.getLogData(username, challegeID);
                 Cursor participateUserData = db.getParticipatesData("username", username);
-                Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
+                //Cursor leaderBoard = db.getUniversalLeaderBoardData("username");
                 String teamName = teamUserData.getString(0);
 
                 int deletedChal = 0;
