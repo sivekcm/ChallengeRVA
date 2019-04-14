@@ -34,14 +34,10 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 
     public static class TeamViewHolder extends RecyclerView.ViewHolder {
         TextView teamNameTxtView;
-        public EditText maxPeopleRegisteredEditTxt;
-        public EditText numPeopleRegisteredEditTxt;
 
         public TeamViewHolder(@NonNull View itemView, final OnItemClickListener listen) {
             super(itemView);
 
-            numPeopleRegisteredEditTxt = itemView.findViewById(R.id.numPeopleRegisteredEditTxt);
-            maxPeopleRegisteredEditTxt = itemView.findViewById(R.id.maxPeopleRegisteredEditTxt);
             teamNameTxtView = itemView.findViewById(R.id.teamNameTxtView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

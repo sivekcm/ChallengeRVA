@@ -188,7 +188,6 @@ public class DBHelper extends SQLiteOpenHelper {
                     "username TEXT NOT NULL, " +
                     "challenges_log DOUBLE NOT NULL, " +
                     "challenges_total INT NOT NULL," +
-                    "username TEXT NOT NULL, " +
                     "challenges_weight DOUBLE NOT NULL, " +
                     "PRIMARY KEY(rank, username), " +
                     "FOREIGN KEY(username) REFERENCES " + TABLE_USER + "(username) ON DELETE CASCADE, " +

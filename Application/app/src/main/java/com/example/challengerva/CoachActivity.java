@@ -208,25 +208,7 @@ public class CoachActivity extends AppCompatActivity {
         coachResetProfileBtn.setOnClickListener(new View.OnClickListener() {
                                                @Override
                                                public void onClick(View view) {
-                                                   String username = user.getUsername();
-                                                   String coachName = user.getFirstName();
-                                                   Cursor challangeUserData = db.getChallengeData("coach", coachName);
-                                                   int challegeID = (challangeUserData.getInt(0));
-                                                   String challengeIDSt = String.valueOf(challangeUserData.getString(0));
 
-                                                   int deletedChal = 0;
-
-                                                   while (challangeUserData.moveToNext()) {
-                                                       deletedChal = db.deleteChallenge(challengeIDSt);
-                                                   }
-
-
-                                                   if (deletedChal > 0 ) {
-                                                       Toast toast=Toast.makeText(getApplicationContext(),"User was reset",Toast.LENGTH_LONG);
-                                                   }
-                                                   else {
-                                                       Toast toast=Toast.makeText(getApplicationContext(),"User not reset",Toast.LENGTH_LONG);
-                                                   }
                                                }
                                            }
         );
@@ -238,17 +220,13 @@ public class CoachActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String username = user.getUsername();
-                Cursor userData = db.getUserData("username", username);
-
-                int deletedUser = 0;
-
-                while (userData.moveToNext()){
-                    deletedUser = db.deleteUser(username);
-                }
-
-
+                int deletedUser;
+                deletedUser = db.deleteUser(username);
                 if (deletedUser > 0) {
+                    Intent intent = new Intent(CoachActivity.this,LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     Toast toast = Toast.makeText(getApplicationContext(), "User was deleted", Toast.LENGTH_LONG);
+                    startActivity(intent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "User not deleted", Toast.LENGTH_LONG);
                 }
