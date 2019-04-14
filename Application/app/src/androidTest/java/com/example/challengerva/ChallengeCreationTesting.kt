@@ -51,7 +51,7 @@ class ChallengeCreationTesting{
 
     @Test
     fun challengeSuccess(){
-        Log.e(@Test, "Performing successful challenge creation")
+        Log.e("@Test", "Performing successful challenge creation")
     }
 
 }
