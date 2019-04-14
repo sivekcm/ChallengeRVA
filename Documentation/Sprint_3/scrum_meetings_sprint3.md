@@ -17,8 +17,8 @@ Question    |          Person                                             | 4/2/
 |            | Farhana Khan | No | No| Out of town | Busy all day Saturday | No | Group project deadline tomorrow night | Busy with other deadlines | None | None | Out of town |
 | What insights have you made? | Adrienne Serra | Logic necessary to implement with logging | None | None | None | Integrating somewhat overlapped work | None | None | Extra unused buttons as well as missing buttons in Athlete and Coach profiles | Missing implementations for delete/reset coach, concern with handling challenges | None |
 |            | Chris Sivek |  Modifications in DBHelper needed | None | Nothing | None | None | need to resolve conflicts within user table | None | New view styles | None | None |
-|            | Shradda Adhikari | More balanced assignments necessary | None | None | None | None | functionality of the .moveNext() method in cursors | None | None | None
-|            | Farhana Khan | Balance assignments | None | None | None | Need more efficient/accomodating meeting times | Standardization is important | None | None | Don't stress too much | 
+|            | Shradda Adhikari | More balanced assignments necessary | None | None | None | None | functionality of the .moveNext() method in cursors | None | None | None | None |
+|            | Farhana Khan | Balance assignments | None | None | None | Need more efficient/accomodating meeting times | Standardization is important | None | None | Don't stress too much | None |
 | Do any changes to the project need to be made as a result of your work? | Adrienne Serra | No | DBHelper critera for Users | None | None | None | No | None | None | None | No |
 |            | Chris Sivek | No | Changes to Challenge | None | changes to the create challenge form to keep track of log unit | None | changes to user class and database | None | None | None | No |
 |            | Shradda Adhikari | No | Inviting people to teams | None | None | None | No | Changing parameters of deleteLeaderBoard method in db helper | None | None | No |
