@@ -1,6 +1,11 @@
 package com.example.challengerva
 
+import android.support.test.espresso.matcher.ViewMatchers
 import android.util.Log
+import android.view.View
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions
 import androidx.test.rule.ActivityTestRule
 import org.junit.Before
 import org.junit.Rule
@@ -18,12 +23,10 @@ class ChallengeCreationTesting{
     private var challenge_typeToBe: String? = null
     private var challenge_diffToBe: String? = null
     private var challenge_teamToBe: String? = null
-    private var challenge_availToBe: String? = null
     private var challenge_descriptToBe: String? = null
     private var challenge_min_teamToBe: String? = null
     private var challenge_max_teamToBe: String? = null
     private var challenge_log_rangeToBe: String? = null
-    private var challenge_log_unitToBe: String? = null
 
     @JvmField
     @Rule
@@ -38,20 +41,29 @@ class ChallengeCreationTesting{
         challenge_typeToBe = "Cardio"
         challenge_diffToBe = "3"
         challenge_teamToBe = "Individual"
-        challenge_availToBe = "Available"
         challenge_descriptToBe = "Running challenge; at your leisure " +
                                  "find a path around your neighborhood that " +
                                  "is 2 miles long and complete it daily"
         challenge_min_teamToBe = "1"
         challenge_max_teamToBe = "1"
         challenge_log_rangeToBe = "2"
-        challenge_log_unitToBe = "miles"
 
     }
 
     @Test
     fun challengeSuccess(){
         Log.e("@Test", "Performing successful challenge creation")
+        Espresso.onView(ViewMatchers.withId(R.id.challengeNameEditText)).perform(ViewActions.typeText(challenge_nameToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.coachUserNameTxtView)).perform(ViewActions.typeText(challenge_coachToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.startDateEditText)).perform(ViewActions.typeText(challenge_startToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.endDateEditText)).perform(ViewActions.typeText(challenge_endToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.challengeTypeTextView)).perform(ViewActions.typeText(challenge_typeToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.difficultyTextView)).perform(ViewActions.typeText(challenge_diffToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.registrationTypeTextView)).perform(ViewActions.typeText(challenge_teamToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.challengeDescriptionEditText)).perform(ViewActions.typeText(challenge_descriptToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.minTeam)).perform(ViewActions.typeText(challenge_min_teamToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.maxTeam)).perform(ViewActions.typeText(challenge_max_teamToBe!!))
+        Espresso.onView(ViewMatchers.withId(R.id.logRange)).perform(ViewActions.typeText(challenge_log_rangeToBe!!))
     }
 
 }
