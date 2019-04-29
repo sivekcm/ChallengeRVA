@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,6 +31,8 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
         setContentView(R.layout.athelte_challenges_list);
 
         challengeRV = findViewById(R.id.athleteChallengeRV);
+        challengeRV.setLayoutManager(new LinearLayoutManager(AthleteViewChallengeActivity.this));
+        challengeRV.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         currentBtn = findViewById(R.id.atheleteChallengeCurrentBtn);
         previousBtn = findViewById(R.id.athleteChallengesPreviousBtn);
 
@@ -78,7 +81,6 @@ public class AthleteViewChallengeActivity extends AppCompatActivity {
      */
     public void showResults(AthleteChallengeAdapter adapter)
     {
-        challengeRV.setLayoutManager(new LinearLayoutManager(AthleteViewChallengeActivity.this));
         challengeRV.swapAdapter(adapter,false);
         adapter.setOnItemClickListener(new AthleteChallengeAdapter.OnItemClickListener() {
             @Override

@@ -15,4 +15,5 @@
     <color name="colorPrimaryDark">#00855F</color>
     <color name="SkyBlue">#e6e6ff</color>
     <color name="OffWhite">#ffffe6</color>
+    <color name="grey_out">#9D9FA2</color>
 </resources>

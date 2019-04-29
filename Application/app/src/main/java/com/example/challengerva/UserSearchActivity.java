@@ -2,8 +2,10 @@ package com.example.challengerva;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -32,6 +34,7 @@ public class UserSearchActivity extends AppCompatActivity {
         cursor = db.getUserData(user.getUsername());
 
         userRV.setLayoutManager(new LinearLayoutManager(UserSearchActivity.this));
+        userRV.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         showResults(cursor);
 
     }

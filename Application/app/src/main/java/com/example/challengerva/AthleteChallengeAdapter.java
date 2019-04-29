@@ -130,7 +130,7 @@ public class AthleteChallengeAdapter extends RecyclerView.Adapter<AthleteChallen
             {
                 viewHolder.logBtn.setEnabled(false);
                 viewHolder.logBtn.setClickable(false);
-                viewHolder.logBtn.setBackgroundColor(context.getResources().getColor(R.color.Orange));
+                viewHolder.logBtn.setBackgroundResource(R.drawable.btn_design_grey);
             }
         }
         else
